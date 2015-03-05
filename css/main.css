@@ -2,7 +2,14 @@ body {
   background: #222;
   color: #eee;
 }
-
+#stats {
+  position: absolute;
+  top: -20px;
+  height: 20px;
+  right: 0px;
+  background: #eee;
+  color: black;
+}
 #gameboard_wrapper {
   width: 100%;
   padding-bottom: 100%;
@@ -10,13 +17,25 @@ body {
   border: 2px solid white;
 }
 
-#gameboard {
+#gameboard_inner {
   background: #999;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   position: absolute;
+}
+
+#gameboard_inner.play {
+  transition: border 1s, opacity 1s;
+  border: 0px solid black;
+  opacity: 1.0;
+}
+
+#gameboard_inner.rewind {
+  transition: border 1s, opacity 1s;
+  border: 100px solid black;
+  opacity: 0.5;
 }
 
 .fork {
