@@ -13,10 +13,19 @@
         <script src='js/mousetrap.js'></script>
     </head>
     <body>
-        <!-- Add your site or application content here -->
-        <h1><a href='http://caryfitzhugh.github.io/fork-the-game/index.html'>Fork: The Game</a></h1>
-        <div id='gameboard_wrapper'>
-          <div id='gameboard'></div>
+        <!-- <h1><a href='http://caryfitzhugh.github.io/fork-the-game/index.html'>Fork: The Game</a></h1> -->
+        <ul class='menu'>
+          <li>Engine</li>
+          <li>Levels</li>
+        </ul>
+
+        <div id='rewind'>
+        </div>
+
+        <div id='gameboard_container'>
+          <div id='gameboard_wrapper'>
+            <div id='gameboard'></div>
+          </div>
         </div>
         <p>
           Move your player via arrow keys.
@@ -27,31 +36,19 @@
           <br/>
             Enter "forks" from that point - repeating everything you did in the future.
         </p>
-<div id='notification'></div>
-<script id='gameboard_template' type='text/ractive'>
-  <div id='stats'>
-    {{#if (internal.game_mode === 'rewind')}}
-      <div id='time-slider'>
-        <span>{{internal.rewind_frame}} / {{internal.total_frames}}</span>
-        <div class='line'></div>
-        <div class='notch' style='left: {{internal.rewind_frame * 100.0 / internal.total_frames}}%'></div>
-      </div>
-    {{/if (internal.game_mode === 'rewind')}}
-  </div>
-  <div id='gameboard_inner' class="{{internal.game_mode}}">
 
-    {{#each forks}}
-      <div class='fork {{fork-number}}' style='left: {{left}}%; top: {{top}}%'></div>
-    {{/each}}
-    {{#player}}
-      <div class='player' style='left: {{left}}%; top: {{top}}%;'></div>
-    {{/player}}
-  </div>
+<div id='notification'></div>
+
+<script id='gameboard_template' type='text/ractive'>
 </script>
 
+        <script src="js/notify.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/history.js"></script>
+        <script src="js/levels.js"></script>
+        <script src="js/input.js"></script>
+        <script src="js/engine.js"></script>
         <script src="js/main.js"></script>
-        <script src="js/gameboard.js"></script>
-        <script src="js/gameloop.js"></script>
 
     </body>
 </html>

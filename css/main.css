@@ -2,6 +2,14 @@ body {
   background: #222;
   color: #eee;
 }
+ul.menu {
+  padding: 0;
+  font-size: 14px;
+}
+.menu > li { transition: all 0.7s; color: #ddd; font-weight: bold; display: inline; }
+
+.menu > li:hover { cursor: pointer; text-shadow: 1px 1px 2px #fff; color: #fff;}
+
 #stats {
   position: absolute;
   top: -20px;
@@ -9,6 +17,12 @@ body {
   right: 0px;
   background: #eee;
   color: black;
+}
+#gameboard_container {
+  width: 100%;
+  max-width: 800px;
+  margin: 20px auto;
+
 }
 #gameboard_wrapper {
   width: 100%;
@@ -26,11 +40,17 @@ body {
   position: absolute;
 }
 
-#gameboard_inner.play {
+body.play-mode #gameboard_inner{
   transition: border 1s, opacity 1s;
   border: 0px solid black;
   opacity: 1.0;
 }
+body.pause-mode #gameboard_inner {
+  transition: border 1s, opacity 1s;
+  border: 100px solid black;
+  opacity: 0.5;
+}
+
 
 #time-slider {
   position: fixed;
@@ -84,12 +104,6 @@ body {
   position: absolute;
 }
 
-#gameboard_inner.rewind {
-  transition: border 1s, opacity 1s;
-  border: 100px solid black;
-  opacity: 0.5;
-}
-
 .fork {
   height: 1%;
   width: 1%;
@@ -102,6 +116,7 @@ body {
 }
 
 .player {
+  transition: all 0.1s;
   height: 1%;
   width: 1%;
   margin-top: -0.5%;
