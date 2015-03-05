@@ -27,15 +27,19 @@
           <br/>
             Enter "forks" from that point - repeating everything you did in the future.
         </p>
-
+<div id='notification'></div>
 <script id='gameboard_template' type='text/ractive'>
-  <div id='gameboard_inner' class="{{internal.game_mode}}">
-    <div id='stats'>Mode: {{internal.game_mode}}
+  <div id='stats'>
     {{#if (internal.game_mode === 'rewind')}}
-      <br/>
-      Position: {{internal.rewind_frame}} / {{internal.total_frames}}
+      <div id='time-slider'>
+        <span>{{internal.rewind_frame}} / {{internal.total_frames}}</span>
+        <div class='line'></div>
+        <div class='notch' style='left: {{internal.rewind_frame * 100.0 / internal.total_frames}}%'></div>
+      </div>
     {{/if (internal.game_mode === 'rewind')}}
-    </div>
+  </div>
+  <div id='gameboard_inner' class="{{internal.game_mode}}">
+
     {{#each forks}}
       <div class='fork {{fork-number}}' style='left: {{left}}%; top: {{top}}%'></div>
     {{/each}}

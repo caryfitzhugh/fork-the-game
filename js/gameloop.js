@@ -1,6 +1,14 @@
 var player_delta = {top:0, left: 0};
 var move_rate = 1;
 var game_history = [];
+var notify = function (msg) {
+  $("#notification").
+    removeClass('show').
+    html(msg).
+    addClass('show');
+
+  _.delay(function() { $("#notification").removeClass('show'); }, 2000);
+};
 
 // How far "back" in history are we operating?
 var history_index = function (v) {
@@ -21,6 +29,7 @@ var add_fork = function (game_future) {
   var fork_path = _.pluck(game_future, 'player');
   var current  = fork_path[0];
   if (current) {
+    notify("Adding fork with " + fork_path.length + " steps");
     window.gameboard.push('forks',
                           {top: current.top,
                            left: current.left,
@@ -29,22 +38,29 @@ var add_fork = function (game_future) {
 };
 
 var stop_game = function () {
+  notify("Pausing game - move time!");
   window.gameboard.set('internal.game_mode' ,'rewind')
   history_index(game_history.length)
 };
 
 var resume_game =  function() {
+  notify("Starting game from here - old future is discarded");
   window.gameboard.set('internal.game_mode' ,'play')
   // Delete any future history from this point onward.
   game_history = _.slice(game_history, 0, history_index());
   history_index(0);
 };
+
 var fork_game = function() {
   if (window.gameboard.get('internal.game_mode') === 'rewind') {
     // We look at the future and whatever is there, we place those player motions
     // into a "fork" element.
     add_fork(_.slice(game_history, history_index(), game_history.length));
-    resume_game();
+
+    window.gameboard.set('internal.game_mode' ,'play')
+    // Delete any future history from this point onward.
+    game_history = _.slice(game_history, 0, history_index());
+    history_index(0);
   }
 };
 
