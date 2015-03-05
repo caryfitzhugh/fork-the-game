@@ -17,6 +17,17 @@ var set_game_state = function (i) {
   });
 };
 
+var add_fork = function (game_future) {
+  var fork_path = _.pluck(game_future, 'player');
+  var current  = fork_path[0];
+  if (current) {
+    window.gameboard.push('forks',
+                          {top: current.top,
+                           left: current.left,
+                           path: _.cloneDeep(fork_path)});
+  }
+};
+
 var stop_game = function () {
   window.gameboard.set('internal.game_mode' ,'rewind')
   history_index(game_history.length)
@@ -27,6 +38,29 @@ var resume_game =  function() {
   // Delete any future history from this point onward.
   game_history = _.slice(game_history, 0, history_index());
   history_index(0);
+};
+var fork_game = function() {
+  if (window.gameboard.get('internal.game_mode') === 'rewind') {
+    // We look at the future and whatever is there, we place those player motions
+    // into a "fork" element.
+    add_fork(_.slice(game_history, history_index(), game_history.length));
+    resume_game();
+  }
+};
+
+// Moves the fork
+var move_fork = function (fork) {
+  var next = fork.path.shift();
+
+  if (next) {
+    // Set his position accordingly...
+    fork.top = next.top;
+    fork.left = next.left;
+    return fork;
+
+  } else {
+    return null;
+  }
 };
 
 // Moves the player
@@ -50,6 +84,15 @@ setInterval(function () {
     // Move the player
     window.gameboard.set('player', move_player(window.gameboard.get('player') ));
 
+    // Move the forks.
+    var forks = window.gameboard.get('forks');
+
+    var new_forks = _.compact(_.map(forks, function(fork, i) {
+      return move_fork(fork);
+    }));
+
+    window.gameboard.set('forks', new_forks);
+
     // Save history
     var state = _.cloneDeep(window.gameboard.get());
     delete state.internal;
@@ -62,7 +105,7 @@ setInterval(function () {
     // Where you can go fwd / back in time
     //
     if (player_delta.left < 0) {
-      history_index(history_index() - 1);
+      history_index(history_index() - 5);
 
       if (history_index() < 0) {
         history_index(0);
@@ -74,7 +117,7 @@ setInterval(function () {
 
     } else if (player_delta.left > 0) {
 
-      history_index(history_index() + 1);
+      history_index(history_index() + 5);
 
       // Go forward (or resume)
       if (history_index() >= game_history.length) {
@@ -99,3 +142,4 @@ Mousetrap.bind('down', function() { player_delta.top += move_rate; return false;
 
 Mousetrap.bind('esc', function() { stop_game();});
 Mousetrap.bind('space', function() { resume_game();});
+Mousetrap.bind('enter', function() { fork_game();});
