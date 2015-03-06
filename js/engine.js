@@ -12,9 +12,6 @@ var Engine = {
         return pos.x === fork.x && pos.y === fork.y;
       });
       var on_structure = game_state.playing_field[pos.x][pos.y] > 0;
-      console.log(game_state.playing_field, pos.x, pos.y);
-      console.log(game_state.playing_field[pos.x], pos.y);
-      console.log(game_state.playing_field[pos.x][pos.y]);
       return on_field && !on_fork && !on_player && !on_structure;
     },
     try_to_move: function (current_game_state, current, vector) {

@@ -124,6 +124,20 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 			render_player(fork.x, fork.y, style_fork);	// translucent green disc
 		}
 
+    /// TEMP CODE BY CARY TO SEE THE BOARD!
+    for (var x = 0 ; x < board_size.width; x += 1) {
+      for (var y = 0; y < board_size.height; y+=1) {
+        if (current_turn.playing_field[x][y] != 0) {
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.fillStyle = "black"
+          ctx.rect(0,0,1,1);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+    }
+
 		ctx.restore();
 	};
 };
