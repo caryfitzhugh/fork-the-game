@@ -6,30 +6,44 @@ var history_index = 0;
 
 var enter_pause_mode = function () {
   play_mode = false;
-
-  history_index = game_history.length;
+  History.show();
   $("body").removeClass("play-mode");
   $("body").addClass("pause-mode");
 };
 
+var continue_play_mode = function () {
+  Notify.show("Continuing...");
+  enter_play_mode();
+};
+
+var rewind_play_mode = function () {
+  Notify.show("Rewind...");
+  History.erase_future();
+  enter_play_mode();
+};
+
+var fork_play_mode = function () {
+  Notify.show("Forking...");
+  History.fork();
+  enter_play_mode();
+};
+
 var enter_play_mode = function () {
   play_mode = true;
-  History.clear();
-  history_index = 0;
+  History.hide();
   $("body").addClass("play-mode");
   $("body").removeClass("pause-mode");
 };
 
 setInterval(function () {
   inputs =  Input.current(); // Gets all the user inputs
-
   if (play_mode) {
 
-    new_state = Engine.tick(_.last(game_history), inputs);
+    new_state = Engine.tick(History.present_state(), inputs);
 
-    Render.draw(game_history, new_state);
+    Render.draw(History.game_history(), new_state);
 
-    game_history.push(new_state);
+    History.save(new_state);
 
     if (inputs.esc) {
       Notify.show("Pausing...");
@@ -37,54 +51,35 @@ setInterval(function () {
     }
 
   } else {
-console.log('asdf', inputs, history_index);
+
     if (inputs.left) {
-      history_index -= 1;
+      if (inputs.shift) {
+        History.backward(10);
+      } else {
+        History.backward();
+      }
     } else if (inputs.right) {
-      history_index += 1;
+      if (inputs.shift) {
+        History.forward(10);
+      } else {
+        History.forward();
+      }
     }
 
-    if (history_index > game_history.length) {
-      enter_play_mode();
+    if (History.play_mode()) {
+      continue_play_mode();
     }
-
-    if (history_index < 0) {
-      history_index = 0;
-    }
-
-    History.tick(game_history, history_index);
 
     if (inputs.space) {
-      Notify.show("Resuming...");
-      enter_play_mode();
+      rewind_play_mode();
     } else if (inputs.enter) {
-      Notify.show("Forking...");
-      enter_play_mode();
+      fork_play_mode();
+    }
+    if (!play_mode) {
+      Render.draw(History.game_history());
     }
   }
 
-
-  /*
-  if (play) {
-    // Does the engine tick, returns a new "desired" state
-    new_state = Engine.tick(inputs)
-
-    //
-    collision_free_state = Collisions.resolve(current_game_state, new_state);
-
-    // Render
-    Render.update(collision_free_state);
-
-    //History
-    History.save_state(collision_free_state);
-  } else {
-    // Rewind mode
-    history_index = 0;
-    History.update(inputs);
-
-    // Reutrns the new game history index and new game state (for forks, etc).
-  }
-  */
 }, 100);
 /*
   var running = window.gameboard.get('internal.game_mode') === 'play';

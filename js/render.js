@@ -24,15 +24,17 @@ var Render = {
     })
 };
 
-Render.draw = function (game_history, new_state) {
-  Render.board.set(_.last(game_history));
-	renderer.draw(game_history);
+Render.draw = function (game_history) {
+  if (game_history && game_history.length > 0) {
+    Render.board.set(_.last(game_history));
+    renderer.draw(game_history);
+  }
 };
 
 // this should be a member variable of any view instance, initialized with the canvas element ID and desired canvas size.
 // This can be changed to an element pointer, but at load time here, the element does not yet exist.
 // You can have more than one view, for a mini-map or something.
-var renderer = new Renderer('temp_gameboard', 800, 800);
+var renderer = new Renderer('temp_gameboard', 600, 600);
 // I can make the size dynamic if we want, but we'll need to call a function
 
 // this should come from game (or level) instance data
@@ -60,7 +62,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
 		var x_intvl = width / board_size.width;
 		var y_intvl = height / board_size.height;
-	
+
 		ctx.beginPath();
 		for (var i=0; i<board_size.width+1; i++) {
 			ctx.moveTo(i*x_intvl, 0);
@@ -74,7 +76,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 			ctx.lineTo(width, i*y_intvl);
 		}
 		ctx.stroke();
-		
+
 		ctx.restore();
 	};
 
@@ -101,7 +103,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 	this.draw = function(game_history) {
 		if (!canvas)
 			canvas = document.getElementById(canvas_element); // better on some post-DOM init or whatever
-			
+
 		ctx = canvas.getContext('2d');
 
 		// clear
@@ -121,7 +123,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 			var fork = current_turn.forks[i];
 			render_player(fork.x, fork.y, style_fork);	// translucent green disc
 		}
-		
+
 		ctx.restore();
 	};
 };

@@ -1,32 +1,82 @@
 var History = {
-  initial: { index: 0 },
-  sequence: [],
-  start_pause_mode: function () {
-    return {index: History.sequence.length};
+  index: function (v) {
+    if (!_.isUndefined(v)) {
+      History.view.set('current_index', v);
+    }
+    return History.view.get('current_index');
   },
   view: new Ractive({
       el: $("#rewind"),
       template: "" +
-"{{#visible}} "+
+"{{#(current_index != history.length)}} "+
 "     <div id='time-slider'> " +
-"       <span>{{current_index}} / {{history_length}}</span> " +
+"       <span>{{current_index}} / {{history.length}}</span> " +
 "       <div class='line'></div> " +
-"       <div class='notch' style='left: {{current_index * 100.0 / history_length}}%'></div> " +
+"       <div class='notch' style='left: {{current_index * 100.0 / history.length}}%'></div> " +
 "     </div> " +
-"{{/visible}} "+
+"{{/(current_index != history.length)}} "+
 "     ",
-      data: {index: 0, history_length: 0 }
-  })
-};
-History.clear = function () {
-  History.view.set('visible', false);
-  History.view.set('history_length', 0);
-  History.view.set('current_index', 0);
+      data: {
+        current_index: 1,
+        history: [Engine.initial] }
+  }),
+  show: function () { History.view.set('current_index', History.view.get('history').length - 1); },
+  hide: function () { History.view.set('current_index', History.view.get('history').length);},
+  forward: function (multiple) {
+    History.view.set('current_index', _.min([History.view.get("history").length, History.view.get('current_index') + (multiple || 1)]));
+  },
+  backward: function (multiple) { History.view.set('current_index', _.max([1, History.view.get('current_index') - (multiple || 1)]));}
+
 };
 
-History.tick = function (history,index) {
-  History.view.set('visible', true);
-  History.view.set('history_length', history.length);
-  History.view.set('current_index', index);
-  console.log('history.length', index);
+History.play_mode = function () {
+  return History.view.get('history').length === History.view.get('current_index');
 };
+
+History.erase_future = function () {
+  History.view.set('history', History.game_history());
+};
+
+History.game_history = function () {
+  return _.slice(History.view.get('history'), 0, History.view.get('current_index'));
+};
+
+History.present_state = function () {
+  return _.cloneDeep(History.view.get("history")[History.view.get('current_index') - 1]);
+};
+
+History.save = function (state) {
+  var history = History.view.get('history');
+  history.push(state);
+  History.view.set({
+    'history': history,
+    current_index: history.length
+  });
+};
+
+History.future = function () {
+  return _.slice(History.view.get('history'), History.view.get('current_index')- 1 /* TO END BY DEFAULT */);
+};
+
+History.fork = function () {
+  // We want to take the player's "future" positions
+  //  and add them to a fork.
+  var future = History.future();
+
+  // Add another Fork to the current state
+  var current = History.present_state();
+
+  current.forks = current.forks || [];
+  current.forks.push({
+    x: current.player.x,
+    y: current.player.y,
+    path : _.pluck(future, 'player')
+  });
+
+  console.log('forked', current.forks);
+
+  History.erase_future();
+  console.log('svae current');
+  History.save(current);
+  console.log(History.view.get('history'));
+}
