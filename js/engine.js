@@ -42,6 +42,39 @@ var Engine = {
     move: function (pos, vector) {
       return {x: pos.x + vector.x, y: pos.y + vector.y};
     },
+    occupied_by_player: function (gs, pos) {
+      return gs.player.x === pos.x && gs.player.y === pos.y;
+    },
+    occupied_by_player_or_fork: function (gs, pos) {
+      // If any of the player or forks are at pos
+      return Engine.occupied_by_player(gs,pos) ||
+        _.find(gs.forks, function (fork) {
+        return fork.x === pos.x && fork.y === pos.y;
+        });
+    },
+    perform_actions: function (current_game_state, inputs) {
+      var game_state = _.cloneDeep(current_game_state);
+      _.each(game_state.actions, function (action) {
+        if (action.type === "switch") {
+          game_state.playing_field[action.position.y][action.position.x] = Levels.tile.switch;
+
+          if (Engine.occupied_by_player_or_fork(game_state, action.position)){
+            game_state.playing_field[action.sets.y][action.sets.x] = action.on;
+          } else {
+            game_state.playing_field[action.sets.y][action.sets.x] = action.off;
+          }
+        } else if (action.type === 'win') {
+          game_state.playing_field[action.position.y][action.position.x] = Levels.tile.win;
+          if (Engine.occupied_by_player(game_state, action.position)){
+            Notify.show("You WON!!!");
+            Game.stop_game();
+          }
+        } else {
+          alert("Unknown action!");
+        }
+      });
+      return game_state;
+    },
     move_forks : function (current_game_state, inputs) {
       var game_state = _.cloneDeep(current_game_state);
 
@@ -105,8 +138,9 @@ var Engine = {
 };
 
 Engine.tick = function (current_game_state, inputs) {
-  var game_state = _.cloneDeep(current_game_state);
-  new_game_state = Engine.move_player(game_state, inputs);
+  var new_game_state = Engine.perform_actions(current_game_state, inputs);
+
+  new_game_state =  Engine.move_player(new_game_state, inputs);
   // Move Forks
   new_game_state = Engine.move_forks(new_game_state, inputs);
 

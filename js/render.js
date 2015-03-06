@@ -87,9 +87,14 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		// draw stuff
 		ctx.beginPath();
 		ctx.rect(0.25, 0.25, 0.5,0.5);
-		ctx.strokeStyle = val === 1 ? "black" : "white";
+    var color = {};
+    color[Levels.tile.wall]= "black";
+    color[Levels.tile.switch] = "white";
+    color[Levels.tile.win] = "green";
+
+		ctx.strokeStyle = color[val];
 		ctx.lineWidth = 0.5;
-		ctx.fillStyle = val === 1 ? "black" : "white";
+		ctx.fillStyle = color[val];
 		ctx.fill();
 		ctx.stroke();
 		ctx.restore();
