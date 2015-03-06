@@ -43,7 +43,7 @@ ul.menu {
 
 canvas#temp_gameboard {
 	border: 2px solid white;
-	background: #999;
+	background: #695D46;
 }
 
 body.play-mode #gameboard_inner{

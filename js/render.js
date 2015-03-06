@@ -39,9 +39,9 @@ var renderer = new Renderer('temp_gameboard', 800, 800);
 var board_size = { width:100, height:100 };	// this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
 
 // these are here for now but should be canvas styles, I think
-var style_grid = { color: 'rgba(255,255,255,.5)', width: 2};	// White
-var style_player = { fill_color: 'rgba(0, 255, 0, 1)', stroke: { color: 'rgba(0, 255, 0, .25)', width: 2 }};
-var style_fork = { fill_color: 'rgba(255, 255, 0, 1)', stroke: { color: 'rgba(255, 255, 0, .25)', width: 2 }};
+var style_grid = { color: '#CFC291', width: 1};	// White
+var style_player = { fill_color: '#A1E8D9', stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
+var style_fork = { fill_color: '#FF712C', stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
 
 function Renderer(canvas_element, canvas_width, canvas_height) {
 	var self = this;		// because ECMAScript
@@ -54,6 +54,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 	function reset_board() {
 		ctx.clearRect(0, 0, width, height);
 
+		ctx.save();
 		ctx.strokeStyle = style_grid.color;
 		ctx.lineWidth = style_grid.width;
 
@@ -73,6 +74,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 			ctx.lineTo(width, i*y_intvl);
 		}
 		ctx.stroke();
+		
+		ctx.restore();
 	};
 
 	function render_player(xposn, yposn, style) {
@@ -83,7 +86,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		ctx.beginPath();
 		ctx.arc(.5, .5, .5, 0, 2 * Math.PI, false);
 		ctx.strokeStyle = style.stroke.color;
-		ctx.lineWidth = style.stroke.width;
+		ctx.lineWidth = style.stroke.width * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
 		ctx.fillStyle = style.fill_color;
 		ctx.fill();
 		ctx.stroke();
