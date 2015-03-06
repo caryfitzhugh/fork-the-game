@@ -1,17 +1,12 @@
 var Engine = {
     move_rate: 1,
-    initial: {
-      player: {x: 50, y: 50},
-      forks: [{x: 10, y:20, path: []}] ,
-      playing_field:  Levels.basic
-    },
     is_open_space: function (game_state, pos) {
-      var on_field = (pos.x <= 100 && pos.x >= 0 && pos.y <= 100 && pos.y >= 0);
+      var on_field = (pos.x <= game_state.playing_field.w && pos.x >= 0 && pos.y <= game_state.playing_field.h && pos.y >= 0);
       var on_player = (pos.x === game_state.player.x && pos.y === game_state.player.y);
       var on_fork = _.find(game_state.forks, function (fork) {
         return pos.x === fork.x && pos.y === fork.y;
       });
-      var on_structure = game_state.playing_field[pos.y][pos.x] === 1;
+      var on_structure = Levels.get(game_state.playing_field, pos.y, pos.x) === 1;
       return on_field && !on_fork && !on_player && !on_structure;
     },
     try_to_move: function (current_game_state, current, vector) {
@@ -56,15 +51,21 @@ var Engine = {
       var game_state = _.cloneDeep(current_game_state);
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
-          game_state.playing_field[action.position.y][action.position.x] = Levels.tile.switch;
+          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);
 
           if (Engine.occupied_by_player_or_fork(game_state, action.position)){
-            game_state.playing_field[action.sets.y][action.sets.x] = action.on;
+            Levels.set(game_state.playing_field,action.sets.y,action.sets.x, action.on);
           } else {
-            game_state.playing_field[action.sets.y][action.sets.x] = action.off;
+            Levels.set(game_state.playing_field,action.sets.y,action.sets.x, action.off);
+          }
+        } else if (action.type === 'fire') {
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.fire);
+          if (Engine.occupied_by_player_or_fork(game_state, action.position)){
+            Notify.show("You DIED -- rewind and try again!!!");
+            Game.enter_pause_mode();
           }
         } else if (action.type === 'win') {
-          game_state.playing_field[action.position.y][action.position.x] = Levels.tile.win;
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.win);
           if (Engine.occupied_by_player(game_state, action.position)){
             Notify.show("You WON!!!");
             Game.stop_game();
@@ -138,14 +139,12 @@ var Engine = {
 };
 
 Engine.tick = function (current_game_state, inputs) {
+  // Perform Environment Actions
   var new_game_state = Engine.perform_actions(current_game_state, inputs);
 
   new_game_state =  Engine.move_player(new_game_state, inputs);
   // Move Forks
   new_game_state = Engine.move_forks(new_game_state, inputs);
-
-
-  // Perform Environment Actions
 
   return new_game_state;
 };

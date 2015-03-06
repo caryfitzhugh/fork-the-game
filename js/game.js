@@ -44,7 +44,10 @@ var Game = {
 
         Render.draw(History.game_history(), new_state);
 
-        History.save(new_state);
+        if (Game.game_running) {
+          // You may have died -- don't save state then!
+          History.save(new_state);
+        }
 
         if (inputs.esc) {
           Notify.show("Pausing...");
@@ -84,4 +87,4 @@ var Game = {
   }
 };
 
-setInterval(Game.tick, 50);
+setInterval(Game.tick, 200);

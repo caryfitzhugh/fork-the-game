@@ -38,7 +38,7 @@ var renderer = new Renderer('temp_gameboard', 600, 600);
 // I can make the size dynamic if we want, but we'll need to call a function
 
 // this should come from game (or level) instance data
-var board_size = { width:100, height:100 };	// this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
+var board_size = { width:30, height:30 };	// this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
 
 // these are here for now but should be canvas styles, I think
 var style_grid = { color: '#CFC291', width: 1};	// White
@@ -91,6 +91,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     color[Levels.tile.wall]= "black";
     color[Levels.tile.switch] = "white";
     color[Levels.tile.win] = "green";
+    color[Levels.tile.fire] = "orange";
 
 		ctx.strokeStyle = color[val];
 		ctx.lineWidth = 0.5;
@@ -141,11 +142,12 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     /// TEMP CODE BY CARY TO SEE THE BOARD!
     for (var x = 0 ; x < board_size.width; x += 1) {
       for (var y = 0; y < board_size.height; y+=1) {
-        if (current_turn.playing_field[y][x] != 0) {
-          render_structure(x,y, current_turn.playing_field[y][x]);
+        if (Levels.get(current_turn.playing_field, y,x) != 0) {
+          render_structure(x,y, Levels.get(current_turn.playing_field,y,x));
         }
       }
     }
+
 		render_player(current_turn.player.x, current_turn.player.y, style_player);	// translucent green disc
 
 		for (var i=0; i < current_turn.forks.length; i++) {
