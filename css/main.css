@@ -29,6 +29,7 @@ ul.menu {
   padding-bottom: 100%;
   position: relative;
   border: 2px solid white;
+	display: none;
 }
 
 #gameboard_inner {
@@ -38,6 +39,11 @@ ul.menu {
   bottom: 0;
   right: 0;
   position: absolute;
+}
+
+canvas#temp_gameboard {
+	border: 2px solid white;
+	background: #999;
 }
 
 body.play-mode #gameboard_inner{
