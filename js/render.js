@@ -80,13 +80,29 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		ctx.restore();
 	};
 
+	function render_structure(xposn, yposn, val) {
+		ctx.save();
+		ctx.translate(xposn, yposn);
+
+		// draw stuff
+		ctx.beginPath();
+		ctx.rect(0.25, 0.25, 0.5,0.5);
+		ctx.strokeStyle = val === 1 ? "black" : "white";
+		ctx.lineWidth = 0.5;
+		ctx.fillStyle = val === 1 ? "black" : "white";
+		ctx.fill();
+		ctx.stroke();
+		ctx.restore();
+	};
+
+
 	function render_player(xposn, yposn, style) {
 		ctx.save();
 		ctx.translate(xposn, yposn);
 
 		// draw stuff
 		ctx.beginPath();
-		ctx.arc(.5, .5, .5, 0, 2 * Math.PI, false);
+		ctx.arc(0.5, 0.5, 0.5, 0, 2 * Math.PI, false);
 		ctx.strokeStyle = style.stroke.color;
 		ctx.lineWidth = style.stroke.width * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
 		ctx.fillStyle = style.fill_color;
@@ -117,26 +133,20 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		// updatenew_state., new_state.player.y
 		var current_turn = game_history[game_history.length - 1];
 
+    /// TEMP CODE BY CARY TO SEE THE BOARD!
+    for (var x = 0 ; x < board_size.width; x += 1) {
+      for (var y = 0; y < board_size.height; y+=1) {
+        if (current_turn.playing_field[x][y] != 0) {
+          render_structure(x,y, current_turn.playing_field[x][y]);
+        }
+      }
+    }
 		render_player(current_turn.player.x, current_turn.player.y, style_player);	// translucent green disc
 
 		for (var i=0; i < current_turn.forks.length; i++) {
 			var fork = current_turn.forks[i];
 			render_player(fork.x, fork.y, style_fork);	// translucent green disc
 		}
-
-    /// TEMP CODE BY CARY TO SEE THE BOARD!
-    for (var x = 0 ; x < board_size.width; x += 1) {
-      for (var y = 0; y < board_size.height; y+=1) {
-        if (current_turn.playing_field[x][y] != 0) {
-          ctx.save();
-          ctx.translate(x, y);
-          ctx.fillStyle = "black"
-          ctx.rect(0,0,1,1);
-          ctx.fill();
-          ctx.restore();
-        }
-      }
-    }
 
 		ctx.restore();
 	};

@@ -1,5 +1,6 @@
 // Add control view - and let you change the tick rate, report FPS, etc.
 var game_history = [Engine.initial];
+game_history[0].playing_field[50][50] = 2;
 
 var play_mode = true;
 var history_index = 0;

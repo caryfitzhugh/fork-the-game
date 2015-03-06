@@ -11,7 +11,7 @@ var Engine = {
       var on_fork = _.find(game_state.forks, function (fork) {
         return pos.x === fork.x && pos.y === fork.y;
       });
-      var on_structure = game_state.playing_field[pos.x][pos.y] > 0;
+      var on_structure = game_state.playing_field[pos.x][pos.y] === 1;
       return on_field && !on_fork && !on_player && !on_structure;
     },
     try_to_move: function (current_game_state, current, vector) {
