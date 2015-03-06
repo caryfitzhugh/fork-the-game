@@ -13,10 +13,8 @@
         <script src='js/mousetrap.js'></script>
     </head>
     <body>
-        <!-- <h1><a href='http://caryfitzhugh.github.io/fork-the-game/index.html'>Fork: The Game</a></h1> -->
         <ul class='menu'>
-          <li>Engine</li>
-          <li>Levels</li>
+          <li id="levels">Levels</li>
         </ul>
 
         <div id='rewind'>
@@ -47,11 +45,16 @@
 
         <script src="js/notify.js"></script>
         <script src="js/render.js"></script>
-        <script src="js/levels.js"></script>
         <script src="js/input.js"></script>
+        <script src="js/levels.js"></script>
         <script src="js/engine.js"></script>
         <script src="js/history.js"></script>
-        <script src="js/main.js"></script>
-
+        <script src="js/game.js"></script>
+        <script>
+      var prev_game = window.location.hash.substr(1);
+      if (!_.isEmpty(prev_game)) {
+          Levels.start_game({context: prev_game});
+      }
+        </script>
     </body>
 </html>

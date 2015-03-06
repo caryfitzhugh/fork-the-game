@@ -136,8 +136,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     /// TEMP CODE BY CARY TO SEE THE BOARD!
     for (var x = 0 ; x < board_size.width; x += 1) {
       for (var y = 0; y < board_size.height; y+=1) {
-        if (current_turn.playing_field[x][y] != 0) {
-          render_structure(x,y, current_turn.playing_field[x][y]);
+        if (current_turn.playing_field[y][x] != 0) {
+          render_structure(x,y, current_turn.playing_field[y][x]);
         }
       }
     }

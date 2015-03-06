@@ -18,8 +18,12 @@ var History = {
 "     ",
       data: {
         current_index: 1,
-        history: [Engine.initial] }
+        history: [] }
   }),
+  init: function (initial_state) {
+    History.view.set("history", []);
+    History.save(initial_state);
+  },
   show: function () { History.view.set('current_index', History.view.get('history').length - 1); },
   hide: function () { History.view.set('current_index', History.view.get('history').length);},
   forward: function (multiple) {

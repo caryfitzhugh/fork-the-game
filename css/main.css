@@ -6,10 +6,17 @@ ul.menu {
   padding: 0;
   font-size: 14px;
 }
-.menu > li { transition: all 0.7s; color: #ddd; font-weight: bold; display: inline; }
+.menu > li > a { transition: all 0.7s; color: #ddd; font-weight: bold; display: inline; }
 
-.menu > li:hover { cursor: pointer; text-shadow: 1px 1px 2px #fff; color: #fff;}
+.menu > li > a:hover { cursor: pointer; text-shadow: 1px 1px 2px #fff; color: #fff;}
 
+.level-select {
+  position: fixed;
+  font-size: 30px;
+  background: white;
+  color: black;
+  padding: 50px;
+}
 #stats {
   position: absolute;
   top: -20px;
@@ -79,6 +86,7 @@ body.pause-mode #gameboard_inner {
   text-align: center;
   font-size: 30px;
   line-height: 30px;
+  height: 0px;
   background: black;
   color: white;
   font-family: sans-serif;
@@ -86,6 +94,7 @@ body.pause-mode #gameboard_inner {
 }
 
 #notification.show {
+  height: 30px;
   opacity: 1.0;
 }
 
