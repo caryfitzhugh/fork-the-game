@@ -54,9 +54,9 @@ var Engine = {
           Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);
 
           if (Engine.occupied_by_player_or_fork(game_state, action.position)){
-            Levels.set(game_state.playing_field,action.sets.y,action.sets.x, action.on);
+						game_state.flags[action.sets] = true;
           } else {
-            Levels.set(game_state.playing_field,action.sets.y,action.sets.x, action.off);
+						game_state.flags[action.sets] = false;
           }
         } else if (action.type === 'fire') {
           Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.fire);
@@ -70,6 +70,17 @@ var Engine = {
             Notify.show("You WON!!!");
             Game.stop_game();
           }
+        } else if (action.type === 'door') {
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.door);
+					var condition = true;
+					_.each(action.required_flags, function (flag) {
+						if (!game_state.flags[flag]) { condition=false; }
+					});
+					if (condition) {
+            Levels.set(game_state.playing_field,action.position.y,action.position.x, action.active);
+					} else {
+            Levels.set(game_state.playing_field,action.position.y,action.position.x, action.inactive);
+					}
         } else {
           alert("Unknown action!");
         }

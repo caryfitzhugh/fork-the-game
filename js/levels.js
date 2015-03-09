@@ -69,7 +69,8 @@ Levels.tile = {
   'wall': 1,
   'switch': 2,
   'win' : 3,
-  'fire': 4
+  'fire': 4,
+	'door': 5
 };
 
 Levels.games = {
@@ -105,9 +106,13 @@ Levels.games = {
       },
       {type: "switch",
        position: {x: 10, y:10},
-       sets: {x: 20, y:18},
-       on: 0,
-       off: 1
+       sets: 0
+      },
+      {type: "door",
+       position: {x: 20, y:18},
+       required_flags: [0],
+       active: 0,
+       inactive: 1
       }
     ],
     playing_field: {w: 30, h: 30, data: {
@@ -122,7 +127,8 @@ Levels.games = {
         "19": 1,"20":1,"21":1
       }
 
-    }}
+    }},
+		flags: [ false ]
   },
   "one switch with FIRE" :  {
   // This manages what leves to display (and return).
@@ -140,9 +146,13 @@ Levels.games = {
       {type: "fire", position: {x: 19, y:20} },
       {type: "switch",
        position: {x: 15, y:15},
-       sets: {x: 20, y:18},
-       on: 0,
-       off: 1
+       sets: 0
+      },
+      {type: "door",
+       position: {x: 20, y:18},
+       required_flags: [0],
+       active: 0,
+       inactive: 1
       }
     ],
     playing_field: {w: 30, h: 30, data: {
@@ -157,7 +167,52 @@ Levels.games = {
         "19": 1,"21":1
       }
 
-    }}
+    }},
+		flags: [ false ]
+  },
+  "two switches with FIRE" :  {
+  // This manages what leves to display (and return).
+  // Proivdes a level id - returns level info to the engine, etc.
+    player: {x: 10, y:10},
+    forks: [],
+    actions: [
+      {type: "win",
+       position: {x: 20, y:19},
+      },
+      {type: "fire", position: {x: 21, y:19} },
+      {type: "fire", position: {x: 19, y:19} },
+      {type: "fire", position: {x: 21, y:20} },
+      {type: "fire", position: {x: 20, y:20} },
+      {type: "fire", position: {x: 19, y:20} },
+      {type: "switch",
+       position: {x: 15, y:15},
+       sets: 0
+      },
+      {type: "switch",
+       position: {x: 25, y:15},
+       sets: 1
+      },
+      {type: "door",
+       position: {x: 15, y:14},
+       required_flags: [0, 1],
+       active: 0,
+       inactive: 1
+      }
+    ],
+    playing_field: {w: 30, h: 30, data: {
+
+      "18":{
+        "19": 1,"21":1
+      },
+      "19":{
+        "19": 1,"21":1
+      },
+      "20": {
+        "19": 1,"21":1
+      }
+
+    }},
+		flags: [ false, false ]
   }
 };
 Levels.view.set('game_names', _.keys(Levels.games));
