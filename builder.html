@@ -17,6 +17,17 @@
         <div id='builder'>
         </div>
         <script id='builder_template' type='text/ractive'>
+<input placeholder='Map Name' value="{{name}}"/>
+<button on-click="save-map" >Save</button>
+<button on-click="new-map" >New</button>
+<button on-click="delete-map" >Delete</button>
+
+<select on-change='load-map'>
+  <option {{(name === "") ? 'selected' : '' }}></option>
+  {{#(maps())}}
+    <option {{(name === .) ? 'selected' : '' }} value='{{.}}' > {{.}} </option>
+  {{/maps}}
+</select>
 
 <a on-click='export'> Export </a>
 {{#export_data}}

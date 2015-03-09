@@ -1,5 +1,6 @@
 var Builder = {
-  view: new Ractive({
+  new_view: function () {
+    return new Ractive({
       el: $("#builder"),
       template: "#builder_template",
 
@@ -19,10 +20,35 @@ var Builder = {
         tile_data_get: function (x,y, data) {
           return _.invert(Levels.tile)[Builder.get_tile(x,y)];
         },
+        maps: function() {
+          var names = [];
+          for (var i = 0; i < localStorage.length; i++){
+            names.push(localStorage.key(i));
+          }
+          return names;
+        },
+        name: "",
         current_tool: "wall",
         selected: null
       }
-  }),
+    });
+   },
+  load_map: function (name) {
+    Builder.view.set(
+      JSON.parse(localStorage.getItem(name))
+    );
+
+  },
+  delete_map: function () {
+    localStorage.removeItem(Builder.view.get('name'));
+
+    Builder.view = Builder.new_view();
+  },
+  save_map: function () {
+    localStorage.setItem(Builder.view.get('name'),
+                         JSON.stringify(Builder.view.get()));
+    Builder.view.update();
+  },
   set_tile: function (x, y, v) {
     var tile_data = Builder.view.get("tile_data");
     if (! tile_data[y]) {
@@ -39,6 +65,7 @@ var Builder = {
     return Builder.view.get("tile_data");
   }
 };
+Builder.view = Builder.new_view();
 
 Builder.view.on('select-tool', function (evt) {
   Builder.view.set('current_tool', evt.context);
@@ -95,6 +122,23 @@ Builder.view.on('export', function (evt) {
                       h: Builder.view.get('height').length,
                       data: Builder.to_field_data()
                     }}, null, 2));
+});
+
+Builder.view.on('delete-map', function (evt) {
+  if (confirm ("Delete for sure?") ) {
+    Builder.delete_map();
+  }
+});
+Builder.view.on('save-map', function (evt) {
+  Builder.save_map();
+});
+
+Builder.view.on('load-map', function (evt) {
+  Builder.load_map($(evt.node).val());
+});
+
+Builder.view.on('new-map', function (evt) {
+  Builder.view = Builder.new_view();
 });
 
 Builder.view.on('import', function (evt) {
