@@ -1,15 +1,19 @@
 var Game = {
   game_loaded: false,
-  game_running: true,
+  // "run", "pause", "resuming", ""
+  game_state: "pause",
+  ignore_shift: false,
   start_game: function (initial_state) {
     History.init(initial_state);
     Game.game_loaded = true;
+    Game.game_state = "run";
   },
   stop_game: function() {
+    Game.game_state = "pause";
     Game.game_loaded = false;
   },
   enter_pause_mode: function () {
-    Game.game_running = false;
+    Game.game_state = "pause";
     History.show();
     $("body").removeClass("play-mode");
     $("body").addClass("pause-mode");
@@ -29,7 +33,7 @@ var Game = {
     Game.enter_play_mode();
   },
   enter_play_mode: function () {
-    Game.game_running = true;
+    Game.game_state = "run";
     History.hide();
     $("body").addClass("play-mode");
     $("body").removeClass("pause-mode");
@@ -38,53 +42,45 @@ var Game = {
   tick: function () {
     if (Game.game_loaded) {
       inputs =  Input.current(); // Gets all the user inputs
-      if (Game.game_running) {
-
+      switch (Game.game_state ) {
+      case "run":
+        // Do these things:
         var new_state = Engine.tick(History.present_state(), inputs);
-
         Render.draw(History.game_history(), new_state);
 
-        if (Game.game_running) {
+        if (Game.game_state === 'run') {
           // You may have died -- don't save state then!
           History.save(new_state);
         }
 
-        if (inputs.esc) {
-          Notify.show("Pausing...");
+        // Test for these state change inputs
+        if (inputs.shift && !Game.ignore_shift) {
           Game.enter_pause_mode();
         }
+        break;
+      case "pause":
+        // We rewind in rewind mode.
+        History.backward(2);
+        Render.draw(History.game_history());
 
-      } else {
-
-        if (inputs.left) {
-          if (inputs.shift) {
-            History.backward(10);
-          } else {
-            History.backward();
-          }
-        } else if (inputs.right) {
-          if (inputs.shift) {
-            History.forward(10);
-          } else {
-            History.forward();
-          }
-        }
-
-        if (History.play_mode()) {
-          Game.continue_play_mode();
-        }
-
-        if (inputs.space) {
-          Game.rewind_play_mode();
-        } else if (inputs.enter) {
+        if (inputs.enter) {
           Game.fork_play_mode();
+          Notify.show("Forking");
+
+          Game.ignore_shift = true;
+
+          // Allow for time to let go of the shift key
+          // before going back into reverse mode.
+          setTimeout(function() { Game.ignore_shift = false;} , 1000);
+        } else if (!inputs.shift) {
+          // We are no longer in rewind mode.
+          Game.rewind_play_mode();
         }
-        if (!Game.game_running) {
-          Render.draw(History.game_history());
-        }
+
+        break;
       }
     }
   }
 };
 
-setInterval(Game.tick, 200);
+var game_tick_interval = setInterval(Game.tick, 50);

@@ -96,8 +96,6 @@ Levels.games = {
     }}
   },
   "one switch" :  {
-  // This manages what leves to display (and return).
-  // Proivdes a level id - returns level info to the engine, etc.
     player: {x: 10, y:10},
     forks: [],
     actions: [

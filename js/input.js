@@ -26,22 +26,31 @@ var Input = {
     224: 'meta'
    }
 };
+Input.map_key = function (chr) {
+  if (Input._MAP[chr]){
+    return Input._MAP[chr];
+  } else {
+    return String.fromCharCode(chr);
+  }
+};
 
 Input.current = function () {
-  var res = _.merge({}, Input.inputs, Input.one_time_inputs);
+  var res = _.merge({},
+                    Input.inputs,
+                    Input.one_time_inputs);
   Input.one_time_inputs = {};
   return res;
 };
 
 $(document).keydown(function (e) {
-  if (!Input.inputs[Input._MAP[e.keyCode]]) {
-    Input.one_time_inputs[Input._MAP[e.keyCode]] = true;
+  if (!Input.map_key(e.keyCode)) {
+    Input.one_time_inputs[Input.map_key(e.keyCode)] = true;
   }
-  Input.inputs[Input._MAP[e.keyCode]] = true;
-  return false;
+  Input.inputs[Input.map_key(e.keyCode)] = true;
+ // return false;
 });
 
 $(document).keyup(function (e) {
-  delete Input.inputs[Input._MAP[e.keyCode]];
-  return false;
+  delete Input.inputs[Input.map_key(e.keyCode)];
+//  return false;
 });

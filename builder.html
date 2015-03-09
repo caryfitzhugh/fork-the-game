@@ -1,0 +1,72 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Fork : The Game</title>
+        <meta name="description" content="">
+
+        <link rel="stylesheet" href="css/main.css">
+        <script src='https://code.jquery.com/jquery-2.1.3.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.3.1/lodash.js"></script>
+        <script src='http://cdn.ractivejs.org/latest/ractive.js'></script>
+        <script src='js/mousetrap.js'></script>
+    </head>
+    <body>
+
+        <div id='builder'>
+        </div>
+        <script id='builder_template' type='text/ractive'>
+
+<a on-click='export'> Export </a>
+{{#export_data}}
+  <div class='export-data'>
+    <textarea>
+    {{{export_data}}}
+    </textarea>
+    <a on-click='close-export'> Close </a>
+  </div>
+{{/export_data}}
+
+<a on-click='import'> Import
+{{#import_data}}
+  <div class='import-data'>
+    <textarea>
+    {{{import_data}}}
+    </textarea>
+    <a on-click='close-import'> Close </a>
+    <a on-click='do-import'> Import </a>
+  </div>
+{{/import_data}}
+</a>
+
+<a class='tools-show'> TOOLS
+  <div class='tools'>
+    <ul>
+    {{#tiles}}
+      <li on-click='select-tool' class='{{is_active(., current_tool)}}'> {{.}}</li>
+    {{/tiles}}
+    </ul>
+  </div>
+</a>
+
+<div class='build-board noselect'>
+  <div class='inner-board noselect'>
+    {{#height:y}}
+      <div class='row'>
+        {{#width:x}}
+          <div data-row="{{y}}" on-click='set-block' class='block {{tile_data_get(x,y, tile_data)}} {{is_selected(selected, x, y)}}'>
+          </div>
+        {{/width:x}}
+      </div>
+    {{/height:y}}
+  </div>
+</div>
+        </script>
+
+        <script src='js/input.js'></script>
+        <script src="js/ractive-menu.js"></script>
+        <script src="js/levels.js"></script>
+        <script src="js/builder.js"></script>
+    </body>
+</html>
