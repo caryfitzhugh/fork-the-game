@@ -40,19 +40,27 @@ var renderer = new Renderer('temp_gameboard', 600, 600);
 // this should come from game (or level) instance data
 var board_size = { width:30, height:30 };	// this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
 
-// these are here for now but should be canvas styles, I think
-var style_grid = { color: '#CFC291', width: 1};	// White
-var style_player = { fill_color: '#A1E8D9', stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
-var style_fork = { fill_color: '#FF712C', stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
-
 function Renderer(canvas_element, canvas_width, canvas_height) {
 	var self = this;		// because ECMAScript
 	var canvas = null;
 	var width = canvas_width;
 	var height = canvas_height;
 	var ctx = null;
+	var current_turn = null;
+	var style_grid = { color: '#CFC291', width: 1 };
+	var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
+	var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
+	var style_structure = {};	// this is initialized in init_styles()
 
 	// private members
+	function init_styles() {
+		// e.g., { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }}
+		style_structure[Levels.tile.wall] =  { fill: { color: 'black' }, stroke: { color: 'grey', width: .1 }};
+		style_structure[Levels.tile.switch] =  { fill: { color: 'grey' }, stroke: { color: 'white', width: .1 }};
+		style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: .1 }};
+		style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: .1 }};
+	}
+
 	function reset_board() {
 		ctx.clearRect(0, 0, width, height);
 
@@ -80,51 +88,60 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		ctx.restore();
 	};
 
-	function render_structure(xposn, yposn, val) {
+	function render_board() {
+
+    for (var x = 0 ; x < board_size.width; x += 1) {
+      for (var y = 0; y < board_size.height; y+=1) {
+        if (Levels.get(current_turn.playing_field, y,x) != 0) {
+          render_structure(x,y, Levels.get(current_turn.playing_field,y,x));
+        }
+      }
+    }
+	};
+
+	function render_structure(xposn, yposn, style_index) {
 		ctx.save();
 		ctx.translate(xposn, yposn);
 
-		// draw stuff
+		// draw the structural elements of the board
 		ctx.beginPath();
-		ctx.rect(0.25, 0.25, 0.5,0.5);
-    var color = {};
-    color[Levels.tile.wall]= "black";
-    color[Levels.tile.switch] = "white";
-    color[Levels.tile.win] = "green";
-    color[Levels.tile.fire] = "orange";
+		ctx.rect(.05, .05, .9, .9);
 
-		ctx.strokeStyle = color[val];
-		ctx.lineWidth = 0.5;
-		ctx.fillStyle = color[val];
+		ctx.strokeStyle = style_structure[style_index].stroke.color;
+		ctx.lineWidth = style_structure[style_index].stroke.width;
+		ctx.fillStyle = style_structure[style_index].fill.color;
 		ctx.fill();
 		ctx.stroke();
 		ctx.restore();
 	};
 
-
 	function render_player(xposn, yposn, style) {
 		ctx.save();
 		ctx.translate(xposn, yposn);
 
-		// draw stuff
+		// draw a player (or fork)
 		ctx.beginPath();
 		ctx.arc(0.5, 0.5, 0.5, 0, 2 * Math.PI, false);
 		ctx.strokeStyle = style.stroke.color;
 		ctx.lineWidth = style.stroke.width * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
-		ctx.fillStyle = style.fill_color;
+		ctx.fillStyle = style.fill.color;
 		ctx.fill();
 		ctx.stroke();
 		ctx.restore();
 	};
 
 	// public members
-	this.init = function(canvas_document) {	// not sure this is needed, can self-init, I suppose...
+	this.init = function(canvas_document) {	// it would be nice to init things, but this is never called?
 		canvas = canvas_document.getElementById(canvas_element);
+		console.log('Renderer.init() is never called)');
+		init_styles(); // too bad
 	};
 
 	this.draw = function(game_history) {
-		if (!canvas)
-			canvas = document.getElementById(canvas_element); // better on some post-DOM init or whatever
+		if (!canvas) {	// Boo! Boo, I say. See above note about this.init()
+			canvas = document.getElementById(canvas_element);
+			init_styles();
+		}
 
 		ctx = canvas.getContext('2d');
 
@@ -137,16 +154,9 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 		//console.log('scale: ', width / board_size.width, height / board_size.height);
 
 		// updatenew_state., new_state.player.y
-		var current_turn = game_history[game_history.length - 1];
-
-    /// TEMP CODE BY CARY TO SEE THE BOARD!
-    for (var x = 0 ; x < board_size.width; x += 1) {
-      for (var y = 0; y < board_size.height; y+=1) {
-        if (Levels.get(current_turn.playing_field, y,x) != 0) {
-          render_structure(x,y, Levels.get(current_turn.playing_field,y,x));
-        }
-      }
-    }
+		current_turn = game_history[game_history.length - 1];
+		
+		render_board();
 
 		render_player(current_turn.player.x, current_turn.player.y, style_player);	// translucent green disc
 
