@@ -193,93 +193,152 @@ Levels.games = {
 		flags: [ false, false ]
   },
   "You will need timing" :  {
-
-    player: {x: 8, y:1},
+    player: {x: 14, y:1},
     forks: [],
     actions: [
-      {type: "switch",
-       position: {x: 8, y:13},
+      {type: "switch",	// inner (top) button
+       position: {x: 15, y:10},
        sets: 0
       },
-      {type: "changeblock",
-       position: {x: 7, y:11},
+      {type: "switch",	// outer (bottom) button
+       position: {x: 14, y:11},
+       sets: 1
+      },
+      {type: "switch",	// secret button
+       position: {x: 12, y:12},
+       sets: 2
+      },
+      {type: "changeblock",	// inner door
+       position: {x: 12, y:10},
+       required_flags: [1],
+       active: 0,
+       inactive: 4
+			},
+      {type: "changeblock",	// outer door
+       position: {x: 13, y:10},
        required_flags: [0],
        active: 0,
        inactive: 1
 			},
-      {type: "changeblock",
-       position: {x: 8, y:10},
+      {type: "changeblock",	// secret door
+       position: {x: 12, y:13},
+       required_flags: [1],
+       active: 0,
+       inactive: 1
+			},
+      {type: "changeblock",	// hidey space
+       position: {x: 16, y:13},
+       required_flags: [2],
+       active: 0,
+       inactive: 1
+			},
+      {type: "changeblock",	// fire trap top
+       position: {x: 14, y:8},
        required_flags: [0],
        active: 4,
        inactive: 0
 			},
-      {type: "changeblock",
-       position: {x: 8, y:12},
-       required_flags: [0],
+      {type: "changeblock",	// fire trap bottom
+       position: {x: 14, y:10},
+       required_flags: [1],
        active: 4,
        inactive: 0
 			}
 		],
-		playing_field: {w: 30, h: 30, data: {
-      "3": {
-        "7": 4,
-        "9": 4
-      },
-      "4": {
-        "7": 4,
-        "9": 4
-      },
-      "5": {
-        "7": 4,
-        "9": 4
-      },
-      "6": {
-        "7": 4,
-        "9": 4
-      },
-      "7": {
-        "7": 4,
-        "9": 4
-      },
-      "8": {
-        "7": 4,
-        "9": 4
-      },
-      "9": {
-        "7": 4,
-        "9": 4
-      },
-      "10": {
-        "5": 1,
-        "6": 1,
-        "7": 1,
-        "9": 1
-      },
-      "11": {
-        "5": 1,
-        "6": Levels.tile.win,
-        "7": 1,
-        "9": 1
-      },
-      "12": {
-        "5": 1,
-        "6": 1,
-        "7": 1,
-        "9": 1,
-				"10": 1
-      },
-      "13": {
-        "7": 1,
-        "10": 1
-      },
-      "14": {
-        "7": 1,
-        "8": 1,
-        "9": 1,
-				"10": 1
-      }
-    }},
-		flags: [ false ]
+		playing_field: {
+			w: 30,
+			h: 30,
+			data: {
+			"0": {
+				"13": 1,
+				"14": 1,
+				"15": 1
+			},
+			"1": {
+				"13": 1,
+				"15": 1
+			},
+			"2": {
+				"13": 1,
+				"15": 1
+			},
+			"3": {},
+			"4": {
+				"12": 1,
+				"13": 1,
+				"15": 1,
+				"16": 1
+			},
+			"5": {
+				"13": 1,
+				"15": 1
+			},
+			"6": {
+				"12": 1,
+				"13": 1,
+				"15": 1,
+				"16": 1
+			},
+			"7": {
+				"13": 1,
+				"15": 1
+			},
+			"8": {
+				"12": 1,
+				"13": 1,
+				"15": 1,
+				"16": 1
+			},
+			"9": {
+				"10": 1,
+				"11": 1,
+				"12": 1,
+				"13": 1,
+				"15": 1,
+				"16": 1,
+				"17": 1,
+				"18": 1
+			},
+			"10": {
+				"10": 1,
+				"11": 3,
+				"12": 1,
+				"13": 1,
+				"16": 1,
+				"17": 1,
+				"18": 1
+			},
+			"11": {
+				"10": 1,
+				"11": 1,
+				"12": 1,
+				"13": 1,
+				"15": 1,
+				"16": 1,
+				"17": 1,
+				"18": 1
+			},
+			"12": {
+				"10": 1,
+				"11": 1,
+				"13": 1,
+				"14": 1,
+				"15": 1,
+				"16": 1,
+				"17": 1,
+				"18": 1
+			},
+			"13": {
+				"11": 1,
+				"12": 1,
+				"13": 1,
+				"14": 1,
+				"15": 1,
+				"16": 1,
+				"17": 1
+			}
+		}},
+		flags: [ false, false, false ]
 	}
 };
 Levels.view.set('game_names', _.keys(Levels.games));
