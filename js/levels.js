@@ -65,12 +65,12 @@ Levels.view.on('select', Levels.select);
 Levels.view.on('start-game', Levels.start_game);
 Levels.view.on('close', Levels.close);
 
-Levels.tile = {
+Levels.tile = {	// this MUST agree with the game engine's definition of the game board and probably should be defined there?
   'wall': 1,
   'switch': 2,
   'win' : 3,
   'fire': 4,
-	'door': 5
+	'changeblock': 5
 };
 
 Levels.games = {
@@ -106,7 +106,7 @@ Levels.games = {
        position: {x: 10, y:10},
        sets: 0
       },
-      {type: "door",
+      {type: "changeblock",
        position: {x: 20, y:18},
        required_flags: [0],
        active: 0,
@@ -146,7 +146,7 @@ Levels.games = {
        position: {x: 15, y:15},
        sets: 0
       },
-      {type: "door",
+      {type: "changeblock",
        position: {x: 20, y:18},
        required_flags: [0],
        active: 0,
@@ -190,8 +190,8 @@ Levels.games = {
        position: {x: 25, y:15},
        sets: 1
       },
-      {type: "door",
-       position: {x: 15, y:14},
+      {type: "changeblock",
+       position: {x: 20, y:18},
        required_flags: [0, 1],
        active: 0,
        inactive: 1

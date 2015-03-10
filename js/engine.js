@@ -51,7 +51,7 @@ var Engine = {
       var game_state = _.cloneDeep(current_game_state);
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
-          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);
+          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);	// Why do we do this? -DC
 
           if (Engine.occupied_by_player_or_fork(game_state, action.position)){
 						game_state.flags[action.sets] = true;
@@ -70,8 +70,8 @@ var Engine = {
             Notify.show("You WON!!!");
             Game.stop_game();
           }
-        } else if (action.type === 'door') {
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.door);
+        } else if (action.type === 'changeblock') {
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.changeblock);
 					var condition = true;
 					_.each(action.required_flags, function (flag) {
 						if (!game_state.flags[flag]) { condition=false; }
