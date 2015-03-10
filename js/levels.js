@@ -211,6 +211,98 @@ Levels.games = {
 
     }},
 		flags: [ false, false ]
-  }
+  },
+  "You will need timing" :  {
+
+    player: {x: 8, y:1},
+    forks: [],
+    actions: [
+      {type: "win",
+       position: {x: 6, y:11}
+      },
+      {type: "switch",
+       position: {x: 8, y:13},
+       sets: 0
+      },
+      {type: "changeblock",
+       position: {x: 7, y:11},
+       required_flags: [0],
+       active: 0,
+       inactive: 1
+			},
+      {type: "changeblock",
+       position: {x: 8, y:10},
+       required_flags: [0],
+       active: 4,
+       inactive: 0
+			},
+      {type: "changeblock",
+       position: {x: 8, y:12},
+       required_flags: [0],
+       active: 4,
+       inactive: 0
+			}
+		],
+		playing_field: {w: 30, h: 30, data: {
+      "3": {
+        "7": 4,
+        "9": 4
+      },
+      "4": {
+        "7": 4,
+        "9": 4
+      },
+      "5": {
+        "7": 4,
+        "9": 4
+      },
+      "6": {
+        "7": 4,
+        "9": 4
+      },
+      "7": {
+        "7": 4,
+        "9": 4
+      },
+      "8": {
+        "7": 4,
+        "9": 4
+      },
+      "9": {
+        "7": 4,
+        "9": 4
+      },
+      "10": {
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "9": 1
+      },
+      "11": {
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "9": 1
+      },
+      "12": {
+        "5": 1,
+        "6": 1,
+        "7": 1,
+        "9": 1,
+				"10": 1
+      },
+      "13": {
+        "7": 1,
+        "10": 1
+      },
+      "14": {
+        "7": 1,
+        "8": 1,
+        "9": 1,
+				"10": 1
+      }
+    }},
+		flags: [ false ]
+	}
 };
 Levels.view.set('game_names', _.keys(Levels.games));
