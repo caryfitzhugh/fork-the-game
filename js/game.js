@@ -1,9 +1,10 @@
 var Game = {
   game_loaded: false,
-  // "run", "pause", "resuming", ""
+  // "run", "pause", "rewind", "won"
   game_state: "pause",
   ignore_shift: false,
   start_game: function (initial_state) {
+    Render.init();
     History.init(initial_state);
     Game.game_loaded = true;
     Game.game_state = "run";
@@ -14,6 +15,12 @@ var Game = {
   },
   enter_pause_mode: function () {
     Game.game_state = "pause";
+    History.show();
+    $("body").removeClass("play-mode");
+    $("body").addClass("pause-mode");
+  },
+  enter_rewind_mode: function () {
+    Game.game_state = "rewind";
     History.show();
     $("body").removeClass("play-mode");
     $("body").addClass("pause-mode");
@@ -45,20 +52,36 @@ var Game = {
       switch (Game.game_state ) {
       case "run":
         // Do these things:
-        var new_state = Engine.tick(History.present_state(), inputs);
+        var engine_result = Engine.tick(History.present_state(), inputs);
+        var new_run_state = engine_result.new_run_state;
+        var new_state = engine_result.new_game_state;
+
         Render.draw(History.game_history(), new_state);
 
-        if (Game.game_state === 'run') {
+        if (new_run_state) {
+          Game.game_state = new_run_state;
+        } else {
           // You may have died -- don't save state then!
           History.save(new_state);
         }
 
         // Test for these state change inputs
         if (inputs.shift && !Game.ignore_shift) {
-          Game.enter_pause_mode();
+          Game.enter_rewind_mode();
         }
         break;
+      case "win":
+        break;
       case "pause":
+        $("body").removeClass("play-mode");
+        $("body").addClass("pause-mode");
+        Render.draw(History.game_history());
+        if (inputs.shift) {
+          Game.enter_rewind_mode();
+        }
+
+        break;
+      case "rewind":
         // We rewind in rewind mode.
         History.backward(2);
         Render.draw(History.game_history());

@@ -53,14 +53,14 @@ canvas#temp_gameboard {
 	background: #695D46;
 }
 
-body.play-mode #gameboard_inner{
-  transition: border 1s, opacity 1s;
-  border: 0px solid black;
+body.play-mode #temp_gameboard{
+  transition: border 0.5s, opacity 0.5s;
+  border: 2px solid white;
   opacity: 1.0;
 }
-body.pause-mode #gameboard_inner {
-  transition: border 1s, opacity 1s;
-  border: 100px solid black;
+body.pause-mode #temp_gameboard {
+  transition: border 0.5s, opacity 0.5s;
+  border: 2px solid red;
   opacity: 0.5;
 }
 

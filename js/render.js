@@ -1,32 +1,13 @@
 
 var Render = {
-  board: new Ractive({
-      el: $("#gameboard"),
-      template: "" +
-" <div id='gameboard_inner' class='{{internal.game_mode}}'> "+
-" "+
-"   {{#each forks}} "+
-"     <div class='fork {{fork-number}}' style='left: {{x}}%; top: {{y}}%'></div> "+
-"   {{/each}} "+
-"   {{#player}} "+
-"     <div class='player' style='left: {{x}}%; top: {{y}}%;'></div> "+
-"   {{/player}} "+
-" </div> "+
-" "+
-"     ",
-			oninit: function() {
-				console.log("init!");
-			},
-			onchange: function() {
-				//console.log("render!");
-			},
-      data: { }
-    })
+  init: function () {
+    // Does not work?
+    //renderer.init();
+  }
 };
 
 Render.draw = function (game_history) {
   if (game_history && game_history.length > 0) {
-    Render.board.set(_.last(game_history));
     renderer.draw(game_history);
   }
 };
@@ -155,7 +136,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
 		// updatenew_state., new_state.player.y
 		current_turn = game_history[game_history.length - 1];
-		
+
 		render_board();
 
 		render_player(current_turn.player.x, current_turn.player.y, style_player);	// translucent green disc

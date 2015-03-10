@@ -78,16 +78,13 @@ Levels.games = {
     player: {x: 10, y:10},
     forks: [],
     actions: [
-      {type: "win",
-       position: {x: 20, y:19}
-      }
     ],
     playing_field: {w: 30, h: 30, data: {
       "18":{
         "19": 1,"21":1
       },
       "19":{
-        "19": 1,"21":1
+        "19": 1,"20": Levels.tile.win,"21":1
       },
       "20": {
         "19": 1,"20":1,"21":1
@@ -99,9 +96,6 @@ Levels.games = {
     player: {x: 10, y:10},
     forks: [],
     actions: [
-      {type: "win",
-       position: {x: 20, y:19},
-      },
       {type: "switch",
        position: {x: 10, y:10},
        sets: 0
@@ -119,7 +113,7 @@ Levels.games = {
         "19": 1,"21":1
       },
       "19":{
-        "19": 1,"21":1
+        "19": 1,"20": Levels.tile.win,"21":1
       },
       "20": {
         "19": 1,"20":1,"21":1
@@ -134,14 +128,6 @@ Levels.games = {
     player: {x: 10, y:10},
     forks: [],
     actions: [
-      {type: "win",
-       position: {x: 20, y:19},
-      },
-      {type: "fire", position: {x: 21, y:19} },
-      {type: "fire", position: {x: 19, y:19} },
-      {type: "fire", position: {x: 21, y:20} },
-      {type: "fire", position: {x: 20, y:20} },
-      {type: "fire", position: {x: 19, y:20} },
       {type: "switch",
        position: {x: 15, y:15},
        sets: 0
@@ -156,15 +142,14 @@ Levels.games = {
     playing_field: {w: 30, h: 30, data: {
 
       "18":{
-        "19": 1,"21":1
+        "19": Levels.tile.fire,"21":Levels.tile.fire
       },
       "19":{
-        "19": 1,"21":1
+        "19": Levels.tile.fire,"20": Levels.tile.win, "21": Levels.tile.fire
       },
       "20": {
-        "19": 1,"21":1
+        "19": Levels.tile.fire,"20": Levels.tile.fire, "21":Levels.tile.fire
       }
-
     }},
 		flags: [ false ]
   },
@@ -174,14 +159,6 @@ Levels.games = {
     player: {x: 10, y:10},
     forks: [],
     actions: [
-      {type: "win",
-       position: {x: 20, y:19},
-      },
-      {type: "fire", position: {x: 21, y:19} },
-      {type: "fire", position: {x: 19, y:19} },
-      {type: "fire", position: {x: 21, y:20} },
-      {type: "fire", position: {x: 20, y:20} },
-      {type: "fire", position: {x: 19, y:20} },
       {type: "switch",
        position: {x: 15, y:15},
        sets: 0
@@ -197,16 +174,19 @@ Levels.games = {
        inactive: 1
       }
     ],
-    playing_field: {w: 30, h: 30, data: {
+    playing_field: {
+      w: 30,
+      h: 30,
+      data: {
 
       "18":{
-        "19": 1,"21":1
+        "19": Levels.tile.fire,"21":1
       },
       "19":{
-        "19": 1,"21":1
+        "19": Levels.tile.fire,"20": Levels.tile.win,"21":1
       },
       "20": {
-        "19": 1,"21":1
+        "19": 1,"21": Levels.tile.fire
       }
 
     }},
@@ -217,9 +197,6 @@ Levels.games = {
     player: {x: 8, y:1},
     forks: [],
     actions: [
-      {type: "win",
-       position: {x: 6, y:11}
-      },
       {type: "switch",
        position: {x: 8, y:13},
        sets: 0
@@ -280,7 +257,7 @@ Levels.games = {
       },
       "11": {
         "5": 1,
-        "6": 1,
+        "6": Levels.tile.win,
         "7": 1,
         "9": 1
       },

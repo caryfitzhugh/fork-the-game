@@ -58,18 +58,6 @@ var Engine = {
           } else {
 						game_state.flags[action.sets] = false;
           }
-        } else if (action.type === 'fire') {
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.fire);
-          if (Engine.occupied_by_player_or_fork(game_state, action.position)){
-            Notify.show("You DIED -- rewind and try again!!!");
-            Game.enter_pause_mode();
-          }
-        } else if (action.type === 'win') {
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.win);
-          if (Engine.occupied_by_player(game_state, action.position)){
-            Notify.show("You WON!!!");
-            Game.stop_game();
-          }
         } else if (action.type === 'changeblock') {
           Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.changeblock);
 					var condition = true;
@@ -82,7 +70,7 @@ var Engine = {
             Levels.set(game_state.playing_field,action.position.y,action.position.x, action.inactive);
 					}
         } else {
-          alert("Unknown action!");
+          console.log("Unknown action!", action);
         }
       });
       return game_state;
@@ -146,16 +134,36 @@ var Engine = {
       game_state.player = new_player;
 
       return game_state;
-   }
+   },
+   test_conditions: function (game_state) {
+     var run_state = null;
+      _.each([game_state.player].concat(game_state.forks), function (p) {
+        if (Levels.get(game_state.playing_field, p.y, p.x) === Levels.tile.fire) {
+          Notify.show("You Melted! -- rewind and try again!!!");
+          run_state = "pause";
+        }
+
+        if (Levels.get(game_state.playing_field, p.y, p.x) === Levels.tile.win) {
+          Notify.show("You WON!!!");
+          run_state = "win";
+        }
+      });
+    return run_state;
+  }
 };
 
 Engine.tick = function (current_game_state, inputs) {
   // Perform Environment Actions
   var new_game_state = Engine.perform_actions(current_game_state, inputs);
 
+  // Fire / win / etc
+  new_run_state = Engine.test_conditions(new_game_state);
+
+  // Move player
   new_game_state =  Engine.move_player(new_game_state, inputs);
   // Move Forks
   new_game_state = Engine.move_forks(new_game_state, inputs);
 
-  return new_game_state;
+  return {new_game_state: new_game_state,
+          new_run_state: new_run_state};
 };
