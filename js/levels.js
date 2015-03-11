@@ -168,7 +168,7 @@ Levels.games = {
        sets: 1
       },
       {type: "changeblock",
-       position: {x: 20, y:18},
+       position: {x: 20, y: 18},
        required_flags: [0, 1],
        active: 0,
        inactive: 1
@@ -180,13 +180,18 @@ Levels.games = {
       data: {
 
       "18":{
-        "19": Levels.tile.fire,"21":1
+        "19": Levels.tile.fire,
+				"21": Levels.tile.fire
       },
       "19":{
-        "19": Levels.tile.fire,"20": Levels.tile.win,"21":1
+        "19": Levels.tile.fire,
+				"20": Levels.tile.win,
+				"21": Levels.tile.fire
       },
       "20": {
-        "19": 1,"21": Levels.tile.fire
+        "19": Levels.tile.fire,
+				"20": Levels.tile.fire,
+				"21": Levels.tile.fire
       }
 
     }},
@@ -339,6 +344,67 @@ Levels.games = {
 			}
 		}},
 		flags: [ false, false, false ]
+	},
+	"Simple Future Logic" :  {
+    player: {x: 10, y:1},
+    forks: [],
+    actions: [
+      {type: "switch",
+       position: {x: 12, y: 4},
+       sets: 0
+      },
+      {type: "switch",
+       position: {x: 16, y: 4},
+       sets: 1
+      },
+      {type: "changeblock",
+       position: {x: 14, y: 6},
+       required_flags: [0],
+       active: 0,
+       inactive: 1
+      },
+      {type: "changeblock",
+       position: {x: 14, y: 8},
+       required_flags: [1],
+       active: 0,
+       inactive: 1
+      }
+    ],
+		playing_field: {
+			w: 30,
+			h: 30,
+			data: {
+				"6": {
+					"13": 1,
+					"14": 1,
+					"15": 1
+				},
+				"7": {
+					"13": 1,
+					"15": 1
+				},
+				"8": {
+					"13": 1,
+					"14": 1,
+					"15": 1
+				},
+				"9": {
+					"13": 1,
+					"15": 1
+				},
+				"10": {
+					"13": 1,
+					"14": 3,
+					"15": 1
+				},
+				"11": {
+					"13": 1,
+					"14": 1,
+					"15": 1
+				}
+			}
+		},
+		flags: [ false, false ]
 	}
 };
 Levels.view.set('game_names', _.keys(Levels.games));

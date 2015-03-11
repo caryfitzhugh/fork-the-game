@@ -36,8 +36,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 	// private members
 	function init_styles() {
 		// e.g., { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }}
-		style_structure[Levels.tile.wall] =  { fill: { color: 'black' }, stroke: { color: 'grey', width: .1 }};
-		style_structure[Levels.tile.switch] =  { fill: { color: 'grey' }, stroke: { color: 'white', width: .1 }};
+		style_structure[Levels.tile.wall] =  { fill: { color: 'gray' }, stroke: { color: 'dimgray', width: .1 }};
+		style_structure[Levels.tile.switch] =  { fill: { color: 'goldenrod' }, stroke: { color: 'white', width: .1 }};
 		style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: .1 }};
 		style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: .1 }};
 	}
