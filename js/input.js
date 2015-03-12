@@ -47,6 +47,7 @@ $(document).keydown(function (e) {
     Input.one_time_inputs[Input.map_key(e.keyCode)] = true;
   }
   Input.inputs[Input.map_key(e.keyCode)] = true;
+
  // return false;
 });
 

@@ -31,15 +31,19 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var style_grid = { color: '#CFC291', width: 1 };
   var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
   var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
+  var style_item =  {
+    "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }}
+  };
   var style_structure = {}; // this is initialized in init_styles()
 
   // private members
   function init_styles() {
     // e.g., { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }}
-    style_structure[Levels.tile.wall] =  { fill: { color: 'gray' }, stroke: { color: 'dimgray', width: .1 }};
-    style_structure[Levels.tile.switch] =  { fill: { color: 'goldenrod' }, stroke: { color: 'white', width: .1 }};
-    style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: .1 }};
-    style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: .1 }};
+    style_structure[Levels.tile.wall] =  { fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }};
+    style_structure[Levels.tile.switch] =  { fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }};
+    style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }};
+    style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }};
+    style_structure[Levels.tile.crate] =  { fill: { color: 'khaki' }, stroke: { color: 'darkkhaki', width: 0.05 }};
   }
 
   function reset_board() {
@@ -96,10 +100,46 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.restore();
   };
 
+  function render_item(item, styles) {
+    var xposn = item.x,
+        yposn = item.y,
+        type = item.type,
+        style = styles[type];
+
+    ctx.save();
+    ctx.translate(xposn, yposn);
+
+      // draw an item
+      ctx.beginPath();
+      if (type === 'magnet') {
+        if (item.position === 'floor') {
+          var arcs = 0;
+          var arce = 2 * Math.PI;
+          ctx.arc(0.5, 0.5, 0.1, arcs, arce, false);
+        } else if (item.position === 'left') {
+          ctx.rect(0, 0.25, 0.25, 0.5);
+        } else if (item.position === 'right') {
+          ctx.rect(0.75, 0.25, 0.25, 0.5);
+        } else if (item.position === 'top') {
+          ctx.rect(0.25, 0, 0.5, 0.25);
+        } else if (item.position === 'bottom') {
+          ctx.rect(0.25, 0.75, 0.5, 0.25);
+        }
+      }
+
+      ctx.strokeStyle = style.stroke.color;
+      ctx.lineWidth = 0.1; //style.stroke.width;// * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
+      ctx.fillStyle = style.fill.color;
+      ctx.fill();
+      ctx.stroke();
+
+    ctx.restore();
+  };
   function render_player(player, style) {
     var xposn = player.x,
         yposn = player.y,
-        heading = player.heading;
+        heading = player.heading,
+        holding = player.holding;
     ctx.save();
     ctx.translate(xposn, yposn);
 
@@ -111,8 +151,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.fillStyle = style.fill.color;
     ctx.fill();
     ctx.stroke();
-    // Now show viewfinder
 
+    // Now show viewfinder
     ctx.beginPath();
     ctx.arc(0.5, 0.5, 0.5, ((heading / 2) - 0.25) * Math.PI,
                      ((heading / 2) + 0.25) * Math.PI, false);
@@ -121,6 +161,17 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.fillStyle = "rgba(10,10,10,0.5)";
     ctx.fill();
     ctx.stroke();
+
+    // Draw "holding"
+    if (holding) {
+      ctx.beginPath();
+      ctx.arc(0.5, 0.5, 0.1, 0, 2 * Math.PI, false);
+      ctx.strokeStyle = "rgba(0,200,0,0.5)";
+      ctx.lineWidth = 0.1;
+      ctx.fillStyle = "rgba(0,200,0,0.5)";
+      ctx.fill();
+      ctx.stroke();
+    }
 
     ctx.restore();
   };
@@ -160,6 +211,12 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
       render_player(fork, style_fork);  // translucent green disc
     }
 
+    if (current_turn.items) {
+      for (var i=0; i < current_turn.items.length; i++) {
+        var item = current_turn.items[i];
+        render_item(item, style_item);
+      }
+    }
     ctx.restore();
   };
 };

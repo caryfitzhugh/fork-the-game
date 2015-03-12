@@ -60,7 +60,7 @@ var Levels = {
     return v;
   }
 };
-console.log("Levels", Levels.select);
+
 Levels.view.on('select', Levels.select);
 Levels.view.on('start-game', Levels.start_game);
 Levels.view.on('close', Levels.close);
@@ -71,16 +71,32 @@ Levels.tile = { // this MUST agree with the game engine's definition of the game
   'win' : 3,
   'fire': 4,
   'changeblock': 5,
-  'logic_block': 6
+  'logic_block': 6,
+  'crate': 7
 };
+Levels.magnet_targets = {};
+Levels.magnet_targets[Levels.tile.wall] = true;
+Levels.magnet_targets[Levels.tile.crate] = true;
 
 Levels.games = {
   "basic" :  {
-    player: {x: 10, y:10},
+    player: {x: 11, y:9, heading: 2},
     forks: [],
     actions: [
     ],
+    items: [
+      {type: "magnet", x: 8, y:9, position: "left"},
+      {type: "magnet", x: 10, y:9, position: "right"},
+      {type: "magnet", x: 9, y:8, position: "top"},
+      {type: "magnet", x: 9, y:10, position: "bottom"}
+    ],
     playing_field: {w: 30, h: 30, data: {
+      8: { 9 : Levels.tile.crate },
+      9: {
+        8: Levels.tile.crate,
+        10: Levels.tile.crate
+      },
+      10: { 9 : Levels.tile.crate },
       "18":{
         "19": 1,"21":1
       },
@@ -344,7 +360,7 @@ Levels.games = {
       }
     }
   },
-  "Logic blocks of FIRE" :  { 
+  "Logic blocks of FIRE" :  {
   // A logical reprise of the popular "two switches with FIRE" level
     player: {x: 10, y:10},
     forks: [],

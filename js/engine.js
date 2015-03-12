@@ -6,8 +6,31 @@ var Engine = {
       var on_fork = _.find(game_state.forks, function (fork) {
         return pos.x === fork.x && pos.y === fork.y;
       });
-      var on_structure = Levels.get(game_state.playing_field, pos.y, pos.x) === 1;
+      var move_to_tile = Levels.get(game_state.playing_field, pos.y, pos.x);
+      var on_structure = _.includes([Levels.tile.wall, Levels.tile.crate], move_to_tile);
       return on_field && !on_fork && !on_player && !on_structure;
+    },
+    in_front: function (player) {
+      var res = {x: player.x, y: player.y};
+      if (player.heading === 0) {
+        res.x = player.x + 1;
+      } else if (player.heading === 1) {
+        res.y = player.y + 1;
+      } else if (player.heading === 2) {
+        res.x = player.x - 1;
+      } else if (player.heading === 3) {
+        res.y = player.y - 1;
+      }
+
+      return res;
+    },
+    pickup: function (current_game_state, location, position) {
+      // Get any item at the location and pull it from the items.
+      return _.remove(current_game_state.items, function (item) {
+        return item.x === location.x &&
+               item.y === location.y &&
+               item.position === position;
+      })[0];
     },
     try_to_move: function (current_game_state, current, vector) {
       var valid_vector = {};
@@ -48,8 +71,50 @@ var Engine = {
         return fork.x === pos.x && fork.y === pos.y;
         });
     },
+    perform_player_actions: function (current_game_state, inputs) {
+      var new_game_state = _.cloneDeep(current_game_state);
+      if (inputs.space) {
+        var in_front = Engine.in_front(current_game_state.player);
+        // If there is something there to target -- target it!
+        var placeable_target = Levels.magnet_targets[
+                                  Levels.get(current_game_state.playing_field,
+                                       in_front.y,
+                                       in_front.x)];
+
+        var target_position = "floor"
+        // We place on the floor UNLESS it's a wall / crate, etc)
+        if (placeable_target) {
+          // If we are on the left, we place it "on the right"
+          target_position = {
+            0: "left",
+            1: "top",
+            2: "right",
+            3: "bottom"
+          }[current_game_state.player.heading];
+        }
+
+        // Is there something there already?
+        var already_there = Engine.pickup(new_game_state, in_front, target_position);
+
+        // put the item in your new "holding" spot
+        new_game_state.player.holding = already_there;
+
+        // If we have something in hand - put it down "in front of you"
+        // Pull from current, and put into "new"
+        if (current_game_state.player.holding &&
+            current_game_state.player.holding.type === "magnet") {
+          // put the magnet at the position
+          new_game_state.items.push(
+            _.merge(_.cloneDeep(current_game_state.player.holding),
+                    in_front,
+                    {'position': target_position}));
+        }
+      }
+      return new_game_state;
+    },
     perform_actions: function (current_game_state, inputs) {
       var game_state = _.cloneDeep(current_game_state);
+
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
           Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch); // Why do we do this? -DC
@@ -119,7 +184,7 @@ var Engine = {
                                 game_state.player);
 
       if (inputs.left) {
-        player.heading = Math.abs((player.heading - 1) % 4);
+        player.heading = Math.abs((player.heading + 3) % 4);
       }
       if (inputs.right) {
         player.heading = Math.abs((player.heading + 1) % 4);
@@ -173,10 +238,12 @@ Engine.tick = function (current_game_state, inputs) {
   var new_game_state = Engine.perform_actions(current_game_state, inputs);
 
   // Fire / win / etc
-  new_run_state = Engine.test_conditions(new_game_state);
+  new_run_state = Engine.test_conditions(new_game_state, inputs);
 
   // Move player
   new_game_state =  Engine.move_player(new_game_state, inputs);
+
+  new_game_state = Engine.perform_player_actions(new_game_state, inputs);
   // Move Forks
   new_game_state = Engine.move_forks(new_game_state, inputs);
 
