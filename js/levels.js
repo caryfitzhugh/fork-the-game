@@ -98,15 +98,16 @@ Levels.games = {
     actions: [
       {type: "switch",
        position: {x: 10, y:10},
-       sets: 0
+       sets_flags: [ "door_open" ]
       },
       {type: "changeblock",
        position: {x: 20, y:18},
-       required_flags: [0],
+       required_flags: [ "door_open" ],
        active: 0,
        inactive: 1
       }
     ],
+		flags: [],
     playing_field: {w: 30, h: 30, data: {
 
       "18":{
@@ -119,8 +120,7 @@ Levels.games = {
         "19": 1,"20":1,"21":1
       }
 
-    }},
-		flags: [ false ]
+    }}
   },
   "one switch with FIRE" :  {
   // This manages what leves to display (and return).
@@ -130,15 +130,16 @@ Levels.games = {
     actions: [
       {type: "switch",
        position: {x: 15, y:15},
-       sets: 0
+       sets_flags: [ "door_open" ]
       },
       {type: "changeblock",
        position: {x: 20, y:18},
-       required_flags: [0],
+       required_flags: [ "door_open" ],
        active: 0,
        inactive: 1
       }
     ],
+		flags: [],
     playing_field: {w: 30, h: 30, data: {
 
       "18":{
@@ -150,8 +151,7 @@ Levels.games = {
       "20": {
         "19": Levels.tile.fire,"20": Levels.tile.fire, "21":Levels.tile.fire
       }
-    }},
-		flags: [ false ]
+    }}
   },
   "two switches with FIRE" :  {
   // This manages what leves to display (and return).
@@ -161,19 +161,20 @@ Levels.games = {
     actions: [
       {type: "switch",
        position: {x: 15, y:15},
-       sets: 0
+       sets_flags: [ "door_open_A" ]
       },
       {type: "switch",
        position: {x: 25, y:15},
-       sets: 1
+       sets_flags: [ "door_open_B" ]
       },
       {type: "changeblock",
        position: {x: 20, y: 18},
-       required_flags: [0, 1],
+       required_flags: ["door_open_A", "door_open_B"],
        active: 0,
        inactive: 1
       }
     ],
+		flags: [],
     playing_field: {
       w: 30,
       h: 30,
@@ -194,182 +195,34 @@ Levels.games = {
 				"21": Levels.tile.fire
       }
 
-    }},
-		flags: [ false, false ]
+    }}
   },
-  "You will need timing" :  {
-    player: {x: 14, y:1},
-    forks: [],
-    actions: [
-      {type: "switch",	// inner (top) button
-       position: {x: 15, y:10},
-       sets: 0
-      },
-      {type: "switch",	// outer (bottom) button
-       position: {x: 14, y:11},
-       sets: 1
-      },
-      {type: "switch",	// secret button
-       position: {x: 12, y:12},
-       sets: 2
-      },
-      {type: "changeblock",	// inner door
-       position: {x: 12, y:10},
-       required_flags: [1],
-       active: 0,
-       inactive: 4
-			},
-      {type: "changeblock",	// outer door
-       position: {x: 13, y:10},
-       required_flags: [0],
-       active: 0,
-       inactive: 1
-			},
-      {type: "changeblock",	// secret door
-       position: {x: 12, y:13},
-       required_flags: [1],
-       active: 0,
-       inactive: 1
-			},
-      {type: "changeblock",	// hidey space
-       position: {x: 16, y:13},
-       required_flags: [2],
-       active: 0,
-       inactive: 1
-			},
-      {type: "changeblock",	// fire trap top
-       position: {x: 14, y:8},
-       required_flags: [0],
-       active: 4,
-       inactive: 0
-			},
-      {type: "changeblock",	// fire trap bottom
-       position: {x: 14, y:10},
-       required_flags: [1],
-       active: 4,
-       inactive: 0
-			}
-		],
-		playing_field: {
-			w: 30,
-			h: 30,
-			data: {
-			"0": {
-				"13": 1,
-				"14": 1,
-				"15": 1
-			},
-			"1": {
-				"13": 1,
-				"15": 1
-			},
-			"2": {
-				"13": 1,
-				"15": 1
-			},
-			"3": {},
-			"4": {
-				"12": 1,
-				"13": 1,
-				"15": 1,
-				"16": 1
-			},
-			"5": {
-				"13": 1,
-				"15": 1
-			},
-			"6": {
-				"12": 1,
-				"13": 1,
-				"15": 1,
-				"16": 1
-			},
-			"7": {
-				"13": 1,
-				"15": 1
-			},
-			"8": {
-				"12": 1,
-				"13": 1,
-				"15": 1,
-				"16": 1
-			},
-			"9": {
-				"10": 1,
-				"11": 1,
-				"12": 1,
-				"13": 1,
-				"15": 1,
-				"16": 1,
-				"17": 1,
-				"18": 1
-			},
-			"10": {
-				"10": 1,
-				"11": 3,
-				"12": 1,
-				"13": 1,
-				"16": 1,
-				"17": 1,
-				"18": 1
-			},
-			"11": {
-				"10": 1,
-				"11": 1,
-				"12": 1,
-				"13": 1,
-				"15": 1,
-				"16": 1,
-				"17": 1,
-				"18": 1
-			},
-			"12": {
-				"10": 1,
-				"11": 1,
-				"13": 1,
-				"14": 1,
-				"15": 1,
-				"16": 1,
-				"17": 1,
-				"18": 1
-			},
-			"13": {
-				"11": 1,
-				"12": 1,
-				"13": 1,
-				"14": 1,
-				"15": 1,
-				"16": 1,
-				"17": 1
-			}
-		}},
-		flags: [ false, false, false ]
-	},
 	"Simple Future Logic" :  {
     player: {x: 14, y:1},
     forks: [],
     actions: [
       {type: "switch",
        position: {x: 12, y: 4},
-       sets: 0
+       sets_flags: ["outer_door"]
       },
       {type: "switch",
        position: {x: 16, y: 4},
-       sets: 1
+       sets_flags: ["inner_door"]
       },
       {type: "changeblock",
        position: {x: 14, y: 6},
-       required_flags: [0],
+       required_flags: ["outer_door"],
        active: 0,
        inactive: 1
       },
       {type: "changeblock",
        position: {x: 14, y: 8},
-       required_flags: [1],
+       required_flags: ["inner_door"],
        active: 0,
        inactive: 1
       }
     ],
+		flags: [],
 		playing_field: {
 			w: 30,
 			h: 30,
@@ -403,8 +256,7 @@ Levels.games = {
 					"15": 1
 				}
 			}
-		},
-		flags: [ false, false ]
+		}
 	},
 	"More Simple Future Logic" :  {
     player: {x: 14, y:1},
@@ -412,41 +264,42 @@ Levels.games = {
     actions: [
       {type: "switch",
        position: {x: 12, y: 3},
-       sets: 0
+       sets_flags: ["first_door"]
       },
       {type: "switch",
        position: {x: 16, y: 3},
-       sets: 1
+       sets_flags: ["second_door_fire"]
       },
       {type: "switch",
        position: {x: 12, y: 4},
-       sets: 2
+       sets_flags: ["third_door"]
       },
       {type: "changeblock",
        position: {x: 14, y: 6},
-       required_flags: [0],
+       required_flags: ["first_door"],
        active: 0,
        inactive: 1
       },
       {type: "changeblock",
        position: {x: 14, y: 7},
-       required_flags: [1],
+       required_flags: ["second_door_fire"],
        active: 0,
        inactive: 1
       },
       {type: "changeblock",
        position: {x: 14, y: 9},
-       required_flags: [2],
+       required_flags: ["third_door"],
        active: 0,
        inactive: 1
       },
       {type: "changeblock",
        position: {x: 14, y: 11},
-       required_flags: [1],
+       required_flags: ["second_door_fire"],
        active: 4,
        inactive: 0
       }
     ],
+		flags: [],
 		playing_field: {
 			w: 30,
 			h: 30,
@@ -488,8 +341,8 @@ Levels.games = {
 					"15": 1
 				}
 			}
-		},
-		flags: [ false, false, false ]
-	}
+		}
+	},
+  "Logic switches of FIRE" :  { this_is: "WIP" }
 };
 Levels.view.set('game_names', _.keys(Levels.games));

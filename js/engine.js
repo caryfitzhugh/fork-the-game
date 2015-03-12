@@ -52,12 +52,10 @@ var Engine = {
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
           Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);	// Why do we do this? -DC
-
-          if (Engine.occupied_by_player_or_fork(game_state, action.position)){
-						game_state.flags[action.sets] = true;
-          } else {
-						game_state.flags[action.sets] = false;
-          }
+          var condition = Engine.occupied_by_player_or_fork(game_state, action.position);
+					_.each(action.sets_flags, function (flag) {
+						game_state.flags[flag] = condition;
+					});
         } else if (action.type === 'changeblock') {
           Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.changeblock);
 					var condition = true;
