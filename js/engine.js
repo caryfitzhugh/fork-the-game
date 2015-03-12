@@ -51,22 +51,22 @@ var Engine = {
       var game_state = _.cloneDeep(current_game_state);
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
-          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch);	// Why do we do this? -DC
+          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch); // Why do we do this? -DC
           var condition = Engine.occupied_by_player_or_fork(game_state, action.position);
-					_.each(action.sets_flags, function (flag) {
-						game_state.flags[flag] = condition;
-					});
+          _.each(action.sets_flags, function (flag) {
+            game_state.flags[flag] = condition;
+          });
         } else if (action.type === 'changeblock') {
           Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.changeblock);
-					var condition = true;
-					_.each(action.required_flags, function (flag) {
-						if (!game_state.flags[flag]) { condition=false; }
-					});
-					if (condition) {
+          var condition = true;
+          _.each(action.required_flags, function (flag) {
+            if (!game_state.flags[flag]) { condition=false; }
+          });
+          if (condition) {
             Levels.set(game_state.playing_field,action.position.y,action.position.x, action.active);
-					} else {
+          } else {
             Levels.set(game_state.playing_field,action.position.y,action.position.x, action.inactive);
-					}
+          }
         } else {
           console.log("Unknown action!", action);
         }

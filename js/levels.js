@@ -65,12 +65,12 @@ Levels.view.on('select', Levels.select);
 Levels.view.on('start-game', Levels.start_game);
 Levels.view.on('close', Levels.close);
 
-Levels.tile = {	// this MUST agree with the game engine's definition of the game board and probably should be defined there?
+Levels.tile = { // this MUST agree with the game engine's definition of the game board and probably should be defined there?
   'wall': 1,
   'switch': 2,
   'win' : 3,
   'fire': 4,
-	'changeblock': 5
+  'changeblock': 5
 };
 
 Levels.games = {
@@ -107,7 +107,7 @@ Levels.games = {
        inactive: 1
       }
     ],
-		flags: [],
+    flags: [],
     playing_field: {w: 30, h: 30, data: {
 
       "18":{
@@ -139,7 +139,7 @@ Levels.games = {
        inactive: 1
       }
     ],
-		flags: [],
+    flags: [],
     playing_field: {w: 30, h: 30, data: {
 
       "18":{
@@ -174,7 +174,7 @@ Levels.games = {
        inactive: 1
       }
     ],
-		flags: [],
+    flags: [],
     playing_field: {
       w: 30,
       h: 30,
@@ -182,22 +182,22 @@ Levels.games = {
 
       "18":{
         "19": Levels.tile.fire,
-				"21": Levels.tile.fire
+        "21": Levels.tile.fire
       },
       "19":{
         "19": Levels.tile.fire,
-				"20": Levels.tile.win,
-				"21": Levels.tile.fire
+        "20": Levels.tile.win,
+        "21": Levels.tile.fire
       },
       "20": {
         "19": Levels.tile.fire,
-				"20": Levels.tile.fire,
-				"21": Levels.tile.fire
+        "20": Levels.tile.fire,
+        "21": Levels.tile.fire
       }
 
     }}
   },
-	"Simple Future Logic" :  {
+  "Simple Future Logic" :  {
     player: {x: 14, y:1},
     forks: [],
     actions: [
@@ -222,43 +222,43 @@ Levels.games = {
        inactive: 1
       }
     ],
-		flags: [],
-		playing_field: {
-			w: 30,
-			h: 30,
-			data: {
-				"6": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				},
-				"7": {
-					"13": 1,
-					"15": 1
-				},
-				"8": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				},
-				"9": {
-					"13": 1,
-					"15": 1
-				},
-				"10": {
-					"13": 1,
-					"14": 3,
-					"15": 1
-				},
-				"11": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				}
-			}
-		}
-	},
-	"More Simple Future Logic" :  {
+    flags: [],
+    playing_field: {
+      w: 30,
+      h: 30,
+      data: {
+        "6": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        },
+        "7": {
+          "13": 1,
+          "15": 1
+        },
+        "8": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        },
+        "9": {
+          "13": 1,
+          "15": 1
+        },
+        "10": {
+          "13": 1,
+          "14": 3,
+          "15": 1
+        },
+        "11": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        }
+      }
+    }
+  },
+  "More Simple Future Logic" :  {
     player: {x: 14, y:1},
     forks: [],
     actions: [
@@ -299,50 +299,50 @@ Levels.games = {
        inactive: 0
       }
     ],
-		flags: [],
-		playing_field: {
-			w: 30,
-			h: 30,
-			data: {
-				"6": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				},
-				"7": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				},
-				"8": {
-					"13": 1,
-					"15": 1
-				},
-				"9": {
-					"13": 1,
-					"15": 1
-				},
-				"10": {
-					"13": 1,
-					"15": 1
-				},
-				"11": {
-					"13": 1,
-					"15": 1
-				},
-				"12": {
-					"13": 1,
-					"14": 3,
-					"15": 1
-				},
-				"13": {
-					"13": 1,
-					"14": 1,
-					"15": 1
-				}
-			}
-		}
-	},
+    flags: [],
+    playing_field: {
+      w: 30,
+      h: 30,
+      data: {
+        "6": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        },
+        "7": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        },
+        "8": {
+          "13": 1,
+          "15": 1
+        },
+        "9": {
+          "13": 1,
+          "15": 1
+        },
+        "10": {
+          "13": 1,
+          "15": 1
+        },
+        "11": {
+          "13": 1,
+          "15": 1
+        },
+        "12": {
+          "13": 1,
+          "14": 3,
+          "15": 1
+        },
+        "13": {
+          "13": 1,
+          "14": 1,
+          "15": 1
+        }
+      }
+    }
+  },
   "Logic switches of FIRE" :  { this_is: "WIP" }
 };
 Levels.view.set('game_names', _.keys(Levels.games));
