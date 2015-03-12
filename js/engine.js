@@ -11,6 +11,7 @@ var Engine = {
     },
     try_to_move: function (current_game_state, current, vector) {
       var valid_vector = {};
+
       // Returns the appropriate / valid new position, based on the vector and collisions
       // Try to move by X
       var x_mod = {x: current.x + vector.x,
@@ -114,21 +115,35 @@ var Engine = {
     move_player: function (current_game_state, inputs) {
       var game_state = _.cloneDeep(current_game_state);
 
-      var player = game_state.player;
-      var move_vector = {x: 0, y: 0};
+      var player = _.merge({}, {heading: 0, x: 0, y: 0, holding: null},
+                                game_state.player);
 
       if (inputs.left) {
-        move_vector.x = -1;
+        player.heading = Math.abs((player.heading - 1) % 4);
       }
       if (inputs.right) {
-        move_vector.x = 1;
+        player.heading = Math.abs((player.heading + 1) % 4);
       }
+
+      var move_vector = {x: 0, y: 0};
       if (inputs.up) {
-        move_vector.y = -1;
+        move_vector = {
+          0: {x: 1, y: 0},
+          1: {x: 0, y: 1},
+          2: {x: -1 , y: 0},
+          3: {x: 0 , y: -1}
+        }[player.heading];
       }
+
       if (inputs.down) {
-        move_vector.y = 1;
+        move_vector = {
+          0: {x: -1, y: 0},
+          1: {x: 0, y: -1},
+          2: {x: 1 , y: 0},
+          3: {x: 0 , y: 1}
+        }[player.heading];
       }
+
 
       var valid_vector =  Engine.try_to_move(current_game_state, player, move_vector);
       var new_player = _.merge({}, player, Engine.move(player, valid_vector));

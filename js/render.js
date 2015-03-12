@@ -96,7 +96,10 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.restore();
   };
 
-  function render_player(xposn, yposn, style) {
+  function render_player(player, style) {
+    var xposn = player.x,
+        yposn = player.y,
+        heading = player.heading;
     ctx.save();
     ctx.translate(xposn, yposn);
 
@@ -108,6 +111,17 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.fillStyle = style.fill.color;
     ctx.fill();
     ctx.stroke();
+    // Now show viewfinder
+
+    ctx.beginPath();
+    ctx.arc(0.5, 0.5, 0.5, ((heading / 2) - 0.25) * Math.PI,
+                     ((heading / 2) + 0.25) * Math.PI, false);
+    ctx.strokeStyle = "rgba(10,10,10,0.5)";
+    ctx.lineWidth = 0.2;
+    ctx.fillStyle = "rgba(10,10,10,0.5)";
+    ctx.fill();
+    ctx.stroke();
+
     ctx.restore();
   };
 
@@ -139,11 +153,11 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     render_board();
 
-    render_player(current_turn.player.x, current_turn.player.y, style_player);  // translucent green disc
+    render_player(current_turn.player, style_player);  // translucent green disc
 
     for (var i=0; i < current_turn.forks.length; i++) {
       var fork = current_turn.forks[i];
-      render_player(fork.x, fork.y, style_fork);  // translucent green disc
+      render_player(fork, style_fork);  // translucent green disc
     }
 
     ctx.restore();

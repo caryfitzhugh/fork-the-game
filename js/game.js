@@ -68,6 +68,8 @@ var Game = {
         // Test for these state change inputs
         if (inputs.shift && !Game.ignore_shift) {
           Game.enter_rewind_mode();
+        } else if (inputs.esc) {
+          Game.enter_pause_mode();
         }
         break;
       case "win":
@@ -78,6 +80,8 @@ var Game = {
         Render.draw(History.game_history());
         if (inputs.shift) {
           Game.enter_rewind_mode();
+        } else if (inputs.esc) {
+          Game.continue_play_mode();
         }
 
         break;
@@ -106,4 +110,4 @@ var Game = {
   }
 };
 
-var game_tick_interval = setInterval(Game.tick, 50);
+var game_tick_interval = setInterval(Game.tick, 100);
