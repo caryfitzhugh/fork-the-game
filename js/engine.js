@@ -67,6 +67,9 @@ var Engine = {
           } else {
             Levels.set(game_state.playing_field,action.position.y,action.position.x, action.inactive);
           }
+        } else if (action.type === 'logic_block') {
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.logic_block);
+          Levels.set(game_state.playing_field,action.position.y,action.position.x, action.triggered(game_state.flags) ? action.active : action.inactive);
         } else {
           console.log("Unknown action!", action);
         }

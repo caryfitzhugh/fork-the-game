@@ -70,7 +70,8 @@ Levels.tile = { // this MUST agree with the game engine's definition of the game
   'switch': 2,
   'win' : 3,
   'fire': 4,
-  'changeblock': 5
+  'changeblock': 5,
+  'logic_block': 6
 };
 
 Levels.games = {
@@ -343,6 +344,59 @@ Levels.games = {
       }
     }
   },
-  "Logic switches of FIRE" :  { this_is: "WIP" }
+  "Logic blocks of FIRE" :  { 
+  // A logical reprise of the popular "two switches with FIRE" level
+    player: {x: 10, y:10},
+    forks: [],
+    actions: [
+      {type: "switch",
+       position: {x: 15, y:15},
+       sets_flags: [ "LOGIC_A" ]
+      },
+      {type: "switch",
+       position: {x: 25, y:15},
+       sets_flags: [ "LOGIC_B" ]
+      },
+      {type: "logic_block",
+       position: {x: 20, y: 16},
+       triggered: function (flags) { return flags["LOGIC_A"] && flags["LOGIC_B"]; },
+       active: 0,
+       inactive: 1
+      },
+      {type: "logic_block",
+       position: {x: 20, y: 17},
+       triggered: function (flags) { return flags["LOGIC_A"] || flags["LOGIC_B"]; },
+       active: 0,
+       inactive: 1
+      },
+      {type: "logic_block",
+       position: {x: 20, y: 18},
+       triggered: function (flags) { return !flags["LOGIC_A"] != !flags["LOGIC_B"]; },
+       active: 0,
+       inactive: 1
+      }
+    ],
+    flags: [],
+    playing_field: {
+      w: 30,
+      h: 30,
+      data: {
+
+      "18":{
+        "19": Levels.tile.fire,
+        "21": Levels.tile.fire
+      },
+      "19":{
+        "19": Levels.tile.fire,
+        "20": Levels.tile.win,
+        "21": Levels.tile.fire
+      },
+      "20": {
+        "19": Levels.tile.fire,
+        "20": Levels.tile.fire,
+        "21": Levels.tile.fire
+      }
+    }}
+  }
 };
 Levels.view.set('game_names', _.keys(Levels.games));
