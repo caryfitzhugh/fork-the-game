@@ -66,6 +66,7 @@ Levels.view.on('start-game', Levels.start_game);
 Levels.view.on('close', Levels.close);
 
 Levels.tile = { // this MUST agree with the game engine's definition of the game board and probably should be defined there?
+  'floor': 0,
   'wall': 1,
   'switch': 2,
   'win' : 3,

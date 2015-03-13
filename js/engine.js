@@ -10,6 +10,14 @@ var Engine = {
       var on_structure = _.includes([Levels.tile.wall, Levels.tile.crate], move_to_tile);
       return on_field && !on_fork && !on_player && !on_structure;
     },
+    is_valid_move: function (game_state, pos, vector) {
+      return (Engine.is_open_space(game_state, pos) || Engine.crate_move_valid(game_state, pos, vector));
+    },
+    crate_move_valid: function (game_state, pos, vector) {
+      var crate_here = Levels.get(game_state.playing_field, pos.y, pos.x) === Levels.tile.crate;
+      var crate_target = {x: pos.x + vector.x, y: pos.y + vector.y};
+      return crate_here && Engine.is_open_space(game_state, crate_target);
+    },
     in_front: function (player) {
       var res = {x: player.x, y: player.y};
       if (player.heading === 0) {
@@ -35,11 +43,16 @@ var Engine = {
     try_to_move: function (current_game_state, current, vector) {
       var valid_vector = {};
 
+      // if ((Math.abs(vector.x)+Math.abs(vector.y)) > 1) {
+        // console.log("Such large moves are not allowed!");
+        // return {x:0, y:0};
+      // }
+
       // Returns the appropriate / valid new position, based on the vector and collisions
       // Try to move by X
       var x_mod = {x: current.x + vector.x,
           y: current.y};
-      if (Engine.is_open_space(current_game_state, x_mod)) {
+      if (Engine.is_valid_move(current_game_state, x_mod, vector)) {
         valid_vector.x = vector.x;
       } else {
         valid_vector.x = 0;
@@ -50,7 +63,7 @@ var Engine = {
         x: current.x
         };
 
-      if (Engine.is_open_space(current_game_state, y_mod)) {
+      if (Engine.is_valid_move(current_game_state, y_mod, vector)) {
         valid_vector.y = vector.y;
       } else {
         valid_vector.y = 0;
@@ -167,6 +180,7 @@ var Engine = {
 
           var valid_vector =  Engine.try_to_move(current_game_state, fork, move_vector);
           fork = _.merge({}, fork, Engine.move(fork, valid_vector));
+          game_state = _.merge({}, game_state, Engine.move_crates(game_state, fork, move_vector));
         } else {
           fork = null;
         }
@@ -212,8 +226,26 @@ var Engine = {
 
       var valid_vector =  Engine.try_to_move(current_game_state, player, move_vector);
       var new_player = _.merge({}, player, Engine.move(player, valid_vector));
+      game_state = _.merge({}, game_state, Engine.move_crates(game_state, new_player, move_vector));
       game_state.player = new_player;
 
+      return game_state;
+   },
+   move_crates: function (current_game_state, pos, vector) {
+      var game_state = _.cloneDeep(current_game_state);
+      if (Levels.get(game_state.playing_field, pos.y, pos.x) == Levels.tile.crate) {  
+        var new_pos = Engine.move(pos, vector);
+        // Move the crate
+        Levels.set(game_state.playing_field,new_pos.y,new_pos.x, Levels.tile.crate);
+        Levels.set(game_state.playing_field,pos.y,pos.x, Levels.tile.floor);
+        // Move attached objects
+        _.each(game_state.items, function (item) {
+          if (item.x === pos.x && item.y === pos.y) {
+            item.x = new_pos.x;
+            item.y = new_pos.y;
+          }
+        });
+      }
       return game_state;
    },
    test_conditions: function (game_state) {
