@@ -16,7 +16,12 @@ var Engine = {
     crate_move_valid: function (game_state, pos, vector) {
       var crate_here = Levels.get(game_state.playing_field, pos.y, pos.x) === Levels.tile.crate;
       var crate_target = {x: pos.x + vector.x, y: pos.y + vector.y};
-      return crate_here && Engine.is_open_space(game_state, crate_target);
+      var magnet_underneath = _.find(Levels.items_at(game_state.items, pos.x, pos.y), function (item) {
+        return item.type === "magnet" && (item.position || "floor") === "floor";
+      });
+
+
+      return crate_here && Engine.is_open_space(game_state, crate_target) && !magnet_underneath;
     },
     in_front: function (player) {
       var res = {x: player.x, y: player.y};
@@ -37,7 +42,7 @@ var Engine = {
       return _.remove(current_game_state.items, function (item) {
         return item.x === location.x &&
                item.y === location.y &&
-               item.position === position;
+               (item.position || "floor") === position;
       })[0];
     },
     try_to_move: function (current_game_state, current, vector) {
@@ -233,7 +238,7 @@ var Engine = {
    },
    move_crates: function (current_game_state, pos, vector) {
       var game_state = _.cloneDeep(current_game_state);
-      if (Levels.get(game_state.playing_field, pos.y, pos.x) == Levels.tile.crate) {  
+      if (Levels.get(game_state.playing_field, pos.y, pos.x) == Levels.tile.crate) {
         var new_pos = Engine.move(pos, vector);
         // Move the crate
         Levels.set(game_state.playing_field,new_pos.y,new_pos.x, Levels.tile.crate);

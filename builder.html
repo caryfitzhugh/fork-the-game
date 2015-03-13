@@ -67,12 +67,20 @@
       <div class='row'>
         {{#width:x}}
           <div data-row="{{y}}" on-click='set-block' class='block {{tile_data_get(x,y, tile_data)}} {{is_selected(selected, x, y)}}'>
+            {{#is_player_here(y, x, player)}}
+              <div class='player'></div>
+            {{/is_player_here(y, x, player)}}
           </div>
         {{/width:x}}
       </div>
     {{/height:y}}
   </div>
 </div>
+
+<label> Description </label>
+<textarea>
+  {{description}}
+</textarea>
         </script>
 
         <script src='js/input.js'></script>

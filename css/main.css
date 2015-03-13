@@ -192,6 +192,18 @@ body.pause-mode #temp_gameboard {
 .block.fire {
   background: orange;
 }
+.block.crate {
+  background: khaki;
+}
+.player {
+  background: blue;
+  height: 12px;
+  width: 12px;
+  position: relative;
+  top: 5px;
+  left: 5px;
+}
+
 .block.win {
   background: green;
 }

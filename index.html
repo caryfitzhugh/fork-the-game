@@ -46,9 +46,11 @@
         <script src="js/render.js"></script>
         <script src="js/input.js"></script>
         <script src="js/levels.js"></script>
+        <script src="js/levels/01.js"></script>
         <script src="js/engine.js"></script>
         <script src="js/history.js"></script>
         <script src="js/game.js"></script>
+        <script> Levels.view.set('game_names', _.keys(Levels.games)); </script>
         <script>
       var prev_game = window.location.hash.substr(1);
       if (!_.isEmpty(prev_game)) {

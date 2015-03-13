@@ -41,6 +41,11 @@ var Levels = {
      if(obj === undefined) return def;
      return obj;
   },
+  items_at: function (items, x, y) {
+    return _.select(items, function (item) {
+      return item.x === x && item.y === y;
+    });
+  },
   get: function(field, x, y) {
     var path = ""+x+"."+y;
     return Levels.path(field.data, path, 0);
@@ -416,4 +421,3 @@ Levels.games = {
     }}
   }
 };
-Levels.view.set('game_names', _.keys(Levels.games));

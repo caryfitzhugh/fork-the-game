@@ -112,7 +112,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
       // draw an item
       ctx.beginPath();
       if (type === 'magnet') {
-        if (item.position === 'floor') {
+        if (!item.position || item.position === 'floor') {
           var arcs = 0;
           var arce = 2 * Math.PI;
           ctx.arc(0.5, 0.5, 0.1, arcs, arce, false);
@@ -197,6 +197,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     // save current state and transform for game display
     ctx.save();
     ctx.scale(width / board_size.width, height / board_size.height);
+
     //console.log('scale: ', width / board_size.width, height / board_size.height);
 
     // updatenew_state., new_state.player.y
@@ -217,6 +218,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         render_item(item, style_item);
       }
     }
+
+
     ctx.restore();
   };
 };

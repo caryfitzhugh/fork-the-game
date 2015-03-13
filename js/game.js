@@ -6,6 +6,14 @@ var Game = {
   start_game: function (initial_state) {
     Render.init();
     History.init(initial_state);
+    if (initial_state.description) {
+      confirm(initial_state.description);
+      Game.start_game_running();
+    } else {
+      Game.start_game_running();
+    }
+  },
+  start_game_running: function () {
     Game.game_loaded = true;
     Game.game_state = "run";
   },
