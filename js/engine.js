@@ -6,22 +6,31 @@ var Engine = {
       var on_fork = _.find(game_state.forks, function (fork) {
         return pos.x === fork.x && pos.y === fork.y;
       });
-      var move_to_tile = Levels.get(game_state.playing_field, pos.y, pos.x);
-      var on_structure = _.includes([Levels.tile.wall, Levels.tile.crate], move_to_tile);
-      return on_field && !on_fork && !on_player && !on_structure;
+      var move_to_tile = Levels.get_safe(game_state.playing_field, pos);
+
+      var on_structure = move_to_tile && _.includes([Levels.tile.wall, Levels.tile.crate], move_to_tile.type);
+      console.log(on_structure);
+      var has_crate = _.find(move_to_tile.items, function (i) { return i.type === 'crate';});
+
+      return on_field && !on_fork && !on_player && !on_structure && !has_crate;
     },
     is_valid_move: function (game_state, pos, vector) {
-      return (Engine.is_open_space(game_state, pos) || Engine.crate_move_valid(game_state, pos, vector));
+      var is_open_space = Engine.is_open_space(game_state, pos);
+      var valid_crate_move = Engine.crate_move_valid(game_state, pos, vector)
+      // if it's an open space OR
+      return is_open_space ||
+        // The crate move is valid (the create is moving
+        valid_crate_move ||  is_open_space;
     },
     crate_move_valid: function (game_state, pos, vector) {
-      var crate_here = Levels.get(game_state.playing_field, pos.y, pos.x) === Levels.tile.crate;
+      // If there is a crate here, we look if it can move
+      var here = Levels.get_safe(game_state.playing_field, pos)
+      var crate_here = _.find(here.items, function (i) { return i.type === "crate";});
+      var not_a_wall = here.type !== Levels.tile.wall;
       var crate_target = {x: pos.x + vector.x, y: pos.y + vector.y};
-      var magnet_underneath = _.find(Levels.items_at(game_state.items, pos.x, pos.y), function (item) {
-        return item.type === "magnet" && (item.position || "floor") === "floor";
-      });
 
-
-      return crate_here && Engine.is_open_space(game_state, crate_target) && !magnet_underneath;
+      var magnet_here = _.find(here.items, function (i) { return i.type === "magnet";});
+      return (crate_here && !magnet_here) && not_a_wall && Engine.is_open_space(game_state, crate_target);
     },
     in_front: function (player) {
       var res = {x: player.x, y: player.y};
@@ -37,21 +46,8 @@ var Engine = {
 
       return res;
     },
-    pickup: function (current_game_state, location, position) {
-      // Get any item at the location and pull it from the items.
-      return _.remove(current_game_state.items, function (item) {
-        return item.x === location.x &&
-               item.y === location.y &&
-               (item.position || "floor") === position;
-      })[0];
-    },
     try_to_move: function (current_game_state, current, vector) {
       var valid_vector = {};
-
-      // if ((Math.abs(vector.x)+Math.abs(vector.y)) > 1) {
-        // console.log("Such large moves are not allowed!");
-        // return {x:0, y:0};
-      // }
 
       // Returns the appropriate / valid new position, based on the vector and collisions
       // Try to move by X
@@ -82,52 +78,26 @@ var Engine = {
     occupied_by_player: function (gs, pos) {
       return gs.player.x === pos.x && gs.player.y === pos.y;
     },
-    occupied_by_player_or_fork: function (gs, pos) {
+    occupied_by_weighty_thing: function (gs, pos) {
       // If any of the player or forks are at pos
       return Engine.occupied_by_player(gs,pos) ||
         _.find(gs.forks, function (fork) {
         return fork.x === pos.x && fork.y === pos.y;
-        });
+        }) ||
+        _.find(Levels.get_safe(gs.playing_field, pos).items, function (i) { return i.type === 'crate';});
     },
     perform_player_actions: function (current_game_state, inputs) {
       var new_game_state = _.cloneDeep(current_game_state);
       if (inputs.space) {
         var in_front = Engine.in_front(current_game_state.player);
-        // If there is something there to target -- target it!
-        var placeable_target = Levels.magnet_targets[
-                                  Levels.get(current_game_state.playing_field,
-                                       in_front.y,
-                                       in_front.x)];
+        var picked_up =
+          Levels.put_item(new_game_state.playing_field,
+                          in_front,
+                          new_game_state.player.holding);
 
-        var target_position = "floor"
-        // We place on the floor UNLESS it's a wall / crate, etc)
-        if (placeable_target) {
-          // If we are on the left, we place it "on the right"
-          target_position = {
-            0: "left",
-            1: "top",
-            2: "right",
-            3: "bottom"
-          }[current_game_state.player.heading];
-        }
-
-        // Is there something there already?
-        var already_there = Engine.pickup(new_game_state, in_front, target_position);
-
-        // put the item in your new "holding" spot
-        new_game_state.player.holding = already_there;
-
-        // If we have something in hand - put it down "in front of you"
-        // Pull from current, and put into "new"
-        if (current_game_state.player.holding &&
-            current_game_state.player.holding.type === "magnet") {
-          // put the magnet at the position
-          new_game_state.items.push(
-            _.merge(_.cloneDeep(current_game_state.player.holding),
-                    in_front,
-                    {'position': target_position}));
-        }
+        new_game_state.player.holding = picked_up;
       }
+
       return new_game_state;
     },
     perform_actions: function (current_game_state, inputs) {
@@ -135,25 +105,26 @@ var Engine = {
 
       _.each(game_state.actions, function (action) {
         if (action.type === "switch") {
-          Levels.set(game_state.playing_field, action.position.y, action.position.x, Levels.tile.switch); // Why do we do this? -DC
-          var condition = Engine.occupied_by_player_or_fork(game_state, action.position);
+          Levels.set_block_type(game_state.playing_field, action.position, Levels.tile.switch); // Why do we do this? -DC
+          // Because then you don't need to also say "2" in the field data... <shrug> not a great solution - CF
+          var condition = Engine.occupied_by_weighty_thing(game_state, action.position);
           _.each(action.sets_flags, function (flag) {
             game_state.flags[flag] = condition;
           });
         } else if (action.type === 'changeblock') {
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.changeblock);
+          //Levels.set(game_state.playing_field,action.position, Levels.tile.changeblock);
           var condition = true;
           _.each(action.required_flags, function (flag) {
             if (!game_state.flags[flag]) { condition=false; }
           });
           if (condition) {
-            Levels.set(game_state.playing_field,action.position.y,action.position.x, action.active);
+            Levels.set_block_type(game_state.playing_field,action.position, action.active);
           } else {
-            Levels.set(game_state.playing_field,action.position.y,action.position.x, action.inactive);
+            Levels.set_block_type(game_state.playing_field,action.position, action.inactive);
           }
         } else if (action.type === 'logic_block') {
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, Levels.tile.logic_block);
-          Levels.set(game_state.playing_field,action.position.y,action.position.x, action.triggered(game_state.flags) ? action.active : action.inactive);
+          Levels.set_block_type(game_state.playing_field,action.position, Levels.tile.logic_block);
+          Levels.set_block_type(game_state.playing_field,action.position, action.triggered(game_state.flags) ? action.active : action.inactive);
         } else {
           console.log("Unknown action!", action);
         }
@@ -166,6 +137,7 @@ var Engine = {
       var forks = _.compact(_.map(game_state.forks, function (old_fork) {
         var fork = _.cloneDeep(old_fork);
         var move_vector = {x: 0, y: 0};
+
         // Inputs move the fork.
         var next_move = fork.path.shift();
         if (next_move) {
@@ -185,7 +157,7 @@ var Engine = {
 
           var valid_vector =  Engine.try_to_move(current_game_state, fork, move_vector);
           fork = _.merge({}, fork, Engine.move(fork, valid_vector));
-          game_state = _.merge({}, game_state, Engine.move_crates(game_state, fork, move_vector));
+          game_state = Engine.move_crates(game_state, fork, valid_vector);
         } else {
           fork = null;
         }
@@ -231,37 +203,40 @@ var Engine = {
 
       var valid_vector =  Engine.try_to_move(current_game_state, player, move_vector);
       var new_player = _.merge({}, player, Engine.move(player, valid_vector));
-      game_state = _.merge({}, game_state, Engine.move_crates(game_state, new_player, move_vector));
+      game_state = Engine.move_crates(game_state, new_player, valid_vector);
       game_state.player = new_player;
 
       return game_state;
    },
+
    move_crates: function (current_game_state, pos, vector) {
-      var game_state = _.cloneDeep(current_game_state);
-      if (Levels.get(game_state.playing_field, pos.y, pos.x) == Levels.tile.crate) {
+     if (vector.x !== 0 || vector.y !== 0) {
+      var new_game_state = _.cloneDeep(current_game_state);
+      var block = Levels.get_safe(new_game_state.playing_field, pos);
+
+      if (_.find(block.items, function (i) { return i.type === "crate";})) {
         var new_pos = Engine.move(pos, vector);
-        // Move the crate
-        Levels.set(game_state.playing_field,new_pos.y,new_pos.x, Levels.tile.crate);
-        Levels.set(game_state.playing_field,pos.y,pos.x, Levels.tile.floor);
-        // Move attached objects
-        _.each(game_state.items, function (item) {
-          if (item.x === pos.x && item.y === pos.y) {
-            item.x = new_pos.x;
-            item.y = new_pos.y;
-          }
-        });
+
+        // Need to move objects (put)
+        Levels.move_crate(new_game_state.playing_field,
+                          pos,
+                          new_pos);
       }
-      return game_state;
+      return new_game_state;
+     } else {
+       return current_game_state;
+     }
+
    },
    test_conditions: function (game_state) {
      var run_state = null;
       _.each([game_state.player].concat(game_state.forks), function (p) {
-        if (Levels.get(game_state.playing_field, p.y, p.x) === Levels.tile.fire) {
+        if (Levels.get_safe(game_state.playing_field, p).type === Levels.tile.fire) {
           Notify.show("You Melted! -- rewind and try again!!!");
           run_state = "pause";
         }
 
-        if (Levels.get(game_state.playing_field, p.y, p.x) === Levels.tile.win) {
+        if (Levels.get_safe(game_state.playing_field, p).type === Levels.tile.win) {
           Notify.show("You WON!!!");
           run_state = "win";
         }

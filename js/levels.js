@@ -46,12 +46,70 @@ var Levels = {
       return item.x === x && item.y === y;
     });
   },
-  get: function(field, x, y) {
-    var path = ""+x+"."+y;
-    return Levels.path(field.data, path, 0);
+  move_crate: function (playing_field, from, to) {
+    var from_data = Levels.get_and_create(playing_field, from);
+    var to_data = Levels.get_and_create(playing_field, to);
+
+    //Overwrite!
+    var new_to = _.cloneDeep(to_data);
+    new_to.items = _.cloneDeep(from_data.items.concat(to_data.items));
+
+    var new_from = _.cloneDeep(from_data);
+    new_from.items = [];
+
+    Levels.set(playing_field, to, new_to);
+    Levels.set(playing_field, from,new_from);
   },
-  set: function(field, x, y, v) {
-    var path = ""+x+"."+y;
+  put_item: function (playing_field, pos, item) {
+    // Returns what was there before
+    // Get any item at the location and pull it from the items.
+    var square = Levels.get(playing_field, pos);
+    var already_there = null;
+    // If the square exists, look in it
+    if (square) {
+      already_there = _.remove(square.items, function (item) {
+        return _.contains(['magnet','transport'], item.type);
+      })[0];
+    }
+
+    // Don't add this if... it doesn't exist!
+    if (item) {
+      if (!square) {
+        var empty_tile = Levels.get_safe(playing_field, pos);
+        empty_tile.items.push(item);
+        Levels.set(playing_field,
+                   pos,
+                   empty_tile);
+      } else {
+        square.items = square.items || [];
+        square.items.push(item);
+      }
+    }
+    return already_there;
+  },
+  get_safe: function (field, pos) {
+    return Levels.get(field, pos) ||  {type: 0, items: []};
+  },
+  get_and_create: function (field, pos) {
+    if (!Levels.get(field, pos)) {
+      Levels.set(field, pos, {type: 0, items: []});
+    }
+    return Levels.get(field, pos);
+  },
+  get: function(field, pos) {
+    var path = ""+ pos.y +"."+pos.x;
+    var at =  Levels.path(field.data, path, null);
+    return at;
+  },
+  set_block_type: function (field, pos, type) {
+    var got = Levels.get_safe(field, pos);
+    got.type = type;
+    Levels.set(field, pos, got);
+  },
+  set: function(field, pos, v) {
+    var x = pos.x;
+    var y = pos.y;
+    var path = ""+y+"."+x;
     var obj = field.data || {};
 
     for(var i = 0,path = path.split('.'),len = path.length; i < len - 1; i++){
@@ -90,27 +148,22 @@ Levels.games = {
     forks: [],
     actions: [
     ],
-    items: [
-      {type: "magnet", x: 8, y:9, position: "left"},
-      {type: "magnet", x: 10, y:9, position: "right"},
-      {type: "magnet", x: 9, y:8, position: "top"},
-      {type: "magnet", x: 9, y:10, position: "bottom"}
-    ],
     playing_field: {w: 30, h: 30, data: {
-      8: { 9 : Levels.tile.crate },
+      7: { 9 : {type: 0, items: [{type: 'magnet'}] }},
+      8: { 9 : {type: 0, items: [{type: 'crate'}] }},
       9: {
-        8: Levels.tile.crate,
-        10: Levels.tile.crate
+        8: {type: 0, items: [{type: 'crate'}]},
+        10:{type: 0, items: [{type: 'crate'}]}
       },
-      10: { 9 : Levels.tile.crate },
-      "18":{
-        "19": 1,"21":1
+      10: { 9 : {type: 0, items: [{type: 'crate'}] }},
+      18:{
+        19: {type: 1},21: {type: 1}
       },
-      "19":{
-        "19": 1,"20": Levels.tile.win,"21":1
+      19:{
+        19: {type: 1},20: {type: Levels.tile.win}, 21:{type: 1}
       },
       "20": {
-        "19": 1,"20":1,"21":1
+        "19": {type: 1},"20":{type: 1},"21":{type: 1}
       }
 
     }}
@@ -133,14 +186,17 @@ Levels.games = {
     flags: [],
     playing_field: {w: 30, h: 30, data: {
 
+      "17":{
+        "10": {type: 0, items: [{type: 'crate'}]},"21":{type: 1, items: []}
+      },
       "18":{
-        "19": 1,"21":1
+        "19": {type: 1, items: []},"21":{type: 1, items: []}
       },
       "19":{
-        "19": 1,"20": Levels.tile.win,"21":1
+        "19": {type: 1},"20": {type: Levels.tile.win},"21":{type: 1}
       },
       "20": {
-        "19": 1,"20":1,"21":1
+        "19": {type: 1},"20":{type: 1},"21":{type: 1}
       }
 
     }}
@@ -165,14 +221,17 @@ Levels.games = {
     flags: [],
     playing_field: {w: 30, h: 30, data: {
 
+      "17":{
+        "10": {type: 0, items: [{type: 'crate'}]}
+      },
       "18":{
-        "19": Levels.tile.fire,"21":Levels.tile.fire
+        "19": {type: Levels.tile.fire},"21":{type: Levels.tile.fire}
       },
       "19":{
-        "19": Levels.tile.fire,"20": Levels.tile.win, "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},"20": {type: Levels.tile.win}, "21": {type: Levels.tile.fire}
       },
       "20": {
-        "19": Levels.tile.fire,"20": Levels.tile.fire, "21":Levels.tile.fire
+        "19": {type: Levels.tile.fire},"20": {type: Levels.tile.fire}, "21":{type: Levels.tile.fire}
       }
     }}
   },
@@ -203,19 +262,24 @@ Levels.games = {
       h: 30,
       data: {
 
+
+      "17":{
+        "10": {type: 0, items: [{type: 'crate'}]},
+        "11": {type: 0, items: [{type: 'crate'}]}
+      },
       "18":{
-        "19": Levels.tile.fire,
-        "21": Levels.tile.fire
+        "21":{type: Levels.tile.fire},
+        "19":{type:Levels.tile.fire}
       },
       "19":{
-        "19": Levels.tile.fire,
-        "20": Levels.tile.win,
-        "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},
+        "20": {type: Levels.tile.win},
+        "21": {type: Levels.tile.fire}
       },
       "20": {
-        "19": Levels.tile.fire,
-        "20": Levels.tile.fire,
-        "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},
+        "20": {type: Levels.tile.fire},
+        "21": {type: Levels.tile.fire}
       }
 
     }}
@@ -251,32 +315,32 @@ Levels.games = {
       h: 30,
       data: {
         "6": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "14": {type: Levels.tile.wall},
+          "15": {type: Levels.tile.wall}
         },
         "7": {
-          "13": 1,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "15": {type: Levels.tile.wall}
         },
         "8": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "14": {type: Levels.tile.wall},
+          "15": {type: Levels.tile.wall}
         },
         "9": {
-          "13": 1,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "15": {type: Levels.tile.wall}
         },
         "10": {
-          "13": 1,
-          "14": 3,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "14": {type: Levels.tile.win},
+          "15": {type: Levels.tile.wall}
         },
         "11": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: Levels.tile.wall},
+          "14": {type: Levels.tile.wall},
+          "15": {type: Levels.tile.wall}
         }
       }
     }
@@ -328,40 +392,40 @@ Levels.games = {
       h: 30,
       data: {
         "6": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: 1},
+          "14": {type: 1},
+          "15": {type: 1}
         },
         "7": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: 1},
+          "14": {type: 1},
+          "15": {type: 1}
         },
         "8": {
-          "13": 1,
-          "15": 1
+          "13": {type: 1},
+          "15": {type: 1}
         },
         "9": {
-          "13": 1,
-          "15": 1
+          "13": {type: 1},
+          "15": {type: 1}
         },
         "10": {
-          "13": 1,
-          "15": 1
+          "13": {type: 1},
+          "15": {type: 1}
         },
         "11": {
-          "13": 1,
-          "15": 1
+          "13": {type: 1},
+          "15": {type: 1}
         },
         "12": {
-          "13": 1,
-          "14": 3,
-          "15": 1
+          "13": {type: 1},
+          "14": {type: 3},
+          "15": {type: 1}
         },
         "13": {
-          "13": 1,
-          "14": 1,
-          "15": 1
+          "13": {type: 1},
+          "14": {type: 1},
+          "15": {type: 1}
         }
       }
     }
@@ -405,18 +469,18 @@ Levels.games = {
       data: {
 
       "18":{
-        "19": Levels.tile.fire,
-        "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},
+        "21": {type: Levels.tile.fire}
       },
       "19":{
-        "19": Levels.tile.fire,
-        "20": Levels.tile.win,
-        "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},
+        "20": {type: Levels.tile.win},
+        "21": {type: Levels.tile.fire}
       },
       "20": {
-        "19": Levels.tile.fire,
-        "20": Levels.tile.fire,
-        "21": Levels.tile.fire
+        "19": {type: Levels.tile.fire},
+        "20": {type: Levels.tile.fire},
+        "21": {type: Levels.tile.fire}
       }
     }}
   }

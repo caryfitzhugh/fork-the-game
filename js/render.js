@@ -32,7 +32,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
   var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
   var style_item =  {
-    "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }}
+    "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
+    "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }}
   };
   var style_structure = {}; // this is initialized in init_styles()
 
@@ -43,7 +44,6 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     style_structure[Levels.tile.switch] =  { fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }};
     style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }};
     style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }};
-    style_structure[Levels.tile.crate] =  { fill: { color: 'khaki' }, stroke: { color: 'darkkhaki', width: 0.05 }};
   }
 
   function reset_board() {
@@ -77,33 +77,40 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     for (var x = 0 ; x < board_size.width; x += 1) {
       for (var y = 0; y < board_size.height; y+=1) {
-        if (Levels.get(current_turn.playing_field, y,x) != 0) {
-          render_structure(x,y, Levels.get(current_turn.playing_field,y,x));
+        render_position(x, y, Levels.get_safe(current_turn.playing_field,{x:x , y:y}));
+      }
+    }
+  };
+
+  function render_position(xposn, yposn, space_data) {
+    if (space_data) {
+      var style_index = space_data.type;
+      if (style_index > 0) {
+        ctx.save();
+        ctx.translate(xposn, yposn);
+
+        // draw the structural elements of the board
+        ctx.beginPath();
+        ctx.rect(.05, .05, .9, .9);
+
+        ctx.strokeStyle = style_structure[style_index].stroke.color;
+        ctx.lineWidth = style_structure[style_index].stroke.width;
+        ctx.fillStyle = style_structure[style_index].fill.color;
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      if (space_data.items) {
+        for (var i=0; i < space_data.items.length; i++) {
+          render_item(xposn, yposn, space_data.items[i], style_item);
         }
       }
     }
   };
 
-  function render_structure(xposn, yposn, style_index) {
-    ctx.save();
-    ctx.translate(xposn, yposn);
-
-    // draw the structural elements of the board
-    ctx.beginPath();
-    ctx.rect(.05, .05, .9, .9);
-
-    ctx.strokeStyle = style_structure[style_index].stroke.color;
-    ctx.lineWidth = style_structure[style_index].stroke.width;
-    ctx.fillStyle = style_structure[style_index].fill.color;
-    ctx.fill();
-    ctx.stroke();
-    ctx.restore();
-  };
-
-  function render_item(item, styles) {
-    var xposn = item.x,
-        yposn = item.y,
-        type = item.type,
+  function render_item(xposn, yposn, item, styles) {
+    var type = item.type,
         style = styles[type];
 
     ctx.save();
@@ -125,6 +132,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         } else if (item.position === 'bottom') {
           ctx.rect(0.25, 0.75, 0.5, 0.25);
         }
+      } else if (type === 'crate') {
+        ctx.rect(0.25, 0.25, 0.5, 0.5);
       }
 
       ctx.strokeStyle = style.stroke.color;
@@ -198,8 +207,6 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.save();
     ctx.scale(width / board_size.width, height / board_size.height);
 
-    //console.log('scale: ', width / board_size.width, height / board_size.height);
-
     // updatenew_state., new_state.player.y
     current_turn = game_history[game_history.length - 1];
 
@@ -211,14 +218,6 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
       var fork = current_turn.forks[i];
       render_player(fork, style_fork);  // translucent green disc
     }
-
-    if (current_turn.items) {
-      for (var i=0; i < current_turn.items.length; i++) {
-        var item = current_turn.items[i];
-        render_item(item, style_item);
-      }
-    }
-
 
     ctx.restore();
   };

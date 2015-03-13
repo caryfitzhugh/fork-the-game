@@ -19,7 +19,7 @@ var Builder = {
         tile_data: {},
         description: "",
         tile_data_get: function (x,y, data) {
-          return _.invert(Levels.tile)[Builder.get_tile(x,y)];
+          return _.invert(Levels.tile)[Builder.get_tile(x,y).type];
         },
         maps: function() {
           var names = [];
@@ -63,7 +63,7 @@ var Builder = {
     if (! tile_data[y]) {
       tile_data[y] = {};
     }
-    tile_data[y][x] = Levels.tile[v];
+    tile_data[y][x] = {type: Levels.tile[v]}
 
     Builder.view.set("tile_data", tile_data);
   },
@@ -74,6 +74,7 @@ var Builder = {
     return Builder.view.get("tile_data");
   }
 };
+
 Builder.view = Builder.new_view();
 
 Builder.view.on('select-tool', function (evt) {
