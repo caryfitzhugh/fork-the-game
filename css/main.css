@@ -48,17 +48,17 @@ ul.menu {
   position: absolute;
 }
 
-canvas#temp_gameboard {
+canvas#canvas_gameboard {
 	border: 2px solid white;
-	background: #695D46;
+	background: black;
 }
 
-body.play-mode #temp_gameboard{
+body.play-mode #canvas_gameboard{
   transition: border 0.5s, opacity 0.5s;
   border: 2px solid white;
   opacity: 1.0;
 }
-body.pause-mode #temp_gameboard {
+body.pause-mode #canvas_gameboard {
   transition: border 0.5s, opacity 0.5s;
   border: 2px solid red;
   opacity: 0.5;

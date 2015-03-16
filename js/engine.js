@@ -9,7 +9,7 @@ var Engine = {
       var move_to_tile = Levels.get_safe(game_state.playing_field, pos);
 
       var on_structure = move_to_tile && _.includes([Levels.tile.wall, Levels.tile.crate], move_to_tile.type);
-      console.log(on_structure);
+
       var has_crate = _.find(move_to_tile.items, function (i) { return i.type === 'crate';});
 
       return on_field && !on_fork && !on_player && !on_structure && !has_crate;

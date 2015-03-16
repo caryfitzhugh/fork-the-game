@@ -1,8 +1,7 @@
 
 var Render = {
   init: function () {
-    // Does not work?
-    //renderer.init();
+    renderer.init();
   }
 };
 
@@ -15,7 +14,7 @@ Render.draw = function (game_history) {
 // this should be a member variable of any view instance, initialized with the canvas element ID and desired canvas size.
 // This can be changed to an element pointer, but at load time here, the element does not yet exist.
 // You can have more than one view, for a mini-map or something.
-var renderer = new Renderer('temp_gameboard', 600, 600);
+var renderer = new Renderer('canvas_gameboard', 600, 600);
 // I can make the size dynamic if we want, but we'll need to call a function
 
 // this should come from game (or level) instance data
@@ -28,10 +27,11 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var height = canvas_height;
   var ctx = null;
   var current_turn = null;
-  var style_grid = { color: '#CFC291', width: 1 };
+  var style_grid = { color: '#CFC291', width: .1 };
   var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
   var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
   var style_item =  {
+    "floor"  :{ fill: { color: '#695D46' }},
     "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
     "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }}
   };
@@ -47,26 +47,31 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   }
 
   function reset_board() {
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, board_size.width, board_size.height);
 
     ctx.save();
+
+    // draw the board "floor"
+    ctx.beginPath();
+    ctx.rect(0, 0, board_size.width, board_size.height);
+    ctx.fillStyle = style_item['floor'].fill.color;
+    ctx.fill();
+
+    // draw the gameboard grid
     ctx.strokeStyle = style_grid.color;
     ctx.lineWidth = style_grid.width;
 
-    var x_intvl = width / board_size.width;
-    var y_intvl = height / board_size.height;
-
     ctx.beginPath();
     for (var i=0; i<board_size.width+1; i++) {
-      ctx.moveTo(i*x_intvl, 0);
-      ctx.lineTo(i*x_intvl, height);
+      ctx.moveTo(i, 0);
+      ctx.lineTo(i, board_size.height);
     }
     ctx.stroke();
 
     ctx.beginPath();
     for (var i=0; i<board_size.height+1; i++) {
-      ctx.moveTo(0, i*y_intvl);
-      ctx.lineTo(width, i*y_intvl);
+      ctx.moveTo(0, i);
+      ctx.lineTo(board_size.width, i);
     }
     ctx.stroke();
 
@@ -144,6 +149,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     ctx.restore();
   };
+
   function render_player(player, style) {
     var xposn = player.x,
         yposn = player.y,
@@ -184,32 +190,40 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     ctx.restore();
   };
+  
+  function center_and_zoom(x, y) {
+    //console.log("x: "+x+" y: "+y);
+    var zoom = 2;
+    // scale up
+    ctx.scale(zoom,zoom);
+    // center view on x,y
+    var tx = -Math.round((x - (board_size.width / (2 * zoom))));
+    var ty = -Math.round((y - (board_size.height / (2 * zoom))));
+    ctx.translate(tx,ty);
+    //console.log("tx: "+tx+" ty: "+ty);
+  };
 
   // public members
-  this.init = function(canvas_document) { // it would be nice to init things, but this is never called?
-    canvas = canvas_document.getElementById(canvas_element);
-    console.log('Renderer.init() is never called)');
-    init_styles(); // too bad
+  this.init = function(canvas_document) {
+    canvas = document.getElementById(canvas_element);
+    init_styles();
+    ctx = canvas.getContext('2d');
   };
 
   this.draw = function(game_history) {
-    if (!canvas) {  // Boo! Boo, I say. See above note about this.init()
-      canvas = document.getElementById(canvas_element);
-      init_styles();
-    }
 
-    ctx = canvas.getContext('2d');
-
-    // clear
-    reset_board();
-
+    // clear the canvas to the background color
+    ctx.clearRect(0, 0, width, height);
     // save current state and transform for game display
     ctx.save();
-    ctx.scale(width / board_size.width, height / board_size.height);
 
     // updatenew_state., new_state.player.y
     current_turn = game_history[game_history.length - 1];
 
+    ctx.scale(width / board_size.width, height / board_size.height);
+    center_and_zoom(current_turn.player.x, current_turn.player.y);
+    // clear
+    reset_board();
     render_board();
 
     render_player(current_turn.player, style_player);  // translucent green disc
