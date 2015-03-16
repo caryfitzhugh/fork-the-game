@@ -204,8 +204,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     // scale up
     ctx.scale(zoom,zoom);
     // center view on x,y
-    var tx = -Math.round((x - (board_size.width / (2 * zoom))));
-    var ty = -Math.round((y - (board_size.height / (2 * zoom))));
+    var tx = -(x - (board_size.width / (2 * zoom))+.5);
+    var ty = -(y - (board_size.height / (2 * zoom))+.5);
     ctx.translate(tx,ty);
   };
 
