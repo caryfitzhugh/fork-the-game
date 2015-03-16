@@ -11,6 +11,14 @@ Render.draw = function (game_history) {
   }
 };
 
+Render.tick = function (inputs) {
+  if (inputs.pageup) {
+    renderer.set_zoom(renderer.get_zoom()+.1);
+  } else if (inputs.pagedown) {
+    renderer.set_zoom(renderer.get_zoom()-.1);
+  }
+}
+
 // this should be a member variable of any view instance, initialized with the canvas element ID and desired canvas size.
 // This can be changed to an element pointer, but at load time here, the element does not yet exist.
 // You can have more than one view, for a mini-map or something.
@@ -27,6 +35,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var height = canvas_height;
   var ctx = null;
   var current_turn = null;
+  var zoom = 1.0;             // initial zoom level
   var style_grid = { color: '#CFC291', width: .1 };
   var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
   var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
@@ -192,15 +201,12 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   };
   
   function center_and_zoom(x, y) {
-    //console.log("x: "+x+" y: "+y);
-    var zoom = 2;
     // scale up
     ctx.scale(zoom,zoom);
     // center view on x,y
     var tx = -Math.round((x - (board_size.width / (2 * zoom))));
     var ty = -Math.round((y - (board_size.height / (2 * zoom))));
     ctx.translate(tx,ty);
-    //console.log("tx: "+tx+" ty: "+ty);
   };
 
   // public members
@@ -208,6 +214,14 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     canvas = document.getElementById(canvas_element);
     init_styles();
     ctx = canvas.getContext('2d');
+  };
+  
+  this.get_zoom = function() {
+    return zoom;
+  };
+
+  this.set_zoom = function(new_zoom) {
+    return zoom = new_zoom;
   };
 
   this.draw = function(game_history) {

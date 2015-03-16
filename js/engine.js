@@ -100,6 +100,7 @@ var Engine = {
 
       return new_game_state;
     },
+
     perform_actions: function (current_game_state, inputs) {
       var game_state = _.cloneDeep(current_game_state);
 
@@ -246,6 +247,9 @@ var Engine = {
 };
 
 Engine.tick = function (current_game_state, inputs) {
+  // Perform Renderer changes, does not affect game state
+  Render.tick(inputs);
+  
   // Perform Environment Actions
   var new_game_state = Engine.perform_actions(current_game_state, inputs);
 
