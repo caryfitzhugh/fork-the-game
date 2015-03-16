@@ -100,35 +100,40 @@ var Engine = {
 
       return new_game_state;
     },
-
-    perform_actions: function (current_game_state, inputs) {
+    perform_tile_actions: function (current_game_state, inputs) {
       var game_state = _.cloneDeep(current_game_state);
+      game_state.flags = game_state.flags || {};
 
-      _.each(game_state.actions, function (action) {
-        if (action.type === "switch") {
-          Levels.set_block_type(game_state.playing_field, action.position, Levels.tile.switch); // Why do we do this? -DC
-          // Because then you don't need to also say "2" in the field data... <shrug> not a great solution - CF
-          var condition = Engine.occupied_by_weighty_thing(game_state, action.position);
-          _.each(action.sets_flags, function (flag) {
-            game_state.flags[flag] = condition;
+      _.each(game_state.playing_field.data, function (vals , y) {
+        _.each(vals, function (data, x) {
+          _.each(data.actions, function (action) {
+            var pos = {x: parseInt(x,10), y:parseInt(y,10) };
+            if (action.type === "switch") {
+              // Because then you don't need to also say "2" in the field data... <shrug> not a great solution - CF
+              var condition = Engine.occupied_by_weighty_thing(game_state, pos);
+
+              _.each(action.sets_flags, function (flag) {
+                game_state.flags[flag] = condition;
+              });
+            } else if (action.type === 'changeblock') {
+              var condition = true;
+              _.each(action.required_flags, function (flag) {
+                if (!game_state.flags[flag]) { condition=false; }
+              });
+              if (condition) {
+
+                Levels.set_block_type(game_state.playing_field,pos, action.active);
+              } else {
+                Levels.set_block_type(game_state.playing_field,pos, action.inactive);
+              }
+            } else if (action.type === 'logic_block') {
+              Levels.set_block_type(game_state.playing_field,pos, Levels.tile.logic_block);
+              Levels.set_block_type(game_state.playing_field,pos, action.triggered(game_state.flags) ? action.active : action.inactive);
+            } else {
+              console.log("Unknown action!", action);
+            }
           });
-        } else if (action.type === 'changeblock') {
-          //Levels.set(game_state.playing_field,action.position, Levels.tile.changeblock);
-          var condition = true;
-          _.each(action.required_flags, function (flag) {
-            if (!game_state.flags[flag]) { condition=false; }
-          });
-          if (condition) {
-            Levels.set_block_type(game_state.playing_field,action.position, action.active);
-          } else {
-            Levels.set_block_type(game_state.playing_field,action.position, action.inactive);
-          }
-        } else if (action.type === 'logic_block') {
-          Levels.set_block_type(game_state.playing_field,action.position, Levels.tile.logic_block);
-          Levels.set_block_type(game_state.playing_field,action.position, action.triggered(game_state.flags) ? action.active : action.inactive);
-        } else {
-          console.log("Unknown action!", action);
-        }
+        });
       });
       return game_state;
     },
@@ -222,12 +227,14 @@ var Engine = {
         Levels.move_crate(new_game_state.playing_field,
                           pos,
                           new_pos);
+        if (_.contains(block.items, undefined)) {
+          console.log('doh');
+        }
       }
       return new_game_state;
      } else {
        return current_game_state;
      }
-
    },
    test_conditions: function (game_state) {
      var run_state = null;
@@ -249,10 +256,9 @@ var Engine = {
 Engine.tick = function (current_game_state, inputs) {
   // Perform Renderer changes, does not affect game state
   Render.tick(inputs);
-  
-  // Perform Environment Actions
-  var new_game_state = Engine.perform_actions(current_game_state, inputs);
 
+  // Perform Environment Actions
+  var new_game_state = Engine.perform_tile_actions(current_game_state, inputs);
   // Fire / win / etc
   new_run_state = Engine.test_conditions(new_game_state, inputs);
 

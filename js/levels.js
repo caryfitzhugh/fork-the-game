@@ -52,7 +52,8 @@ var Levels = {
 
     //Overwrite!
     var new_to = _.cloneDeep(to_data);
-    new_to.items = _.cloneDeep(from_data.items.concat(to_data.items));
+    from_data.items = from_data.items || [];
+    new_to.items = _.cloneDeep(from_data.items.concat(to_data.items || []));
 
     var new_from = _.cloneDeep(from_data);
     new_from.items = [];
@@ -103,7 +104,11 @@ var Levels = {
   },
   set_block_type: function (field, pos, type) {
     var got = Levels.get_safe(field, pos);
-    got.type = type;
+    if (type) {
+      got.type = type;
+    } else {
+      delete got.type;
+    }
     Levels.set(field, pos, got);
   },
   set: function(field, pos, v) {
@@ -171,26 +176,17 @@ Levels.games = {
   "one switch" :  {
     player: {x: 10, y:10},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 10, y:10},
-       sets_flags: [ "door_open" ]
-      },
-      {type: "changeblock",
-       position: {x: 20, y:18},
-       required_flags: [ "door_open" ],
-       active: 0,
-       inactive: 1
-      }
-    ],
-    flags: [],
     playing_field: {w: 30, h: 30, data: {
-
+      "10": {
+        "10": {actions: [{type: "switch", sets_flags: ["door_open"]}]}
+      },
       "17":{
         "10": {type: 0, items: [{type: 'crate'}]},"21":{type: 1, items: []}
       },
       "18":{
-        "19": {type: 1, items: []},"21":{type: 1, items: []}
+        "19": {type: 1, items: []},
+        "20": {type: 0, actions: [{type: "changeblock", required_flags: ["door_open"], inactive: Levels.tile.wall}]},
+        "21": {type: 1, items: []}
       },
       "19":{
         "19": {type: 1},"20": {type: Levels.tile.win},"21":{type: 1}
@@ -206,25 +202,16 @@ Levels.games = {
   // Proivdes a level id - returns level info to the engine, etc.
     player: {x: 10, y:10},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 15, y:15},
-       sets_flags: [ "door_open" ]
-      },
-      {type: "changeblock",
-       position: {x: 20, y:18},
-       required_flags: [ "door_open" ],
-       active: 0,
-       inactive: 1
-      }
-    ],
-    flags: [],
     playing_field: {w: 30, h: 30, data: {
+      "10": {
+        "10": {actions: [{type: "switch", sets_flags: ["door_open"]}]}
+      },
 
       "17":{
         "10": {type: 0, items: [{type: 'crate'}]}
       },
       "18":{
+        "20": {actions: [{type: "changeblock", required_flags: ["door_open"], inactive: Levels.tile.wall}]},
         "19": {type: Levels.tile.fire},"21":{type: Levels.tile.fire}
       },
       "19":{
@@ -240,35 +227,26 @@ Levels.games = {
   // Proivdes a level id - returns level info to the engine, etc.
     player: {x: 10, y:10},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 15, y:15},
-       sets_flags: [ "door_open_A" ]
-      },
-      {type: "switch",
-       position: {x: 25, y:15},
-       sets_flags: [ "door_open_B" ]
-      },
-      {type: "changeblock",
-       position: {x: 20, y: 18},
-       required_flags: ["door_open_A", "door_open_B"],
-       active: 0,
-       inactive: 1
-      }
-    ],
-    flags: [],
     playing_field: {
       w: 30,
       h: 30,
       data: {
 
-
+      15: {
+        15: {
+          actions: [{type: 'switch', sets_flags: ["door_open_A"]}]
+        },
+        25: {
+          actions: [{type: 'switch', sets_flags: ["door_open_B"]}]
+        }
+      },
       "17":{
         "10": {type: 0, items: [{type: 'crate'}]},
         "11": {type: 0, items: [{type: 'crate'}]}
       },
       "18":{
         "21":{type: Levels.tile.fire},
+        "20":{ actions: [{type: "changeblock", required_flags: ["door_open_A", "door_open_B"], inactive: Levels.tile.wall}]},
         "19":{type:Levels.tile.fire}
       },
       "19":{
@@ -281,42 +259,22 @@ Levels.games = {
         "20": {type: Levels.tile.fire},
         "21": {type: Levels.tile.fire}
       }
-
     }}
   },
   "Simple Future Logic" :  {
     player: {x: 14, y:1},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 12, y: 4},
-       sets_flags: ["outer_door"]
-      },
-      {type: "switch",
-       position: {x: 16, y: 4},
-       sets_flags: ["inner_door"]
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 6},
-       required_flags: ["outer_door"],
-       active: 0,
-       inactive: 1
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 8},
-       required_flags: ["inner_door"],
-       active: 0,
-       inactive: 1
-      }
-    ],
-    flags: [],
     playing_field: {
       w: 30,
       h: 30,
       data: {
+        4: {
+          12: {actions: [{type:'switch', sets_flags: ['outer_door']}]},
+          16: {actions: [{type:'switch', sets_flags: ['inner_door']}]},
+        },
         "6": {
           "13": {type: Levels.tile.wall},
-          "14": {type: Levels.tile.wall},
+          "14": {actions: [{type: "changeblock", required_flags: ['outer_door'], inactive: Levels.tile.wall }]},
           "15": {type: Levels.tile.wall}
         },
         "7": {
@@ -325,7 +283,7 @@ Levels.games = {
         },
         "8": {
           "13": {type: Levels.tile.wall},
-          "14": {type: Levels.tile.wall},
+          "14": {actions: [{type: "changeblock", required_flags: ['inner_door'], inactive: Levels.tile.wall }]},
           "15": {type: Levels.tile.wall}
         },
         "9": {
@@ -348,57 +306,25 @@ Levels.games = {
   "More Simple Future Logic" :  {
     player: {x: 14, y:1},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 12, y: 3},
-       sets_flags: ["first_door"]
-      },
-      {type: "switch",
-       position: {x: 16, y: 3},
-       sets_flags: ["second_door_fire"]
-      },
-      {type: "switch",
-       position: {x: 12, y: 4},
-       sets_flags: ["third_door"]
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 6},
-       required_flags: ["first_door"],
-       active: 0,
-       inactive: 1
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 7},
-       required_flags: ["second_door_fire"],
-       active: 0,
-       inactive: 1
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 9},
-       required_flags: ["third_door"],
-       active: 0,
-       inactive: 1
-      },
-      {type: "changeblock",
-       position: {x: 14, y: 11},
-       required_flags: ["second_door_fire"],
-       active: 4,
-       inactive: 0
-      }
-    ],
-    flags: [],
     playing_field: {
       w: 30,
       h: 30,
       data: {
+        3: {
+          16: {actions: [{type:"switch", sets_flags: ["third_door"]}]}
+        },
+        4: {
+          12: {actions: [{type:'switch', sets_flags: ['first_door']}]},
+          16: {actions: [{type:'switch', sets_flags: ['second_door']}]},
+        },
         "6": {
           "13": {type: 1},
-          "14": {type: 1},
+          "14": {actions: [{type: 'changeblock', required_flags: ["first_door"], inactive: Levels.tile.wall}]},
           "15": {type: 1}
         },
         "7": {
           "13": {type: 1},
-          "14": {type: 1},
+          "14": {actions: [{type: 'changeblock', required_flags: ["second_door"], inactive: Levels.tile.fire}]},
           "15": {type: 1}
         },
         "8": {
@@ -407,6 +333,7 @@ Levels.games = {
         },
         "9": {
           "13": {type: 1},
+          "14": {actions: [{type: 'changeblock', required_flags: ["third_door"], inactive: Levels.tile.wall}]},
           "15": {type: 1}
         },
         "10": {
@@ -415,6 +342,7 @@ Levels.games = {
         },
         "11": {
           "13": {type: 1},
+          "14": {actions: [{type: 'changeblock', required_flags: ["second_door"], active: Levels.tile.win}]},
           "15": {type: 1}
         },
         "12": {
@@ -434,42 +362,42 @@ Levels.games = {
   // A logical reprise of the popular "two switches with FIRE" level
     player: {x: 10, y:10},
     forks: [],
-    actions: [
-      {type: "switch",
-       position: {x: 15, y:15},
-       sets_flags: [ "LOGIC_A" ]
-      },
-      {type: "switch",
-       position: {x: 25, y:15},
-       sets_flags: [ "LOGIC_B" ]
-      },
-      {type: "logic_block",
-       position: {x: 20, y: 16},
-       triggered: function (flags) { return flags["LOGIC_A"] && flags["LOGIC_B"]; },
-       active: 0,
-       inactive: 1
-      },
-      {type: "logic_block",
-       position: {x: 20, y: 17},
-       triggered: function (flags) { return flags["LOGIC_A"] || flags["LOGIC_B"]; },
-       active: 0,
-       inactive: 1
-      },
-      {type: "logic_block",
-       position: {x: 20, y: 18},
-       triggered: function (flags) { return !flags["LOGIC_A"] != !flags["LOGIC_B"]; },
-       active: 0,
-       inactive: 1
-      }
-    ],
-    flags: [],
     playing_field: {
       w: 30,
       h: 30,
       data: {
-
+      15: {
+        15: {actions: [{type: "switch", sets_flags: ["LOGIC_A"]}]},
+        25: {actions: [{type: "switch", sets_flags: ["LOGIC_B"]}]}
+      },
+      16: {
+        20: {actions: [
+              {type: "logic_block",
+               position: {x: 20, y: 16},
+               triggered: function (flags) { return flags["LOGIC_A"] && flags["LOGIC_B"]; },
+               active: 0,
+               inactive: 1
+              }]}
+      },
+      17: {
+        20: {actions: [
+              {type: "logic_block",
+               position: {x: 20, y: 16},
+               triggered: function (flags) { return flags["LOGIC_A"] && flags["LOGIC_B"]; },
+               active: 0,
+               inactive: 1
+              }]}
+      },
       "18":{
         "19": {type: Levels.tile.fire},
+        20: {actions: [
+              {type: "logic_block",
+               position: {x: 20, y: 18},
+               triggered: function (flags) { return !flags["LOGIC_A"] != !flags["LOGIC_B"]; },
+               active: 0,
+               inactive: 1
+              }
+        ]},
         "21": {type: Levels.tile.fire}
       },
       "19":{

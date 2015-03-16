@@ -7,7 +7,6 @@ Levels.games["Welcome"] = {
         "In order to make sure that they don't slide around, place a magnet on the ground and then push "+
         // http://www.darkshire.net/jhkim/rpg/polaris/starnames.html
         "the crate onto it.  Make sure things are in place before the ship takes off for Zi Ceng. 5 Minutes!",
-  "actions": [],
   "forks": [],
   "playing_field": {
     "w": 30,
@@ -241,6 +240,11 @@ Levels.games["Welcome"] = {
         "4": {type: 1},
         "5": {type: 1},
         "6": {type: 1},
+        "16":{actions: [{ type: 'switch', sets_flags: ['sw-1']}]},
+        "17":{actions: [{ type: 'switch', sets_flags: ['sw-2']}]},
+        "18":{actions: [{ type: 'switch', sets_flags: ['sw-3']}]},
+        "19":{actions: [{ type: 'switch', sets_flags: ['sw-0']}]},
+        "20":{actions: [{ type: 'changeblock', required_flags: ['sw-0','sw-1','sw-2','sw-3'], active: Levels.tile.win}]},
         "21":{type: 1}
       },
       "23": {

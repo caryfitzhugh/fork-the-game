@@ -43,6 +43,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     "floor"  :{ fill: { color: '#695D46' }},
     "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
     "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }},
+    "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
     "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
     "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
     "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
@@ -93,7 +94,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   function render_position(xposn, yposn, space_data) {
     if (space_data) {
       var type = space_data.type;
-      if (type != Levels.tile.floor) {
+      if (type && type != Levels.tile.floor) {
         ctx.save();
         ctx.translate(xposn, yposn);
 
@@ -109,9 +110,48 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         ctx.restore();
       }
 
+      if (space_data.actions) {
+        _.each(space_data.actions, function (action) {
+          if (action.type === 'switch') {
+              ctx.save();
+              ctx.translate(xposn, yposn);
+
+              // draw the structural elements of the board
+              ctx.beginPath();
+              ctx.rect(0.1, 0.1, .8, .8);
+
+              ctx.strokeStyle = styles.switch.stroke.color;
+              ctx.lineWidth = styles.switch.stroke.width;
+              ctx.fillStyle = styles.switch.fill.color;
+              ctx.fill();
+              ctx.stroke();
+              ctx.restore();
+          } else if (action.type === 'changeblock') {
+              ctx.save();
+              ctx.translate(xposn, yposn);
+
+              // draw the structural elements of the board
+              ctx.beginPath();
+              ctx.rect(0.49, 0.49, 0.02,0.02);
+
+              ctx.strokeStyle = "white";
+              ctx.lineWidth = 0.1;
+              ctx.fillStyle = "rgba(0,0,0,0.3)";
+              ctx.fill();
+              ctx.stroke();
+              ctx.restore();
+          }
+        });
+      }
+
       if (space_data.items) {
         for (var i=0; i < space_data.items.length; i++) {
-          render_item(xposn, yposn, space_data.items[i]);
+          if (space_data.items[i]) {
+            render_item(xposn, yposn, space_data.items[i]);
+          } else {
+            debugger;
+            console.log('blargle, bad item!', space_data);
+          }
         }
       }
     }
@@ -193,7 +233,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     ctx.restore();
   };
-  
+
   function center_and_zoom(x, y) {
     // scale up
     ctx.scale(zoom,zoom);
@@ -208,7 +248,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     canvas = document.getElementById(canvas_element);
     ctx = canvas.getContext('2d');
   };
-  
+
   this.get_zoom = function() {
     return zoom;
   };
