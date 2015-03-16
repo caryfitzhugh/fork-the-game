@@ -35,25 +35,19 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var height = canvas_height;
   var ctx = null;
   var current_turn = null;
-  var zoom = 1.0;             // initial zoom level
-  var style_grid = { color: '#CFC291', width: .1 };
-  var style_player = { fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }};
-  var style_fork = { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }};
-  var style_item =  {
+  var zoom = 2.0;             // initial zoom level
+  var styles =  {
+    "grid"   :{ stroke: { color: '#CFC291', width: .1 }},
+    "player" :{ fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }},
+    "fork"   :{ fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }},
     "floor"  :{ fill: { color: '#695D46' }},
     "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
-    "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }}
+    "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }},
+    "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
+    "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
+    "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
+    "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
   };
-  var style_structure = {}; // this is initialized in init_styles()
-
-  // private members
-  function init_styles() {
-    // e.g., { fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }}
-    style_structure[Levels.tile.wall] =  { fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }};
-    style_structure[Levels.tile.switch] =  { fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }};
-    style_structure[Levels.tile.win] =  { fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }};
-    style_structure[Levels.tile.fire] =  { fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }};
-  }
 
   function reset_board() {
     ctx.clearRect(0, 0, board_size.width, board_size.height);
@@ -63,12 +57,12 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     // draw the board "floor"
     ctx.beginPath();
     ctx.rect(0, 0, board_size.width, board_size.height);
-    ctx.fillStyle = style_item['floor'].fill.color;
+    ctx.fillStyle = styles['floor'].fill.color;
     ctx.fill();
 
     // draw the gameboard grid
-    ctx.strokeStyle = style_grid.color;
-    ctx.lineWidth = style_grid.width;
+    ctx.strokeStyle = styles['grid'].stroke.color;
+    ctx.lineWidth = styles['grid'].stroke.width;
 
     ctx.beginPath();
     for (var i=0; i<board_size.width+1; i++) {
@@ -98,8 +92,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
   function render_position(xposn, yposn, space_data) {
     if (space_data) {
-      var style_index = space_data.type;
-      if (style_index > 0) {
+      var type = space_data.type;
+      if (type != Levels.tile.floor) {
         ctx.save();
         ctx.translate(xposn, yposn);
 
@@ -107,9 +101,9 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         ctx.beginPath();
         ctx.rect(.05, .05, .9, .9);
 
-        ctx.strokeStyle = style_structure[style_index].stroke.color;
-        ctx.lineWidth = style_structure[style_index].stroke.width;
-        ctx.fillStyle = style_structure[style_index].fill.color;
+        ctx.strokeStyle = styles[type].stroke.color;
+        ctx.lineWidth = styles[type].stroke.width;
+        ctx.fillStyle = styles[type].fill.color;
         ctx.fill();
         ctx.stroke();
         ctx.restore();
@@ -117,13 +111,13 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
       if (space_data.items) {
         for (var i=0; i < space_data.items.length; i++) {
-          render_item(xposn, yposn, space_data.items[i], style_item);
+          render_item(xposn, yposn, space_data.items[i]);
         }
       }
     }
   };
 
-  function render_item(xposn, yposn, item, styles) {
+  function render_item(xposn, yposn, item) {
     var type = item.type,
         style = styles[type];
 
@@ -212,7 +206,6 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   // public members
   this.init = function(canvas_document) {
     canvas = document.getElementById(canvas_element);
-    init_styles();
     ctx = canvas.getContext('2d');
   };
   
@@ -240,11 +233,11 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     reset_board();
     render_board();
 
-    render_player(current_turn.player, style_player);  // translucent green disc
+    render_player(current_turn.player, styles['player']);
 
     for (var i=0; i < current_turn.forks.length; i++) {
       var fork = current_turn.forks[i];
-      render_player(fork, style_fork);  // translucent green disc
+      render_player(fork, styles['fork']);
     }
 
     ctx.restore();
