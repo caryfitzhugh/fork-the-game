@@ -1,13 +1,20 @@
 
 var Render = {
+  renderer : null,
+  mini_renderer : null,
   init: function () {
+    renderer = new Renderer('canvas_gameboard', 600, 600);
     renderer.init();
+    mini_renderer = new Renderer('canvas_minimap', 200, 200);
+    mini_renderer.init();
+    mini_renderer.set_zoom(1.0);
   }
 };
 
 Render.draw = function (game_history) {
   if (game_history && game_history.length > 0) {
     renderer.draw(game_history);
+    mini_renderer.draw(game_history);
   }
 };
 
@@ -20,12 +27,6 @@ Render.tick = function (inputs) {
     renderer.set_zoom(renderer.get_zoom()-.1);
   }
 }
-
-// this should be a member variable of any view instance, initialized with the canvas element ID and desired canvas size.
-// This can be changed to an element pointer, but at load time here, the element does not yet exist.
-// You can have more than one view, for a mini-map or something.
-var renderer = new Renderer('canvas_gameboard', 600, 600);
-// I can make the size dynamic if we want, but we'll need to call a function
 
 // this should come from game (or level) instance data
 var board_size = { width:30, height:30 }; // this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed

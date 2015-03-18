@@ -36,7 +36,7 @@ ul.menu {
   padding-bottom: 100%;
   position: relative;
   border: 2px solid white;
-	display: none;
+  display: none;
 }
 
 #gameboard_inner {
@@ -49,8 +49,14 @@ ul.menu {
 }
 
 canvas#canvas_gameboard {
-	border: 2px solid white;
-	background: black;
+  border: 2px solid white;
+  background: black;
+}
+
+canvas#canvas_minimap {
+  border: 1px solid white;
+  background: black;
+  float: right;
 }
 
 body.play-mode #canvas_gameboard{
