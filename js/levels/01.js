@@ -46,6 +46,10 @@ Levels.games["Welcome"] = {
       },
       "2": {
         "0": {type: 1},
+        "1": {items: [{type: "forklift", heading: 0}]},
+        "3": {items: [{type: "forklift", heading: 2}]},
+        "4": {items: [{type: "forklift", heading: 1}]},
+        "2": {items: [{type: "forklift", heading: 3}]},
         "5": {type: 1},
         "21": {type: 1}
       },

@@ -42,6 +42,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     "fork"   :{ fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }},
     "floor"  :{ fill: { color: '#695D46' }},
     "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
+    "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5)', width: 0.75 }},
     "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }},
     "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
     "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
@@ -182,10 +183,27 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         }
       } else if (type === 'crate') {
         ctx.rect(0.25, 0.25, 0.5, 0.5);
+      } else if (type === 'forklift') {
+        var arcs = 0;
+        // Middle part
+        ctx.rect(0.35, 0.35, 0.3, 0.3);
+        if (item.heading === 0) {
+          ctx.rect(0.75, 0.35, 0.25, 0.1);
+          ctx.rect(0.75, 0.55, 0.25, 0.1);
+        } else if (item.heading === 1) {
+          ctx.rect(0.35, 0.75, 0.1, 0.25);
+          ctx.rect(0.55, 0.75, 0.1, 0.25);
+        } else if (item.heading === 2) {
+          ctx.rect(0.0, 0.35, 0.25, 0.1);
+          ctx.rect(0.0, 0.55, 0.25, 0.1);
+        } else if (item.heading === 3) {
+          ctx.rect(0.35, 0.0, 0.1, 0.25);
+          ctx.rect(0.55, 0.0, 0.1, 0.25);
+        }
       }
 
       ctx.strokeStyle = style.stroke.color;
-      ctx.lineWidth = 0.1; //style.stroke.width;// * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
+      ctx.lineWidth = 0.1;
       ctx.fillStyle = style.fill.color;
       ctx.fill();
       ctx.stroke();
