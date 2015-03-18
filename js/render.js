@@ -253,15 +253,45 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
     ctx.restore();
   };
+  
+  // I may make some more of these animators and generalize them, but for now...
+  var orientation_animator = (function() {
+    var current_heading = null;
+    return {
+      get_orientation: function(target_heading) {
+        if (current_heading == null) current_heading = target_heading;
+        else {
+          var delta_heading = target_heading - current_heading; // how far off are we?
+          if (delta_heading != 0) {
+            // shortest way to get there?
+            delta_heading += (delta_heading > Math.PI) ? -2 * Math.PI : (delta_heading < -Math.PI) ? 2 * Math.PI : 0;
+            // animate our way closer to the target
+            if (Math.abs(delta_heading) < Math.PI / 100) {  // lower numbers increase the distance at which the orientation "snaps" to the target
+              current_heading = target_heading;
+            } else {
+              current_heading = current_heading + (delta_heading / 3);  // smaller number increases speed of orientation change
+            }
+          }
+        }
+        return current_heading;
+      }
+    }
+  })();
 
   function orient_view(player) {
     // translate the center of the board to the origin
     ctx.translate(board_size.width / 2.0, board_size.height / 2.0);
+
     // zoom the view here
     ctx.scale(zoom,zoom);
-    // rotate it as well
-    var angle = (((player.heading + 1) % 4) * -Math.PI / 2);
-    ctx.rotate(angle);
+
+    var angle = (3 * Math.PI) / 2;  // when you have no orientation, you face to the right (-270d)
+    if (player.heading) {
+      // rotate the canvas to orient the player
+      angle = Math.abs(player.heading - 3) * (Math.PI / 2);
+    }
+    ctx.rotate(orientation_animator.get_orientation(angle));
+
     // now translate the view over the player
     ctx.translate(-(player.x + .5), -(player.y + .5));
   };
