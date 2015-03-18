@@ -11,6 +11,8 @@ Render.draw = function (game_history) {
   }
 };
 
+// the thinking with Render.tick is to perform display settings outside of the game state
+// and to do some one-time stuff I will add later :-)
 Render.tick = function (inputs) {
   if (inputs.pageup) {
     renderer.set_zoom(renderer.get_zoom()+.1);
@@ -252,13 +254,16 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     ctx.restore();
   };
 
-  function center_and_zoom(x, y) {
-    // scale up
+  function orient_view(player) {
+    // translate the center of the board to the origin
+    ctx.translate(board_size.width / 2.0, board_size.height / 2.0);
+    // zoom the view here
     ctx.scale(zoom,zoom);
-    // center view on x,y
-    var tx = -(x - (board_size.width / (2 * zoom))+.5);
-    var ty = -(y - (board_size.height / (2 * zoom))+.5);
-    ctx.translate(tx,ty);
+    // rotate it as well
+    var angle = (((player.heading + 1) % 4) * -Math.PI / 2);
+    ctx.rotate(angle);
+    // now translate the view over the player
+    ctx.translate(-(player.x + .5), -(player.y + .5));
   };
 
   // public members
@@ -286,7 +291,7 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     current_turn = game_history[game_history.length - 1];
 
     ctx.scale(width / board_size.width, height / board_size.height);
-    center_and_zoom(current_turn.player.x, current_turn.player.y);
+    orient_view(current_turn.player);
     // clear
     reset_board();
     render_board();
@@ -299,5 +304,19 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     }
 
     ctx.restore();
+    //show_me_the_center();
+  };
+
+  function show_me_the_center() {
+    // draw the gameboard grid
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+    ctx.moveTo((width)/2, 0);
+    ctx.lineTo((width)/2, height-1);
+    ctx.moveTo(0, (height)/2);
+    ctx.lineTo(width-1, (height)/2);
+    ctx.stroke();
   };
 };
