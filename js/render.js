@@ -13,10 +13,9 @@ var Render = {
         "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5)', width: 0.75 }},
         "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.2 }},
         "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-        "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
-        "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
-        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
+        "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // wall
+        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},    // win
+        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}          // fire
       }
     );
     mini_renderer = new Renderer('canvas_minimap', 200, 200, 
@@ -32,10 +31,9 @@ var Render = {
         "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5) ', width: 0.75 }},
         "crate"  :{ fill: { color: 'rgba(240,230,140,.8) ' }},
         "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-        "1"  :{ fill: { color: 'rgba(190,190,190, .5) ' }, stroke: { color: 'rgba(105,105,105,.5) ', width: 0.1 }},       // Eww, let's fix this
-        "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
-        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
+        "1"  :{ fill: { color: 'rgba(190,190,190, .5) ' }, stroke: { color: 'rgba(105,105,105,.5) ', width: 0.1 }},   // wall
+        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},                                // win
+        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}                                      // fire
       }
     );
     renderer.init();
@@ -127,8 +125,8 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     if (space_data) {
       var type = space_data.type;
       if (type && type != Levels.tile.floor) {
-        // these are all the floor tiles that are not "items"
-        // since this excludes the floor, only walls come through here
+        // these are all the floor tiles that are not "items" or "actions"
+        // since this excludes the floor, walls, win & fire come through here
         ctx.save();
         ctx.translate(xposn, yposn);
 
@@ -328,7 +326,7 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     // zoom the view here
     ctx.scale(zoom,zoom);
 
-    var angle = (3 * Math.PI) / 2;  // when you have no orientation, you face to the right (-270d)
+    var angle = (3 * Math.PI) / 2;  // when you have no orientation, you face to the right (270d rotation)
     if (player.heading) {
       // rotate the canvas to orient the player
       angle = Math.abs(player.heading - 3) * (Math.PI / 2);
@@ -377,10 +375,10 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     }
 
     ctx.restore();
-    //show_me_the_center();
+    self.show_me_the_center();
   };
 
-  function show_me_the_center() {
+  this.show_me_the_center = function() {
     // draw the gameboard grid
     ctx.strokeStyle = 'white';
     ctx.lineWidth = 2;
