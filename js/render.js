@@ -3,9 +3,42 @@ var Render = {
   renderer : null,
   mini_renderer : null,
   init: function () {
-    renderer = new Renderer('canvas_gameboard', 600, 600);
+    renderer = new Renderer('canvas_gameboard', 600, 600, 
+      {
+        "grid"   :{ stroke: { color: '#CFC291', width: .1 }},
+        "player" :{ fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }},
+        "fork"   :{ fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }},
+        "floor"  :{ fill: { color: '#695D46' }},
+        "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
+        "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5)', width: 0.75 }},
+        "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.2 }},
+        "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
+        "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
+        "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
+        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
+        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
+      }
+    );
+    mini_renderer = new Renderer('canvas_minimap', 200, 200, 
+      {
+        // well, this is a start. General problem I have found with JS is that there's no easy way to
+        // handle colors if you use both rgba() and #RGB. Delegating conversions to sugar functions is
+        // generally a very bad idea in a render loop. :) So good luck below.
+        "grid"   :{ stroke: { color: 'rgba(207,194,145,.3)', width: .1 }},
+        "player" :{ fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5) ', width: 1.5 }},
+        "fork"   :{ fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5) ', width: 1 }},
+        "floor"  :{},
+        "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, 1) ', width: 0.25 }},
+        "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5) ', width: 0.75 }},
+        "crate"  :{ fill: { color: 'rgba(240,230,140,.8) ' }},
+        "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
+        "1"  :{ fill: { color: 'rgba(190,190,190, .5) ' }, stroke: { color: 'rgba(105,105,105,.5) ', width: 0.1 }},       // Eww, let's fix this
+        "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
+        "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
+        "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
+      }
+    );
     renderer.init();
-    mini_renderer = new Renderer('canvas_minimap', 200, 200);
     mini_renderer.init();
     mini_renderer.set_zoom(1.0);
   }
@@ -31,7 +64,7 @@ Render.tick = function (inputs) {
 // this should come from game (or level) instance data
 var board_size = { width:30, height:30 }; // this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
 
-function Renderer(canvas_element, canvas_width, canvas_height) {
+function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
   var self = this;    // because ECMAScript
   var canvas = null;
   var width = canvas_width;
@@ -39,49 +72,44 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
   var ctx = null;
   var current_turn = null;
   var zoom = 2.0;             // initial zoom level
-  var styles =  {
-    "grid"   :{ stroke: { color: '#CFC291', width: .1 }},
-    "player" :{ fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }},
-    "fork"   :{ fill: { color: '#FF712C' }, stroke: { color: 'rgba(255, 113, 44, .5)', width: 1 }},
-    "floor"  :{ fill: { color: '#695D46' }},
-    "magnet" :{ fill: { color: '#FF2222' }, stroke: { color: 'rgba(255, 50, 50, .5)', width: 0.25 }},
-    "forklift" :{ fill: { color: '#22FF22' }, stroke: { color: 'rgba(50, 255, 50, .5)', width: 0.75 }},
-    "crate"  :{ fill: { color: 'darkkhaki' }, stroke: { color: 'khaki', width: 0.25 }},
-    "switch"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-    "1"  :{ fill: { color: 'gray' }, stroke: { color: 'dimgray', width: 0.1 }},       // Eww, let's fix this
-    "2"  :{ fill: { color: 'goldenrod' }, stroke: { color: 'white', width: 0.1 }},
-    "3"  :{ fill: { color: 'green' }, stroke: { color: 'lawngreen', width: 0.1 }},
-    "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}
-  };
+  var styles =  _.cloneDeep(the_styles);
 
   function reset_board() {
+    var style;
+
     ctx.clearRect(0, 0, board_size.width, board_size.height);
 
     ctx.save();
 
     // draw the board "floor"
-    ctx.beginPath();
-    ctx.rect(0, 0, board_size.width, board_size.height);
-    ctx.fillStyle = styles['floor'].fill.color;
-    ctx.fill();
+    style = styles['floor'];
+    if (style && style.fill) {
+      ctx.beginPath();
+      ctx.rect(0, 0, board_size.width, board_size.height);
+      ctx.fillStyle = style.fill.color;
+      ctx.fill();
+    }
 
     // draw the gameboard grid
-    ctx.strokeStyle = styles['grid'].stroke.color;
-    ctx.lineWidth = styles['grid'].stroke.width;
+    style = styles['grid'];
+    if (style && style.stroke) {
+      ctx.strokeStyle = style.stroke.color;
+      ctx.lineWidth = style.stroke.width;
 
-    ctx.beginPath();
-    for (var i=0; i<board_size.width+1; i++) {
-      ctx.moveTo(i, 0);
-      ctx.lineTo(i, board_size.height);
-    }
-    ctx.stroke();
+      ctx.beginPath();
+      for (var i=0; i<board_size.width+1; i++) {
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, board_size.height);
+      }
+      ctx.stroke();
 
-    ctx.beginPath();
-    for (var i=0; i<board_size.height+1; i++) {
-      ctx.moveTo(0, i);
-      ctx.lineTo(board_size.width, i);
+      ctx.beginPath();
+      for (var i=0; i<board_size.height+1; i++) {
+        ctx.moveTo(0, i);
+        ctx.lineTo(board_size.width, i);
+      }
+      ctx.stroke();
     }
-    ctx.stroke();
 
     ctx.restore();
   };
@@ -99,6 +127,8 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
     if (space_data) {
       var type = space_data.type;
       if (type && type != Levels.tile.floor) {
+        // these are all the floor tiles that are not "items"
+        // since this excludes the floor, only walls come through here
         ctx.save();
         ctx.translate(xposn, yposn);
 
@@ -163,10 +193,16 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
 
   function render_item(xposn, yposn, item) {
     var type = item.type,
-        style = styles[type];
-
-    ctx.save();
-    ctx.translate(xposn, yposn);
+        style = styles[type],
+        has_fill = false,
+        has_stroke = false;
+    
+    if (style && (style.fill)) has_fill = true;
+    if (style && (style.stroke)) has_stroke = true;
+    
+    if (has_fill || has_stroke) {
+      ctx.save();
+      ctx.translate(xposn, yposn);
 
       // draw an item
       ctx.beginPath();
@@ -205,13 +241,19 @@ function Renderer(canvas_element, canvas_width, canvas_height) {
         }
       }
 
-      ctx.strokeStyle = style.stroke.color;
-      ctx.lineWidth = 0.1;
-      ctx.fillStyle = style.fill.color;
-      ctx.fill();
-      ctx.stroke();
+      if (has_fill) {
+        ctx.fillStyle = style.fill.color;
+        ctx.fill();
+      }
 
-    ctx.restore();
+      if (has_stroke) {
+        ctx.strokeStyle = style.stroke.color;
+        ctx.lineWidth = style.stroke.width;
+        ctx.stroke();
+      }
+
+      ctx.restore();
+    }
   };
 
   function render_player(player, style) {

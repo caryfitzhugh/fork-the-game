@@ -39,7 +39,7 @@ canvas#canvas_gameboard {
 
 canvas#canvas_minimap {
   border: 1px solid white;
-  background: black;
+  background: rgba(0, 0, 0, 0.3);
   position: absolute;
   bottom: 8px;
   right: 0px;
