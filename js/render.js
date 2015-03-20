@@ -3,7 +3,7 @@ var Render = {
   renderer : null,
   mini_renderer : null,
   init: function () {
-    renderer = new Renderer('canvas_gameboard', 600, 600, 
+    renderer = new Renderer(document.getElementById('canvas_gameboard'), { x:600, y:600 }, 
       {
         "grid"   :{ stroke: { color: '#CFC291', width: .1 }},
         "player" :{ fill: { color: '#A1E8D9' }, stroke: { color: 'rgba(161, 232, 217, .5)', width: 1.5 }},
@@ -18,7 +18,7 @@ var Render = {
         "4"  :{ fill: { color: 'orange' }, stroke: { color: 'red', width: 0.1 }}          // fire
       }
     );
-    mini_renderer = new Renderer('canvas_minimap', 200, 200, 
+    mini_renderer = new Renderer(document.getElementById('canvas_minimap'), { x:200, y:200 }, 
       {
         // well, this is a start. General problem I have found with JS is that there's no easy way to
         // handle colors if you use both rgba() and #RGB. Delegating conversions to sugar functions is
@@ -57,17 +57,17 @@ Render.tick = function (inputs) {
   } else if (inputs.pagedown) {
     renderer.set_zoom(renderer.get_zoom()-.1);
   }
+  Animate.tick();
 }
 
 // this should come from game (or level) instance data
 var board_size = { width:30, height:30 }; // this should be global to the game (or at least to the level), it is the grid on which the players and objects are placed
 
-function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
+function Renderer(canvas_element, canvas_dimensions, the_styles) {
   var self = this;    // because ECMAScript
-  var canvas = null;
-  var width = canvas_width;
-  var height = canvas_height;
-  var ctx = null;
+  var canvas = canvas_element;  // DOM object
+  var canvas_size = canvas_dimensions;  // could clone, but it does work if the values change
+  var ctx = canvas.getContext('2d');
   var current_turn = null;
   var zoom = 2.0;             // initial zoom level
   var styles =  _.cloneDeep(the_styles);
@@ -266,7 +266,7 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     ctx.beginPath();
     ctx.arc(0.5, 0.5, 0.5, 0, 2 * Math.PI, false);
     ctx.strokeStyle = style.stroke.color;
-    ctx.lineWidth = style.stroke.width * Math.sin((new Date().getMilliseconds() / 1000) * Math.PI);
+    ctx.lineWidth = style.stroke.width * Animate.pulse();
     ctx.fillStyle = style.fill.color;
     ctx.fill();
     ctx.stroke();
@@ -339,8 +339,8 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
 
   // public members
   this.init = function(canvas_document) {
-    canvas = document.getElementById(canvas_element);
-    ctx = canvas.getContext('2d');
+    //canvas = document.getElementById(canvas_element);
+    //ctx = canvas.getContext('2d');
   };
 
   this.get_zoom = function() {
@@ -354,14 +354,14 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
   this.draw = function(game_history) {
 
     // clear the canvas to the background color
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(0, 0, canvas_size.x, canvas_size.y);
     // save current state and transform for game display
     ctx.save();
 
     // updatenew_state., new_state.player.y
     current_turn = game_history[game_history.length - 1];
 
-    ctx.scale(width / board_size.width, height / board_size.height);
+    ctx.scale(canvas_size.x / board_size.width, canvas_size.y / board_size.height);
     orient_view(current_turn.player);
     // clear
     reset_board();
@@ -375,7 +375,7 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     }
 
     ctx.restore();
-    self.show_me_the_center();
+    //self.show_me_the_center();
   };
 
   this.show_me_the_center = function() {
@@ -384,10 +384,10 @@ function Renderer(canvas_element, canvas_width, canvas_height, the_styles) {
     ctx.lineWidth = 2;
 
     ctx.beginPath();
-    ctx.moveTo((width)/2, 0);
-    ctx.lineTo((width)/2, height-1);
-    ctx.moveTo(0, (height)/2);
-    ctx.lineTo(width-1, (height)/2);
+    ctx.moveTo((canvas_size.x)/2, 0);
+    ctx.lineTo((canvas_size.x)/2, canvas_size.y-1);
+    ctx.moveTo(0, (canvas_size.y)/2);
+    ctx.lineTo(canvas_size.x-1, (canvas_size.y)/2);
     ctx.stroke();
   };
 };
