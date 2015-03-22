@@ -11,6 +11,7 @@ GameObject:
   - 20: {fileID: 2000000}
   - 81: {fileID: 8100000}
   - 114: {fileID: 11400006}
+  - 114: {fileID: 11490966}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -54,8 +55,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -30, y: 1, z: 25}
+  m_LocalRotation: {x: 0, y: .430510908, z: 0, w: -.902585387}
+  m_LocalPosition: {x: 13.9399996, y: .800000012, z: -10.4200001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400000}
@@ -220,6 +221,22 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 11400004}
   StrideInterval: 4
   RunningStrideLengthen: .722000003
+--- !u!114 &11490966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcaba3ad17b46e8478b7ddf2f95b36bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickup_distance: 2
+  hold_distance: 2
+  pickup_mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
