@@ -103,6 +103,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   polarity: 0
   glow: {fileID: 0}
+  attraction_range: 3
+  attraction_mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
