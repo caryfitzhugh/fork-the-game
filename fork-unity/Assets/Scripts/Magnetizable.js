@@ -8,8 +8,9 @@ public var attraction_mask: LayerMask;
 // Attract!
 class MagnetismAttractionData extends System.ValueType
 {
-  var position : Vector3;
-  var polarity : MagPolarity;
+  var position  : Vector3;
+  var polarity  : MagPolarity;
+  var multiplier: int;
 }
 
 function Start () {
@@ -25,17 +26,26 @@ function magnetize_update (args : MagnetismAttractionData) {
   if (polarity != MagPolarity.None) {
     var force = (transform.position - args.position);
     var sqrLen = force.sqrMagnitude;
+    var impulse = (args.position - transform.position) * args.multiplier * sqrLen;
 
     if (sqrLen > 0.5) {
 
       if (args.polarity == polarity) {
-        Debug.Log("attract!");
+        //Debug.Log("attract!");
 	transform.LookAt(args.position);
-	gameObject.GetComponent.<Rigidbody>().AddForce((args.position - transform.position) * 10 * sqrLen, ForceMode.Acceleration);
+        
+        if (sqrLen < 2) {
+        } else {
+          impulse = impulse * 5;
+        }  
+	gameObject.GetComponent.<Rigidbody>().AddForce(impulse, ForceMode.Force);
       } else {
-        Debug.Log("repel!");
+        //Debug.Log("repel!");
+        if (sqrLen < 2) {
+          impulse = impulse * 5;
+        } 
 	transform.LookAt(args.position);
-	gameObject.GetComponent.<Rigidbody>().AddForce((transform.position - args.position) * 10 * sqrLen, ForceMode.Acceleration);
+	gameObject.GetComponent.<Rigidbody>().AddForce(impulse * -1, ForceMode.Force);
       }
     }
   }
@@ -43,11 +53,12 @@ function magnetize_update (args : MagnetismAttractionData) {
 
 function FixedUpdate() {
   if (polarity && polarity != MagPolarity.None) {
+    var hitColliders = Physics.OverlapSphere(transform.position, attraction_range, attraction_mask);
+
     var attraction_data = new MagnetismAttractionData();
     attraction_data.position = transform.position;
     attraction_data.polarity = polarity;
-
-    var hitColliders = Physics.OverlapSphere(transform.position, attraction_range, attraction_mask);
+    attraction_data.multiplier = hitColliders.length;
           	
     for (var i = 0; i < hitColliders.Length; i++) {
       hitColliders[i].gameObject.SendMessage('magnetize_update', attraction_data);

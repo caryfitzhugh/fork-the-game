@@ -176,6 +176,10 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_Mass
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
@@ -188,7 +192,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.73000002
+      value: 2.74000001
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.y
@@ -196,7 +200,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 5.07999992
+      value: 5.01999998
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalRotation.x
@@ -216,11 +220,23 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_Name
       value: Metal Cargo Box 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363934, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+      propertyPath: m_UseLightProbes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+      propertyPath: attraction_mask.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+      propertyPath: polarity
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
@@ -358,7 +374,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -4.30999994
+      value: -3.28999996
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.y
@@ -386,7 +402,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_Name
@@ -533,6 +549,25 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 62d606ed28af8444e849995177d5601a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1740310896
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+  m_PrefabInternal: {fileID: 535182934}
+--- !u!114 &1740310902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1740310896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01f1e25448ba44b7d97ea5427ee39bf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnetize_distance: 2
+  magnetize_mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &1774187975
 Prefab:
   m_ObjectHideFlags: 0
@@ -588,7 +623,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 4.32000017
+      value: 2.51999998
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.y
@@ -596,7 +631,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.100000001
+      value: -1.74000001
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalRotation.x
@@ -621,6 +656,10 @@ Prefab:
     - target: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_Name
       value: Metal Cargo Box 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+      propertyPath: polarity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
