@@ -1,8 +1,11 @@
 ﻿#pragma strict
 
 var pickup_distance : float = 2.0;
-var hold_distance : float = 2.0;
+var hold_distance : float = 0.0;
 var pickup_mask : LayerMask;
+
+var speed : float = 10.0;
+var threshold : float = 0.5;
 
 private var is_holding : boolean = false;
 private var held_object : GameObject;
@@ -11,15 +14,22 @@ private var held_object : GameObject;
 function Start () {
 }
 
+/*
+void Update () {
+    Vector3 direction = targetPosition - transform.position;
+    if(direction.magnitude > threshold){
+        direction.Normalize();
+        transform.position = transform.position + direction * speed * Time.deltaTime;
+    }else{ 
+        // Without this game object jumps around target and never settles
+        transform.position = targetPosition;
+    }
+
+}*/
 // called every frame
 function Update ()
 {
   var hit_info : RaycastHit;
-
-  if (is_holding == true)
-  {
-    held_object.transform.position = transform.position + transform.forward * hold_distance;  // continue to align the held object with the camera
-  }
 
   if (Input.GetMouseButtonDown(0))
   {
@@ -37,13 +47,20 @@ function Update ()
         hit_info.collider.GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world, we will move it ourselves
 
         hit_info.collider.transform.parent = transform.parent;  // set object to be a child of the player (carrying it)
-        hit_info.collider.transform.position = transform.position;  // set object location to camera location
-        hit_info.collider.transform.position += transform.forward * hold_distance; // vector math gives us a point in front of the camera
-        
-        
+
         held_object = hit_info.collider.gameObject;
+
         is_holding = true;
       }
     }
   }
+
+  if (is_holding == true)
+  {
+    Debug.Log("tween this would be nice..");
+    held_object.transform.localPosition = new Vector3(0,0,1.5);
+    held_object.transform.position.y = held_object.GetComponent.<Renderer>().bounds.size.y / 2;
+		held_object.transform.LookAt(new Vector3(transform.position.x, 0.5, transform.position.z));
+  }
+
 }
