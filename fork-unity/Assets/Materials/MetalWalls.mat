@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: MetalBare0011_M
+  m_Name: MetalWalls
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -19,8 +19,8 @@ Material:
           name: _MainTex
         second:
           m_Texture: {fileID: 2800000, guid: 85608d49c780d8b4b9824c92d774947d, type: 3}
-          m_Scale: {x: 6, y: 1}
-          m_Offset: {x: 0, y: .0199999996}
+          m_Scale: {x: 5, y: 5}
+          m_Offset: {x: .0299999993, y: 0}
       data:
         first:
           name: _BumpMap
@@ -40,8 +40,8 @@ Material:
           name: _EmissionMap
         second:
           m_Texture: {fileID: 0}
-          m_Scale: {x: 6, y: 1}
-          m_Offset: {x: 0, y: .0199999996}
+          m_Scale: {x: 5, y: 5}
+          m_Offset: {x: .0299999993, y: 0}
       data:
         first:
           name: _ParallaxMap

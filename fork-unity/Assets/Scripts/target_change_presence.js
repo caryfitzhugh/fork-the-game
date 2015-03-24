@@ -3,6 +3,7 @@
 var toggleRenderer : boolean;
 var toggleCollider : boolean;
 var toggleRigidbody : boolean;
+var activateOnly : boolean;
 
 private var original_renderer_enabled : boolean;
 private var original_collider_enabled : boolean;
@@ -13,11 +14,17 @@ private var original_rigidbody_kinematic : boolean;
 // Disable object collider and renderer and set rigidbody.isKinematic to false to initially hide object
 function Start () {
   original_renderer_enabled = GetComponent.<Renderer>().enabled;
-  original_collider_enabled = GetComponent.<Collider>().enabled;;
-  original_rigidbody_kinematic = GetComponent.<Rigidbody>().isKinematic;
+  original_collider_enabled = GetComponent.<Collider>().enabled;
+  var rigidbody = GetComponent.<Rigidbody>();
+  if (rigidbody) {
+    original_rigidbody_kinematic = rigidbody.isKinematic;
+  }
 }
 
 function object_activate(active : boolean) {
+  if (!active && activateOnly)
+    return;
+
   if (toggleRenderer) {
     GetComponent.<Renderer>().enabled = (active ? !original_renderer_enabled : original_renderer_enabled );
   }

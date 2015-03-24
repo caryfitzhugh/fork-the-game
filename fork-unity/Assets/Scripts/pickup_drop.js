@@ -1,11 +1,8 @@
 ﻿#pragma strict
 
 var pickup_distance : float = 2.0;
-var hold_distance : float = 0.0;
+var hold_distance : float = 1.5;
 var pickup_mask : LayerMask;
-
-var speed : float = 10.0;
-var threshold : float = 0.5;
 
 private var is_holding : boolean = false;
 private var held_object : GameObject;
@@ -46,7 +43,7 @@ function Update ()
   if (is_holding == true)
   {
     Debug.Log("tween this would be nice..");
-    held_object.transform.localPosition = new Vector3(0,0,1.5);
+    held_object.transform.localPosition = new Vector3(0,0,hold_distance);
     held_object.transform.position.y = held_object.GetComponent.<Renderer>().bounds.size.y / 2;
 		held_object.transform.LookAt(new Vector3(transform.position.x, 0.5, transform.position.z));
   }
