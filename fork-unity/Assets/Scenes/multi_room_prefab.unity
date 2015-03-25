@@ -1,0 +1,1834 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!29 &1
+SceneSettings:
+  m_ObjectHideFlags: 0
+  m_PVSData: 
+  m_PVSObjectsArray: []
+  m_PVSPortalsArray: []
+  m_OcclusionBakeSettings:
+    smallestOccluder: 5
+    smallestHole: .25
+    backfaceThreshold: 100
+--- !u!104 &2
+RenderSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_Fog: 0
+  m_FogColor: {r: .5, g: .5, b: .5, a: 1}
+  m_FogMode: 3
+  m_FogDensity: .00999999978
+  m_LinearFogStart: 0
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: .211999997, g: .226999998, b: .259000003, a: 1}
+  m_AmbientEquatorColor: {r: .114, g: .125, b: .133000001, a: 1}
+  m_AmbientGroundColor: {r: .0469999984, g: .0430000015, b: .0350000001, a: 1}
+  m_AmbientIntensity: .746999979
+  m_AmbientMode: 0
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_HaloStrength: .5
+  m_FlareStrength: 1
+  m_FlareFadeSpeed: 3
+  m_HaloTexture: {fileID: 0}
+  m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
+  m_DefaultReflectionMode: 0
+  m_DefaultReflectionResolution: 128
+  m_ReflectionBounces: 1
+  m_ReflectionIntensity: 1
+  m_CustomReflection: {fileID: 0}
+  m_Sun: {fileID: 0}
+--- !u!127 &3
+LevelGameManager:
+  m_ObjectHideFlags: 0
+--- !u!157 &4
+LightmapSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 5
+  m_GIWorkflowMode: 1
+  m_LightmapsMode: 1
+  m_GISettings:
+    serializedVersion: 2
+    m_BounceScale: 1
+    m_IndirectOutputScale: 1
+    m_AlbedoBoost: 1
+    m_TemporalCoherenceThreshold: 1
+    m_EnvironmentLightingMode: 0
+    m_EnableBakedLightmaps: 1
+    m_EnableRealtimeLightmaps: 1
+  m_LightmapEditorSettings:
+    serializedVersion: 3
+    m_Resolution: 2
+    m_BakeResolution: 40
+    m_TextureWidth: 1024
+    m_TextureHeight: 1024
+    m_AOMaxDistance: 1
+    m_Padding: 2
+    m_CompAOExponent: 0
+    m_LightmapParameters: {fileID: 0}
+    m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherRayCount: 1024
+  m_LightmapSnapshot: {fileID: 112000000, guid: 1ae8ebe1051a190479f362797ff2d7b0,
+    type: 2}
+  m_RuntimeCPUUsage: 25
+--- !u!196 &5
+NavMeshSettings:
+  serializedVersion: 2
+  m_ObjectHideFlags: 0
+  m_BuildSettings:
+    serializedVersion: 2
+    agentRadius: .5
+    agentHeight: 2
+    agentSlope: 45
+    agentClimb: .400000006
+    ledgeDropHeight: 0
+    maxJumpAcrossDistance: 0
+    accuratePlacement: 0
+    minRegionArea: 2
+    cellSize: .166666672
+    manualCellSize: 0
+  m_NavMeshData: {fileID: 0}
+--- !u!1001 &111957425
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 15.4899998
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 23
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &159443520
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.5039997
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3.00900006
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 11
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &203631891
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 10.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -18.0009995
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 19
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &240742742
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 10.4969997
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -12.0010004
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 18
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &248880662
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -24.5049992
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -27.0039997
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 17
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &352034780
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -.707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: .707106709
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
+  m_IsPrefabParent: 0
+--- !u!1001 &377241691
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 7.00600004
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &386978123
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 20.4960003
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3.01999998
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 13
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &437984068
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.51100016
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 12.9989996
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &459528375
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 9.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &555710668
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: .50999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &626204378
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 15.4899998
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 22
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &640766813
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 24.5020008
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 26.993
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 25
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &860746603
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.5059996
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 8.02200031
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &926369331
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 20.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 18.1299992
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 16
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &971296995
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.51000023
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 6.99599981
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 6
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1002804331
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -15.0200005
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 32
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1176452363
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -.532000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -18
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 20
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1206496650
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -14.4919996
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 17.9860001
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 9
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1397229662
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 24.5060005
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -27.0100002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 24
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1615141095
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.49600029
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 8.02000046
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1663243959
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.48999977
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -15.0299997
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 33
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1687610775
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -8.77999973
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 31
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1732734493
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.49400043
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3.01900005
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 12
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1771784799
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -20.5020008
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 17.9960003
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 10
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1803190716
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 14.4899998
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 18.1399994
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1809840611
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 10.5039997
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 26.9950008
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 27
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1875910597
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -23.1000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 25.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 26
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1875966693
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.48999977
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -21.3400002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 34
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1881939728
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -15.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -21.3299999
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 35
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1909327661
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 14.4860001
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -3.00999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 14
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1914277624
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -.532000005
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -12
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 21
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1915123241
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.48000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 26.8920002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &1959961226
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -9.48999977
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -8.78999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 30
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2030842064
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -4.42000008
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.00999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 25.1499996
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: .707106829
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: .707106709
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2077553469
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -.550000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -27
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 29
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2085217002
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 10.4879999
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -27.0100002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 28
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2147202078
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 4.48000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 408610, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 169256, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+      propertyPath: m_Name
+      value: Wall Light 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
+  m_IsPrefabParent: 0
