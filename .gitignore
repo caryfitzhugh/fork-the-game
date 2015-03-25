@@ -9,6 +9,12 @@ UnityGenerated/
 Library/
 Assets/AssetStoreTools*
 
+# ================= #
+# Blender generated #
+# ================= #
+*.blend
+*.blend1
+
 # ========================== #
 # Please to otherwise ignore #
 # ========================== #

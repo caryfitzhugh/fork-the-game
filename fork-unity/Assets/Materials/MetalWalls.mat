@@ -20,7 +20,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 85608d49c780d8b4b9824c92d774947d, type: 3}
           m_Scale: {x: 5, y: 5}
-          m_Offset: {x: .0299999993, y: 0}
+          m_Offset: {x: .0199999996, y: .0900000036}
       data:
         first:
           name: _BumpMap
@@ -41,7 +41,7 @@ Material:
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 5, y: 5}
-          m_Offset: {x: .0299999993, y: 0}
+          m_Offset: {x: .0199999996, y: .0900000036}
       data:
         first:
           name: _ParallaxMap
