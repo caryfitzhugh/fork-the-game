@@ -42,10 +42,10 @@ function Update ()
 
   if (is_holding == true)
   {
-    Debug.Log("tween this would be nice..");
-    held_object.transform.localPosition = new Vector3(0,0,hold_distance);
-    held_object.transform.position.y = held_object.GetComponent.<Renderer>().bounds.size.y / 2;
-		held_object.transform.LookAt(new Vector3(transform.position.x, 0.5, transform.position.z));
+    var target_position = transform.position + transform.forward * hold_distance;  // continue to align the held object with the camera
+    held_object.transform.position.x = target_position.x;
+    held_object.transform.position.z = target_position.z; // don't adjust the objects y-position to keep it on the floor
+    held_object.transform.LookAt(new Vector3(transform.position.x, 0.5, transform.position.z));
   }
 
 }
