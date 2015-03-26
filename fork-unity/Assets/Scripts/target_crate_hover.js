@@ -1,7 +1,7 @@
 ﻿#pragma strict
 
 var hoverHeight : float = 1.6;
-var power : float = 5;
+var power : float = 1;
 var balance : float = 98;
 //var dampen : float = 1;
 
