@@ -1,6 +1,7 @@
 ﻿#pragma strict
 enum MagPolarity{ None, Positive, Negative};
 var polarity : MagPolarity = MagPolarity.None;
+
 public var glow : Light;
 public var attraction_range : float = 3.0;
 public var attraction_mask: LayerMask;
