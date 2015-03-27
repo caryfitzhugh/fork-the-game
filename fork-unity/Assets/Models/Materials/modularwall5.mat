@@ -93,7 +93,7 @@ Material:
       data:
         first:
           name: _Parallax
-        second: .0428999998
+        second: .0406000018
       data:
         first:
           name: _ZWrite
@@ -109,7 +109,7 @@ Material:
       data:
         first:
           name: _OcclusionStrength
-        second: 1
+        second: .601999998
       data:
         first:
           name: _DetailNormalMapScale
