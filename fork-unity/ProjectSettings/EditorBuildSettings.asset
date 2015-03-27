@@ -9,3 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/welcome.unity
   - enabled: 1
     path: Assets/Scenes/level1.unity
+  - enabled: 1
+    path: Assets/Scenes/chasm.unity
+  - enabled: 1
+    path: Assets/Scenes/multi_room.unity
