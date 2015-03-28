@@ -22,7 +22,7 @@ function Start () {
 
 function OnTriggerEnter (other : Collider) {
   if (nearby_objects.Contains(other.gameObject.GetInstanceID())){
-    Debug.Log("What? Error! - Already here");
+    //Debug.Log("What? Error! - Already here");
   } else {
     // Make sure it's part of the Layer we want (or Tagged as we want it to be).
     nearby_objects.Add(other.gameObject.GetInstanceID(), other.gameObject);
@@ -33,7 +33,7 @@ function OnTriggerStay (other : Collider) {
 //  Debug.Log("staying:");
  // Debug.Log(other);
   if (!nearby_objects.Contains(other.gameObject.GetInstanceID())){
-    Debug.Log("What? Error! - It's stay - but not here");
+    //Debug.Log("What? Error! - It's stay - but not here");
   }
 };
 
@@ -46,5 +46,5 @@ function OnTriggerExit (other : Collider) {
 };
 
 function FixedUpdate () {
-  Debug.Log("There are " + nearby_objects.Count + " nearby!");
+  //Debug.Log("There are " + nearby_objects.Count + " nearby!");
 };
