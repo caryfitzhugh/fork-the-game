@@ -129,7 +129,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_Name
-      value: Hover Box 2
+      value: Enclosed Spinning Crate
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
@@ -1570,6 +1570,19 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_PrefabInternal: {fileID: 952282443}
+--- !u!114 &952282445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952282444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8260e7123b5d645b72960e73e58f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stability: 1
+  speed: 2
 --- !u!114 &952282446
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1578,21 +1591,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 952282444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7114d79bc5f60b24a9b2ba1aed114d60, type: 3}
+  m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  polarity: 0
-  polarityIndicator: {fileID: 205000121}
-  colorMaterial: 1
-  colorLight: 1
-  surfaceLayer:
-    serializedVersion: 2
-    m_Bits: 512
   balance: 98
-  hoverHeight: .00999999978
-  throttleTouch: .100000001
-  stability: 1
-  speed: 2
+  hoverHeight: 1.5
+  sensitivity: .100000001
+  spin: 1
+  spinPower: .200000003
 --- !u!1001 &971296995
 Prefab:
   m_ObjectHideFlags: 0
@@ -2007,11 +2013,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverHeight: 3
-  power: 1
   balance: 98
+  hoverHeight: 2.5
+  sensitivity: 1
   spin: 1
-  spinPower: .5
+  spinPower: .200000003
 --- !u!1001 &1397229662
 Prefab:
   m_ObjectHideFlags: 0
@@ -3286,11 +3292,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverHeight: 1.60000002
-  power: 1
   balance: 98
+  hoverHeight: 1.60000002
+  sensitivity: 1
   spin: 1
-  spinPower: .5
+  spinPower: .200000003
 --- !u!1001 &2030842064
 Prefab:
   m_ObjectHideFlags: 0
