@@ -30,13 +30,13 @@ function FixedUpdate() {
       if (gameObject != other_magnet.gameObject) {
         var other_magnet_reference : Magnetized = other_magnet.GetComponent(Magnetized);
         if (other_magnet_reference && (other_magnet_reference.polarity != MagPolarity.None)) {
-          // Calculate the normalized force to apply to other collider
-          var force = Mathf.Clamp(1.0 - ((other_magnet.transform.position - transform.position).magnitude / fieldRadius), 0.0, 1.0);
+          // Calculate the normalized force to apply to ourselves, based on the other magnet
+          var force = Mathf.Clamp(1.0 - ((other_magnet.transform.position - transform.position).magnitude / other_magnet_reference.fieldRadius), 0.0, 1.0);
           //Debug.Log("normalized force magnitude: " + force);
           // Determine vector to other magnet
           var direction = other_magnet.transform.position - transform.position;
           // calculate force along vector using strength setting
-          var force_vector : Vector3 = direction.normalized * force * force * other_magnet_reference.strength;
+          var force_vector : Vector3 = direction.normalized * force * force * other_magnet_reference.strength * 10;
           //Debug.Log("force_vector magnitude: " + force_vector.magnitude);
           if (other_magnet_reference.polarity == polarity) {
             // polarity is the same so repel
