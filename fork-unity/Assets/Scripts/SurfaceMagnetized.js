@@ -8,17 +8,20 @@ public var surfaceLayer: LayerMask;
 // I think all these publics will go away once we tune the hover/float
 public var balance : float = 98;
 public var hoverHeight : float = .01;
-public var throttleTouch : float = .1;
+public var sensitivity : float = .1;
 public var stability : float = 1.0;
 public var speed : float = 2.0;
 
 private var rbody : Rigidbody;
 private var ind_mat_instance : Material;  // do not change the original material -- for some reason that changes the material permanently
 private var was_kinematic : boolean;
+private var target_height : float;
 
 function Start () {
   rbody = GetComponent.<Rigidbody>();
+  target_height = GetComponent.<Renderer>().bounds.extents.y + hoverHeight;
   was_kinematic = GetComponent.<Rigidbody>().isKinematic;
+
   if (colorMaterial && polarityIndicator) {  // cache a copy of a duplicate material assigned to the indicator object
     var ind_renderer = polarityIndicator.GetComponent.<Renderer>();
     if (ind_renderer) {
@@ -72,8 +75,8 @@ function FixedUpdate() {
 
         // this is the upward force that lifts the body
         var bounds = GetComponent.<Renderer>().bounds;  // find the bottom of the object
-        var throttle = (hoverHeight - bounds.min.y) / hoverHeight;  // calculated throttle value (normalized)
-        var thrust = (throttle * (throttleTouch * balance)) + balance;  // attenuated thrust to adjust body as needed
+        var throttle = (target_height - transform.position.y) / target_height;  // calculated throttle value normalized
+        var thrust = (throttle * (sensitivity * balance)) + balance;  // attenuated thrust to adjust body as needed
         rbody.AddForce(Vector3.up * thrust);
         //Debug.Log("Target hgt delta: " + (hoverHeight - bounds.min.y) + " Throttle: " + throttle + " Thrust: " + thrust);
 
