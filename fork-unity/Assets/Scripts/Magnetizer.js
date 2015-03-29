@@ -13,7 +13,7 @@ function Update () {
 
   if (Input.GetKey(KeyCode.LeftBracket) || Input.GetKey(KeyCode.RightBracket) || Input.GetKey(KeyCode.P)) {
     if (Physics.Raycast(transform.position, transform.forward, hit_info, magnetize_distance, magnetize_mask)) {
-      Debug.Log(hit_info.collider);
+      //Debug.Log(hit_info.collider);
 
       if (Input.GetKey(KeyCode.LeftBracket) ) {
         hit_info.collider.gameObject.SendMessage("set_polarity", MagPolarity.Positive);

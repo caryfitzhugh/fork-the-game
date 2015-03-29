@@ -34,7 +34,7 @@ function Start () {
 function Update () {
 }
 
-function set_polarity (new_polarity) {
+function set_polarity (new_polarity : MagPolarity) {
   //Debug.Log("Setting polarity: " + new_polarity);
   polarity = new_polarity;
 
@@ -67,7 +67,7 @@ function set_polarity (new_polarity) {
 function FixedUpdate() {
   var parent = transform.parent;
   var carried = (parent != null && parent.gameObject.tag == "Player");
-  if (polarity && !carried) {
+  if (polarity != MagPolarity.None && !carried) {
     var hit_info : RaycastHit;
 
     if(Physics.Raycast(transform.position, Vector3.down, hit_info, 1, surfaceLayer)) {

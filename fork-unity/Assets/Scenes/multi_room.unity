@@ -133,6 +133,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &101493766
@@ -144,7 +145,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -7.63999987
+      value: -3.9000001
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.y
@@ -152,7 +153,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -4.94999981
+      value: -17.3099995
       objectReference: {fileID: 0}
     - target: {fileID: 431114, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: m_LocalRotation.x
@@ -178,7 +179,9 @@ Prefab:
       propertyPath: m_Drag
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &111957425
@@ -1015,7 +1018,9 @@ Prefab:
       propertyPath: m_Name
       value: Metal Cargo Box 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &519634297
@@ -1578,9 +1583,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 952282444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd8260e7123b5d645b72960e73e58f31, type: 3}
+  m_Script: {fileID: 11500000, guid: 7114d79bc5f60b24a9b2ba1aed114d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  polarity: 0
+  polarityIndicator: {fileID: 205000121}
+  colorMaterial: 1
+  colorLight: 1
+  surfaceLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  balance: 98
+  hoverHeight: .00999999978
+  sensitivity: .100000001
   stability: 1
   speed: 2
 --- !u!114 &952282446
@@ -1591,14 +1606,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 952282444}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
+  m_Script: {fileID: 11500000, guid: 31606ce697d2dbf42904990b4c6f8875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
-  hoverHeight: 1.5
-  sensitivity: .100000001
-  spin: 1
-  spinPower: .200000003
+  polarity: 0
+  fieldRadius: 5
+  strength: 50
+  attractionLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  output: 0
 --- !u!1001 &971296995
 Prefab:
   m_ObjectHideFlags: 0
@@ -1855,7 +1872,9 @@ Prefab:
       propertyPath: m_Name
       value: Metal Cargo Box 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1176452363
@@ -2180,6 +2199,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1573948527
@@ -3230,6 +3250,57 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a18b3dfd505c596488af1a1aa879ea26, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1990318146
+GameObject:
+  m_PrefabParentObject: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+  m_PrefabInternal: {fileID: 101493766}
+--- !u!114 &1990318147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1990318146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31606ce697d2dbf42904990b4c6f8875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  polarity: 2
+  fieldRadius: 5
+  strength: 50
+  attractionLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  output: 1
+--- !u!114 &1990318148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1990318146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  balance: 98
+  hoverHeight: .100000001
+  sensitivity: .100000001
+  spin: 0
+  spinPower: .200000003
+--- !u!114 &1990318154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1990318146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd8260e7123b5d645b72960e73e58f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stability: 1
+  speed: 2
 --- !u!1001 &2023748893
 Prefab:
   m_ObjectHideFlags: 0
