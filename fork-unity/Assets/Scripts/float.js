@@ -1,5 +1,9 @@
 ﻿#pragma strict
 
+// float creates a hover at very small distances above the ground. For some reason, the small force adjustments needed
+//    induce angular momentum in the object. Who knows why? Anyway, vector math is fun.
+//  Thinking now that stabilize should probably be its own script, handy as it is.
+
 var balance : float = 98;
 var hoverHeight : float = .01;
 var throttleMod : float = .1;
