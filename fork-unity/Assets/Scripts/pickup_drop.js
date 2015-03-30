@@ -49,7 +49,8 @@ function Update ()
     held_object.transform.position.x = target_position.x;
     held_object.transform.position.z = target_position.z; // don't adjust the objects y-position to keep it on the floor
     held_object.transform.position.y = hold_height;
-    held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
+    // When moving / pickup a crate, we can't flip the orientation.
+    //held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
   }
 
 }

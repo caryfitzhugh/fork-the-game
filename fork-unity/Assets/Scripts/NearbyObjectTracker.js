@@ -1,9 +1,9 @@
 #pragma strict
 
-public var tracking_range : float = 1.0;
+public var tracking_range : float = 5.0;
 
 // This is the mask we use to determine which objects to track
-public var detection_mask: LayerMask;
+public var trackable_type  = "PolarityIndicator";
 
 private var nearby_objects =  {};
 private var nearby_object_tracker : GameObject;
@@ -25,16 +25,14 @@ function OnTriggerEnter (other : Collider) {
     //Debug.Log("What? Error! - Already here");
   } else {
     // Make sure it's part of the Layer we want (or Tagged as we want it to be).
-    nearby_objects.Add(other.gameObject.GetInstanceID(), other.gameObject);
+    if (other.gameObject.GetComponent.<PolarityIndicator>()) {
+      nearby_objects.Add(other.gameObject.GetInstanceID(), other.gameObject);
+    }
   }
 };
 
 function OnTriggerStay (other : Collider) {
-//  Debug.Log("staying:");
- // Debug.Log(other);
-  if (!nearby_objects.Contains(other.gameObject.GetInstanceID())){
-    //Debug.Log("What? Error! - It's stay - but not here");
-  }
+
 };
 
 function OnTriggerExit (other : Collider) {
@@ -46,5 +44,5 @@ function OnTriggerExit (other : Collider) {
 };
 
 function FixedUpdate () {
-  //Debug.Log("There are " + nearby_objects.Count + " nearby!");
+  gameObject.SendMessage("calculate_magnetic_force", nearby_objects);
 };

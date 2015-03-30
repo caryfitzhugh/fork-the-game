@@ -17,9 +17,8 @@ class MagnetismAttractionData extends System.ValueType
 function Start () {
 };
 
-function set_polarity (new_polarity) {
-Debug.Log("Setting polarity");
-  polarity = new_polarity; 
+function set_polarity (new_polarity : MagPolarity) {
+  polarity = new_polarity;
 };
 
 function magnetize_update (args : MagnetismAttractionData) {
@@ -34,17 +33,17 @@ function magnetize_update (args : MagnetismAttractionData) {
       if (args.polarity == polarity) {
         //Debug.Log("attract!");
 	transform.LookAt(args.position);
-        
+
         if (sqrLen < 2) {
         } else {
           impulse = impulse * 5;
-        }  
+        }
 	gameObject.GetComponent.<Rigidbody>().AddForce(impulse, ForceMode.Force);
       } else {
         //Debug.Log("repel!");
         if (sqrLen < 2) {
           impulse = impulse * 5;
-        } 
+        }
 	transform.LookAt(args.position);
 	gameObject.GetComponent.<Rigidbody>().AddForce(impulse * -1, ForceMode.Force);
       }
@@ -60,7 +59,7 @@ function FixedUpdate() {
     attraction_data.position = transform.position;
     attraction_data.polarity = polarity;
     attraction_data.multiplier = hitColliders.length;
-          	
+
     for (var i = 0; i < hitColliders.Length; i++) {
       hitColliders[i].gameObject.SendMessage('magnetize_update', attraction_data);
     }

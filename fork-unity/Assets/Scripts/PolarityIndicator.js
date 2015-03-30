@@ -23,6 +23,10 @@ function Start () {
 function Update () {
 }
 
+function get_polarity () : MagPolarity {
+  return polarity;
+}
+
 function set_polarity (new_polarity : MagPolarity) {
   //Debug.Log("Setting polarity: " + new_polarity);
   polarity = new_polarity;
