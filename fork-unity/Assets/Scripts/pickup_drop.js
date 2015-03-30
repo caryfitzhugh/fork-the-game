@@ -6,6 +6,7 @@ var pickup_mask : LayerMask;
 
 private var is_holding : boolean = false;
 private var held_object : GameObject;
+private var hold_height : float = 0;
 
 // init
 function Start () {
@@ -34,6 +35,8 @@ function Update ()
         hit_info.collider.transform.parent = transform.parent;  // set object to be a child of the player (carrying it)
 
         held_object = hit_info.collider.gameObject;
+        hold_height = held_object.transform.position.y;
+        //Debug.Log("Hgt: " + hold_height);
 
         is_holding = true;
       }
@@ -45,7 +48,8 @@ function Update ()
     var target_position = transform.parent.position + transform.parent.forward * hold_distance;  // continue to align the held object with the camera
     held_object.transform.position.x = target_position.x;
     held_object.transform.position.z = target_position.z; // don't adjust the objects y-position to keep it on the floor
-    held_object.transform.LookAt(new Vector3(transform.position.x, 0.5, transform.position.z));
+    held_object.transform.position.y = hold_height;
+    held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
   }
 
 }

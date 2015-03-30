@@ -4,7 +4,6 @@ public var polarity : MagPolarity = MagPolarity.None;
 public var fieldRadius : float = 5.0;
 public var strength : float = 1.0;
 public var attractionLayer: LayerMask;
-public var output : boolean = true;
 
 private var rbody : Rigidbody;
 

@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 public var polarity : MagPolarity = MagPolarity.None;
+public var selfIndicator : boolean = true;
 public var polarityIndicator : GameObject;
 public var colorMaterial : boolean = true;
 public var colorLight : boolean = true;
@@ -8,6 +9,7 @@ public var colorLight : boolean = true;
 private var ind_mat_instance : Material;  // do not change the original material -- for some reason that changes the material permanently
 
 function Start () {
+  if (selfIndicator) polarityIndicator = gameObject;
   if (colorMaterial && polarityIndicator) {  // cache a copy of a duplicate material assigned to the indicator object
     var ind_renderer = polarityIndicator.GetComponent.<Renderer>();
     if (ind_renderer) {
