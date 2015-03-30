@@ -10,14 +10,11 @@ public var stability : float = 1.0;
 public var speed : float = 2.0;
 
 private var rbody : Rigidbody;
-private var was_kinematic : boolean;
 private var target_height : float;
 
 function Start () {
   rbody = GetComponent.<Rigidbody>();
   target_height = GetComponent.<Renderer>().bounds.extents.y + hoverHeight;
-  was_kinematic = GetComponent.<Rigidbody>().isKinematic;
-  set_polarity(polarity);
 }
 
 function Update () {
@@ -26,14 +23,6 @@ function Update () {
 function set_polarity (new_polarity : MagPolarity) {
   //Debug.Log("Setting polarity: " + new_polarity);
   polarity = new_polarity;
-
-  if (polarity == MagPolarity.Positive) {
-    GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world so it will not move -- redundant now that FixedUpdate does this
-  } else if (polarity == MagPolarity.Negative) {
-    GetComponent.<Rigidbody>().isKinematic = false;  // replace it in the physics world
-  } else {
-    GetComponent.<Rigidbody>().isKinematic = was_kinematic;
-  }
 }
 
 function FixedUpdate() {
@@ -60,7 +49,7 @@ function FixedUpdate() {
         var torque_vector = Vector3.Cross(predicted_up, Vector3.up);
         rbody.AddTorque(torque_vector * speed * speed);
       } else if (polarity == MagPolarity.Positive) {
-        GetComponent.<Rigidbody>().isKinematic = true;
+        rbody.AddForce(Vector3.down * balance);
       }
     }
   }
