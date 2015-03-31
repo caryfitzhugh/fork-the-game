@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
 public var force_multiplier : float = 500;
-
 private var my_polarity : HasPolarity = null;
+
 
 function Awake () {
   my_polarity = GetComponent(HasPolarity);
@@ -14,58 +14,86 @@ function Start () {
 }
 
 function Update () {
+  // Want to draw a line from each face - straight outward
+  // For debugging
 
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(1,0,0)), Color.blue);
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,1,0)), Color.yellow);
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,0,1)), Color.white);
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,-1,0)), Color.red);
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,0,-1)), Color.green);
+  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(-1,0,0)), Color.magenta);
 }
 
-function calculate_magnetic_force (nearby_objects : Hashtable) {
-
+function process_nearby_objects (nearby_objects : Hashtable) {
   if (my_polarity.polarity != MagPolarity.None) {
 
-  //Debug.Log("calc mag force.  " + nearby_objects.Count);
+    for (var target : GameObject in nearby_objects.Values) {
+      // If the object has a polarity
+      var tpi = target.GetComponent.<HasPolarity>();
+      var target_polarity = tpi.polarity;
+      var vector = (target.transform.position - transform.position);
+      // This is our magnitude
+      var magnitude = force_multiplier * nearby_objects.Count;
 
-    // You want to compare yourself against all the other objects
-    // collect them into groups
-    var groups = collect_into_groups(nearby_objects);
-  Debug.Log("found groups:" + groups.Count);
+      var closestSurfacePoint1: Vector3  = GetComponent.<Collider>().ClosestPointOnBounds(target.transform.position);
+      var closestSurfacePoint2 : Vector3 = target.GetComponent.<Collider>().ClosestPointOnBounds(transform.position);
+      var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
 
-    // For each of the other game objects.
-    for (var group : Hashtable in groups) {
 
-      if (group.ContainsKey(gameObject.GetInstanceID())) {
-        //Debug.Log("it's my group!");
-        // Only look at objects connected by your fixed joints.
-        // If they are attracting. Do nothing.
-        // If they are repelling.  Destroy the links and do a repulsion force == to the size of the group ^ 2
+      if (surface_distance < 1) {
+
+        Debug.DrawLine(transform.position, target.transform.position, new Color(180, 255 , 100, 1.0));
+        //Debug.DrawLine(closestSurfacePoint1, closestSurfacePoint2, Color.magenta);
+
+        var face = transform.InverseTransformVector(target.transform.position - transform.position);
+        var color;
+        var face_vector ;
+
+        // What face?
+        if (Mathf.Abs(face.x) > Mathf.Abs(face.y) &&
+            Mathf.Abs(face.x) > Mathf.Abs(face.z)) {
+
+          if (face.x > 0) {
+            face_vector = Vector3.right;
+          } else {
+            face_vector = Vector3.left;
+          }
+
+        } else if (Mathf.Abs(face.y) > Mathf.Abs(face.x) &&
+                   Mathf.Abs(face.y) > Mathf.Abs(face.z)) {
+          if (face.y > 0) {
+            face_vector = Vector3.up;
+          } else {
+            face_vector = Vector3.down;
+          }
+        } else {
+          // The Z
+          if (face.z > 0) {
+            face_vector = Vector3.forward;
+          } else {
+            face_vector = Vector3.back;
+          }
+        }
+
+        var relative_face_vector = transform.TransformVector(face_vector).normalized;
+
+        // Make sure we can move it.
+        // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html
+        Debug.DrawLine(transform.position, transform.position + (3 * relative_face_vector), Color.black);
+
       } else {
-        var target = closest_object_from_group (gameObject, group);
-        var tpi = target.GetComponent.<PolarityIndicator>();
-        var target_polarity = tpi.polarity;
-        var vector = (target.transform.position - transform.position);
-
-        // If you are next to me. You are 1.
-        // If you are the max away - you are probably like 25 (5**2)
-        //
-        var magnitude = force_multiplier * group.Count * 1 / vector.sqrMagnitude;
 
         if (target_polarity == MagPolarity.None) {
-          //Debug.Log("do nothing");
           // Do nothing -- the other guy is non-polarized
         } else if (target_polarity != my_polarity.polarity) {
-          //Debug.Log("does not match my polarity");
           // You just push it away (opposite of the bottom equation)
           GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Acceleration);
         } else {
-          // if it's closer than the threshold
-          if (vector.sqrMagnitude <= 1.5 ) {
-            // add a fixed joint to it!  -- make it part of you.
-            //Debug.Log("adding rigid fixed joint");
-            var new_joint : FixedJoint = gameObject.AddComponent.<FixedJoint>();
-            new_joint.connectedBody = target.GetComponent.<Rigidbody>();
-          } else {
-            // if it's farther than that, then use size of my group ^ 2 / the distance ^ 2 * force.. to push it towards *you*
-            GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Acceleration);
-          }
+          ///target.transform.LookAt(transform.position);
+          GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Acceleration);
         }
+
       }
     }
   }

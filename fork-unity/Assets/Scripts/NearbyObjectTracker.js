@@ -41,5 +41,6 @@ function OnTriggerExit (other : Collider) {
 };
 
 function FixedUpdate () {
-  // gameObject.SendMessage("calculate_magnetic_force", nearby_objects);  // has no receivers, makes too many warnings :)
+  // Tell us to process!
+  gameObject.SendMessage("process_nearby_objects", nearby_objects);  // has no receivers, makes too many warnings :)
 };
