@@ -142,26 +142,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 322b6b386ad07e64d913f30ac3bed0a7, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &75352709
-GameObject:
-  m_PrefabParentObject: {fileID: 105378, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
-  m_PrefabInternal: {fileID: 1795916222}
---- !u!114 &75352717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 75352709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e0361d8b2b5fc946a73cb21f0685413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  balance: 98
-  hoverHeight: .00999999978
-  throttleMod: .100000001
-  stability: 1
-  speed: 2
 --- !u!1001 &150646478
 Prefab:
   m_ObjectHideFlags: 0
@@ -314,6 +294,10 @@ Prefab:
       value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+      propertyPath: polarity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11464434, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
       propertyPath: polarity
       value: 2
       objectReference: {fileID: 0}

@@ -1,10 +1,10 @@
 ﻿#pragma strict
-enum MagPolarity{ None, Positive, Negative};
-var polarity : MagPolarity = MagPolarity.None;
 
 public var glow : Light;
 public var attraction_range : float = 3.0;
 public var attraction_mask: LayerMask;
+
+private var my_polarity : HasPolarity = null;
 
 // Attract!
 class MagnetismAttractionData extends System.ValueType
@@ -14,23 +14,24 @@ class MagnetismAttractionData extends System.ValueType
   var multiplier: int;
 }
 
-function Start () {
+function Awake () {
+  my_polarity = GetComponent(HasPolarity);
+  if (my_polarity == null) Debug.Log("Error! -- Object has no polarity!");
 };
 
-function set_polarity (new_polarity : MagPolarity) {
-  polarity = new_polarity;
+function Start () {
 };
 
 function magnetize_update (args : MagnetismAttractionData) {
 
-  if (polarity != MagPolarity.None) {
+  if (my_polarity.polarity != MagPolarity.None) {
     var force = (transform.position - args.position);
     var sqrLen = force.sqrMagnitude;
     var impulse = (args.position - transform.position) * args.multiplier * sqrLen;
 
     if (sqrLen > 0.5) {
 
-      if (args.polarity == polarity) {
+      if (args.polarity == my_polarity.polarity) {
         //Debug.Log("attract!");
 	transform.LookAt(args.position);
 
@@ -52,12 +53,12 @@ function magnetize_update (args : MagnetismAttractionData) {
 };
 
 function FixedUpdate() {
-  if (polarity && polarity != MagPolarity.None) {
+  if (my_polarity.polarity != MagPolarity.None) {
     var hitColliders = Physics.OverlapSphere(transform.position, attraction_range, attraction_mask);
 
     var attraction_data = new MagnetismAttractionData();
     attraction_data.position = transform.position;
-    attraction_data.polarity = polarity;
+    attraction_data.polarity = my_polarity.polarity;
     attraction_data.multiplier = hitColliders.length;
 
     for (var i = 0; i < hitColliders.Length; i++) {
@@ -74,13 +75,13 @@ function Update () {
     Debug.Log("added light");
   }
 
-  if (polarity == MagPolarity.None) {
+  if (my_polarity.polarity == MagPolarity.None) {
     light.enabled = false;
-  } else if (polarity == MagPolarity.Positive) {
-    light.enabled = true;
-    light.color = new Color(1,0,0,0.5);
-  } else if (polarity == MagPolarity.Negative) {
+  } else if (my_polarity.polarity == MagPolarity.Positive) {
     light.enabled = true;
     light.color = new Color(0,0,1,0.5);
+  } else if (my_polarity.polarity == MagPolarity.Negative) {
+    light.enabled = true;
+    light.color = new Color(1,0,0,0.5);
   }
 }

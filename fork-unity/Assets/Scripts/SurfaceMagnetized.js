@@ -1,6 +1,5 @@
 ﻿#pragma strict
 
-public var polarity : MagPolarity = MagPolarity.None;
 public var surfaceLayer: LayerMask;
 // I think all these publics will go away once we tune the hover/float
 public var balance : float = 98;
@@ -9,30 +8,28 @@ public var sensitivity : float = .1;
 public var stability : float = 1.0;
 public var speed : float = 2.0;
 
+private var my_polarity : HasPolarity = null;
 private var rbody : Rigidbody;
 private var target_height : float;
+
+function Awake () {
+  my_polarity = GetComponent(HasPolarity);
+  if (my_polarity == null) Debug.Log("Error! -- Object has no polarity!");
+}
 
 function Start () {
   rbody = GetComponent.<Rigidbody>();
   target_height = GetComponent.<Renderer>().bounds.extents.y + hoverHeight;
 }
 
-function Update () {
-}
-
-function set_polarity (new_polarity : MagPolarity) {
-  //Debug.Log("Setting polarity: " + new_polarity);
-  polarity = new_polarity;
-}
-
 function FixedUpdate() {
   var parent = transform.parent;
   var carried = (parent != null && parent.gameObject.tag == "Player");
-  if (polarity != MagPolarity.None && !carried) {
+  if (my_polarity.polarity != MagPolarity.None && !carried) {
     var hit_info : RaycastHit;
 
     if(Physics.Raycast(transform.position, Vector3.down, hit_info, 1, surfaceLayer)) {
-      if (polarity == MagPolarity.Negative) {
+      if (my_polarity.polarity == MagPolarity.Negative) {
 
         // this is the upward force that lifts the body
         var bounds = GetComponent.<Renderer>().bounds;  // find the bottom of the object
@@ -48,7 +45,7 @@ function FixedUpdate() {
         // so we apply torque along an axis perpendicular to the plane containing the desired and predicted up vectors
         var torque_vector = Vector3.Cross(predicted_up, Vector3.up);
         rbody.AddTorque(torque_vector * speed * speed);
-      } else if (polarity == MagPolarity.Positive) {
+      } else if (my_polarity.polarity == MagPolarity.Positive) {
         rbody.AddForce(Vector3.down * balance);
       }
     }

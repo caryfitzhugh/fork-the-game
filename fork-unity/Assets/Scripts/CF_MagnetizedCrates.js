@@ -1,5 +1,14 @@
 ﻿#pragma strict
+
 public var force_multiplier : float = 500;
+
+private var my_polarity : HasPolarity = null;
+
+function Awake () {
+  my_polarity = GetComponent(HasPolarity);
+  if (my_polarity == null) Debug.Log("Error! -- Object has no polarity!");
+}
+
 function Start () {
 
 }
@@ -9,10 +18,8 @@ function Update () {
 }
 
 function calculate_magnetic_force (nearby_objects : Hashtable) {
-  var my_polarity_indicator : PolarityIndicator = gameObject.GetComponent.<PolarityIndicator>();
-  var my_polarity = my_polarity_indicator.get_polarity();
 
-  if (my_polarity != MagPolarity.None) {
+  if (my_polarity.polarity != MagPolarity.None) {
 
   //Debug.Log("calc mag force.  " + nearby_objects.Count);
 
@@ -43,7 +50,7 @@ function calculate_magnetic_force (nearby_objects : Hashtable) {
         if (target_polarity == MagPolarity.None) {
           //Debug.Log("do nothing");
           // Do nothing -- the other guy is non-polarized
-        } else if (target_polarity != my_polarity) {
+        } else if (target_polarity != my_polarity.polarity) {
           //Debug.Log("does not match my polarity");
           // You just push it away (opposite of the bottom equation)
           GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Acceleration);

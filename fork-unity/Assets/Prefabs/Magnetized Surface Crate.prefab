@@ -12,9 +12,9 @@ GameObject:
   - 65: {fileID: 6551918}
   - 23: {fileID: 2366592}
   - 54: {fileID: 5446890}
+  - 114: {fileID: 11492078}
   - 114: {fileID: 11435690}
   - 114: {fileID: 11428860}
-  - 114: {fileID: 11446724}
   m_Layer: 8
   m_Name: Magnetized Surface Crate
   m_TagString: Crate
@@ -109,7 +109,6 @@ MonoBehaviour:
   attractionLayer:
     serializedVersion: 2
     m_Bits: 256
-  output: 0
 --- !u!114 &11435690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,7 +129,7 @@ MonoBehaviour:
   sensitivity: .100000001
   stability: 1
   speed: 2
---- !u!114 &11446724
+--- !u!114 &11492078
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -138,10 +137,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 189416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfc4f6834ca39ab4587c8a791e764c4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0764e8072ca702e46a197a8e26aff89e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   polarity: 0
+  selfIndicator: 1
   polarityIndicator: {fileID: 0}
   colorMaterial: 1
   colorLight: 1

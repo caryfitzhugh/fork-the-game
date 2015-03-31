@@ -12,6 +12,7 @@ GameObject:
   - 65: {fileID: 6536266}
   - 23: {fileID: 2363934}
   - 54: {fileID: 5485492}
+  - 114: {fileID: 11464434}
   - 114: {fileID: 11427440}
   - 114: {fileID: 11483540}
   m_Layer: 8
@@ -108,6 +109,22 @@ MonoBehaviour:
   attraction_mask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &11464434
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 105378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0764e8072ca702e46a197a8e26aff89e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  polarity: 0
+  selfIndicator: 1
+  polarityIndicator: {fileID: 0}
+  colorMaterial: 1
+  colorLight: 1
 --- !u!114 &11483540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tracking_range: 10
+  trackable_type: PolarityIndicator
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
