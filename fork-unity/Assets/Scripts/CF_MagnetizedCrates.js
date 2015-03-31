@@ -41,12 +41,10 @@ function process_nearby_objects (nearby_objects : Hashtable) {
       var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
 
 
-      if (surface_distance < 1) {
+      if (surface_distance < 4) {
 
-        Debug.DrawLine(transform.position, target.transform.position, new Color(180, 255 , 100, 1.0));
-        //Debug.DrawLine(closestSurfacePoint1, closestSurfacePoint2, Color.magenta);
-
-        var face = transform.InverseTransformVector(target.transform.position - transform.position);
+        var vec_to_center  = (transform.position - target.transform.position); //(target.transform.position - transform.position
+        var face = transform.InverseTransformVector(vec_to_center);
         var color;
         var face_vector ;
 
@@ -54,33 +52,38 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         if (Mathf.Abs(face.x) > Mathf.Abs(face.y) &&
             Mathf.Abs(face.x) > Mathf.Abs(face.z)) {
 
-          if (face.x > 0) {
-            face_vector = Vector3.right;
-          } else {
-            face_vector = Vector3.left;
-          }
+          if (face.x > 0) { face_vector = Vector3.left; }
+          else { face_vector = Vector3.right; }
 
         } else if (Mathf.Abs(face.y) > Mathf.Abs(face.x) &&
                    Mathf.Abs(face.y) > Mathf.Abs(face.z)) {
-          if (face.y > 0) {
-            face_vector = Vector3.up;
-          } else {
-            face_vector = Vector3.down;
-          }
+          if (face.y > 0) { face_vector = Vector3.up; }
+          else { face_vector = Vector3.down; }
+
         } else {
-          // The Z
-          if (face.z > 0) {
-            face_vector = Vector3.forward;
-          } else {
-            face_vector = Vector3.back;
-          }
+          if (face.z > 0) { face_vector = Vector3.forward; }
+          else { face_vector = Vector3.back;}
         }
 
-        var relative_face_vector = transform.TransformVector(face_vector).normalized;
+        var world_face_vector = transform.TransformVector(face_vector).normalized;
+
+        Debug.DrawLine(transform.position, transform.position + (3 * world_face_vector), Color.black);
+
+
+        // At this point I have my vectors in world_coords.
+        // The black line is the face I want to turn towards the target.transform.position
+
+
+        // ALTERNATIVE #1 - FROM DAVE?
+        var normal_axis = Vector3.Cross(vec_to_center, world_face_vector);
+/*
+        Debug.Log("normal: " + normal_axis);
+        var speed = 100;
+        GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);
+*/
 
         // Make sure we can move it.
         // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html
-        Debug.DrawLine(transform.position, transform.position + (3 * relative_face_vector), Color.black);
 
       } else {
 
