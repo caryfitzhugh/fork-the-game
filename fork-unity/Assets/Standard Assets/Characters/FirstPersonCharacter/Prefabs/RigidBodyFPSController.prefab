@@ -13,6 +13,7 @@ GameObject:
   - 114: {fileID: 11400006}
   - 114: {fileID: 11490966}
   - 114: {fileID: 11479816}
+  - 114: {fileID: 11470968}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -32,7 +33,6 @@ GameObject:
   - 136: {fileID: 13600000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11482366}
-  - 114: {fileID: 11438738}
   m_Layer: 0
   m_Name: RigidBodyFPSController
   m_TagString: Player
@@ -224,12 +224,12 @@ MonoBehaviour:
   rigidbodyFirstPersonController: {fileID: 11400004}
   StrideInterval: 4
   RunningStrideLengthen: .722000003
---- !u!114 &11438738
+--- !u!114 &11470968
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100006}
+  m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02e0fdffca705f24a94305fc48f708fb, type: 3}
@@ -239,6 +239,11 @@ MonoBehaviour:
   width: 3
   height: 35
   spread: 20
+  tracking:
+    maxSpread: 60
+    minSpread: 20
+    spreadPerSecond: 30
+    decreasePerSecond: 25
 --- !u!114 &11479816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -282,6 +287,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pickup_distance: 2
   hold_distance: 1.5
+  alignObject: 0
   pickup_mask:
     serializedVersion: 2
     m_Bits: 256

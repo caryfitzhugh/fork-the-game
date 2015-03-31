@@ -239,7 +239,8 @@ Prefab:
       propertyPath: hold_distance
       value: 1.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &574317965
@@ -694,6 +695,26 @@ MonoBehaviour:
   magnetize_mask:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1740310904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1740310896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e0fdffca705f24a94305fc48f708fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  width: 3
+  height: 35
+  spread: 20
+  tracking:
+    maxSpread: 60
+    minSpread: 20
+    spreadPerSecond: 30
+    decreasePerSecond: 25
 --- !u!1001 &1774187975
 Prefab:
   m_ObjectHideFlags: 0
