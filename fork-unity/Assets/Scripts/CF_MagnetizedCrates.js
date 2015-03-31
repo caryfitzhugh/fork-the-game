@@ -85,6 +85,9 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         // Make sure we can move it.
         // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html
 
+        // STEP 1) Adjust the rotation to match
+        // STEP 2) Move closer until the extents / bounds are within 0.1 (or something tiny).
+        // STEP 3) Attach a fixedJoint btwn you and the target
       } else {
 
         if (target_polarity == MagPolarity.None) {
