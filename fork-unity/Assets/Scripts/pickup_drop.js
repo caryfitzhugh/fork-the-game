@@ -2,6 +2,7 @@
 
 var pickup_distance : float = 2.0;
 var hold_distance : float = 1.5;
+var alignObject : boolean = false;
 var pickup_mask : LayerMask;
 
 private var is_holding : boolean = false;
@@ -49,8 +50,10 @@ function Update ()
     held_object.transform.position.x = target_position.x;
     held_object.transform.position.z = target_position.z; // don't adjust the objects y-position to keep it on the floor
     held_object.transform.position.y = hold_height;
-    // When moving / pickup a crate, we can't flip the orientation.
-    //held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
+    // When moving / pickup a crate, sometimes we don't want to flip the orientation.
+    if (alignObject == true) {
+      held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
+    }
   }
 
 }

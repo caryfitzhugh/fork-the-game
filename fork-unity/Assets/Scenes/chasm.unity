@@ -877,6 +877,10 @@ Prefab:
       propertyPath: m_ClearFlags
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 11490966, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: alignObject
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
@@ -979,6 +983,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11427440, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
+    - {fileID: 11483540, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b20cfdffac8a08647832372b741f2aec, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1895567049
