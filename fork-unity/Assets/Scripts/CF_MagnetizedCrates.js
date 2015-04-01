@@ -53,7 +53,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         //Debug.Log("tgt_local: " + target_local);
 
         // Which face is closest to matching the desired direction?
-        var local_face_vector;
+        var local_face_vector : Vector3;
         if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
             Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
 
@@ -79,7 +79,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         //Debug.Log("wtv: " + world_target_vector);
 
         var normal_axis = Vector3.Cross(world_target_vector, world_face_vector);
-        Debug.Log("rotation axis (red): " + normal_axis);
+        //Debug.Log("rotation axis (red): " + normal_axis);
         Debug.DrawLine(transform.position, transform.position + (3 * normal_axis), Color.blue);
         // This is the axis of rotation around which we must be rotated to match the desired orientation
 
@@ -101,7 +101,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
           // You just push it away (opposite of the bottom equation)
           GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Acceleration);
         } else {
-          ///target.transform.LookAt(transform.position);
+          //target.transform.LookAt(transform.position);
           GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Acceleration);
         }
 
@@ -111,7 +111,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
 }
 
 function closest_object_from_group (you : GameObject, group_contents : Hashtable) : GameObject {
-  var closest = null;
+  var closest : GameObject = null;
   var closest_dist = 99999;
 
   for (var obj in group_contents.Values) {
