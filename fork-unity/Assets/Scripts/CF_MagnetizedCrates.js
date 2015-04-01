@@ -17,12 +17,12 @@ function Update () {
   // Want to draw a line from each face - straight outward
   // For debugging
 
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(1,0,0)), Color.blue);
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,1,0)), Color.yellow);
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,0,1)), Color.white);
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,-1,0)), Color.red);
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(0,0,-1)), Color.green);
-  Debug.DrawRay(transform.position, transform.TransformVector(new Vector3(-1,0,0)), Color.magenta);
+  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.right), Color.blue);
+  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.up), Color.yellow);
+  Debug.DrawRay(transform.position, transform.TransformVector(Vector3.forward), Color.white);
+  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.down), Color.red);
+  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.back), Color.green);
+  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.left), Color.magenta);
 }
 
 function process_nearby_objects (nearby_objects : Hashtable) {
@@ -36,6 +36,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
       // This is our magnitude
       var magnitude = force_multiplier * nearby_objects.Count;
 
+      // This is an expensive calculation. You may want to just use the distance between the object centers.
       var closestSurfacePoint1: Vector3  = GetComponent.<Collider>().ClosestPointOnBounds(target.transform.position);
       var closestSurfacePoint2 : Vector3 = target.GetComponent.<Collider>().ClosestPointOnBounds(transform.position);
       var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
@@ -43,44 +44,48 @@ function process_nearby_objects (nearby_objects : Hashtable) {
 
       if (surface_distance < 4) {
 
-        var vec_to_center  = (transform.position - target.transform.position); //(target.transform.position - transform.position
-        var face = transform.InverseTransformVector(vec_to_center);
-        var color;
-        var face_vector ;
+        Debug.DrawLine(transform.position, target.transform.position, Color.green);
+        // this is the target line we want to match
 
-        // What face?
-        if (Mathf.Abs(face.x) > Mathf.Abs(face.y) &&
-            Mathf.Abs(face.x) > Mathf.Abs(face.z)) {
+        var target_local = transform.InverseTransformPoint(target.transform.position);  // vector to target in local coordinates
+        //Debug.Log("my_loc_world: " + transform.position);
+        //Debug.Log("tgt_loc_world: " + target.transform.position);
+        //Debug.Log("tgt_local: " + target_local);
 
-          if (face.x > 0) { face_vector = Vector3.left; }
-          else { face_vector = Vector3.right; }
+        // Which face is closest to matching the desired direction?
+        var local_face_vector;
+        if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
+            Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
 
-        } else if (Mathf.Abs(face.y) > Mathf.Abs(face.x) &&
-                   Mathf.Abs(face.y) > Mathf.Abs(face.z)) {
-          if (face.y > 0) { face_vector = Vector3.up; }
-          else { face_vector = Vector3.down; }
+          if (target_local.x > 0) { local_face_vector = Vector3.right; }
+          else { local_face_vector = Vector3.left; }
+
+        } else if (Mathf.Abs(target_local.y) > Mathf.Abs(target_local.x) &&
+                   Mathf.Abs(target_local.y) > Mathf.Abs(target_local.z)) {
+          if (target_local.y > 0) { local_face_vector = Vector3.up; }
+          else { local_face_vector = Vector3.down; }
 
         } else {
-          if (face.z > 0) { face_vector = Vector3.forward; }
-          else { face_vector = Vector3.back;}
+          if (target_local.z > 0) { local_face_vector = Vector3.forward; }
+          else { local_face_vector = Vector3.back;}
         }
+        //Debug.Log("lfv: " + local_face_vector);
+        var world_face_vector = transform.TransformVector(local_face_vector).normalized;
+        //Debug.Log("wfv (red): " + world_face_vector);
+        Debug.DrawLine(transform.position, transform.position + (3 * world_face_vector), Color.red);
+        // This is the face-normal that is closest to the target line, so we need to move this line to the green line
+        
+        var world_target_vector = (target.transform.position - transform.position).normalized;
+        //Debug.Log("wtv: " + world_target_vector);
 
-        var world_face_vector = transform.TransformVector(face_vector).normalized;
+        var normal_axis = Vector3.Cross(world_target_vector, world_face_vector);
+        Debug.Log("rotation axis (red): " + normal_axis);
+        Debug.DrawLine(transform.position, transform.position + (3 * normal_axis), Color.blue);
+        // This is the axis of rotation around which we must be rotated to match the desired orientation
 
-        Debug.DrawLine(transform.position, transform.position + (3 * world_face_vector), Color.black);
-
-
-        // At this point I have my vectors in world_coords.
-        // The black line is the face I want to turn towards the target.transform.position
-
-
-        // ALTERNATIVE #1 - FROM DAVE?
-        var normal_axis = Vector3.Cross(vec_to_center, world_face_vector);
-/*
-        Debug.Log("normal: " + normal_axis);
-        var speed = 100;
-        GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);
-*/
+        // I refuse to believe that my vector is inverted so I invert it for AddTorque who is, of course, wrong. :)
+        var speed = -5; // it it hard to overcome static friction, but this torque works fine with a hover attached (though we'd have to dampen the torque, you'll see why)
+        //GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);  // it also works on the floor at large values
 
         // Make sure we can move it.
         // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html
