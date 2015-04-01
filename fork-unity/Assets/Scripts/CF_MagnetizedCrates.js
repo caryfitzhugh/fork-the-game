@@ -34,13 +34,13 @@ function process_nearby_objects (nearby_objects : Hashtable) {
       var target_polarity = tpi.polarity;
       var vector = (target.transform.position - transform.position);
       // This is our magnitude
-      var magnitude = force_multiplier * nearby_objects.Count;
+      var magnitude = force_multiplier * nearby_objects.Count * nearby_objects.Count;
 
       if (target_polarity == MagPolarity.None) {
         // Do nothing -- the other guy is non-polarized
       } else if (target_polarity != my_polarity.polarity) {
         // You just push it away (opposite of the bottom equation)
-        GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Acceleration);
+        GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Force);
       } else {
         // This is an expensive calculation. You may want to just use the distance between the object centers.
         var closestSurfacePoint1: Vector3  = GetComponent.<Collider>().ClosestPointOnBounds(target.transform.position);
@@ -103,7 +103,7 @@ function process_nearby_objects (nearby_objects : Hashtable) {
           // STEP 2) Move closer until the extents / bounds are within 0.1 (or something tiny).
           // STEP 3) Attach a fixedJoint btwn you and the target
         } else  {
-          GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Acceleration);
+          GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Force);
         }
       }
     }

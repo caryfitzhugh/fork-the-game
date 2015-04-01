@@ -6,7 +6,7 @@ function Start () {
 
 }
 function OnGUI(){
-  GUI.Label(Rect(0,0,Screen.width,Screen.height),"P) Removes Polarity\n[) Add red\n]) Add blue");
+  GUI.Label(Rect(0,0,Screen.width,Screen.height),"P) Removes Polarity\n[) Add BLUE\n]) Add RED");
 }
 function Update () {
   var hit_info : UnityEngine.RaycastHit;
