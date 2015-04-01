@@ -1062,7 +1062,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 51
+  m_RootOrder: 32
 --- !u!1001 &547232133
 Prefab:
   m_ObjectHideFlags: 0
@@ -1762,7 +1762,7 @@ Transform:
   m_LocalScale: {x: .779999971, y: 1, z: .879999995}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 17
 --- !u!1 &988982430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4562,6 +4562,30 @@ Prefab:
     - target: {fileID: 11400004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
       propertyPath: mouseLook.YSensitivity
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: spread
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: tracking.maxSpread
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: tracking.minSpread
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: tracking.trackLayers.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: tracking.decreasePerSecond
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 11470968, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+      propertyPath: tracking.spreadPerSecond
+      value: 45
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}

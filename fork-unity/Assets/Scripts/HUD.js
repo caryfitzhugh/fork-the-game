@@ -3,10 +3,21 @@
 var crosshairColor = Color.white; //The crosshair color
 var width : float = 3; //Crosshair width
 var height : float = 35; //Crosshair height
-var spread : float = 20; // Distance apart
+var spread : float = 50; // Distance apart
+
+class tracking_opts {
+  var trackLayers: LayerMask;
+  var minSpread = 15.0;
+  var spreadPerSecond = 45.0;
+  var decreasePerSecond = 150.0;
+}
+ 
+var tracking : tracking_opts;
  
 private var texture : Texture2D;
 private var lineStyle : GUIStyle;
+private var hit_distance = 2;  // temp until we can align hit distances
+private var maxSpread = 50.0;
 
 function Start () {
   texture = Texture2D(1,1);   // 1-pixel texture
@@ -15,6 +26,18 @@ function Start () {
    
   lineStyle = GUIStyle();
   lineStyle.normal.background = texture;
+}
+
+function Update () {
+  //Debug.Log(
+  var hit_info : RaycastHit;
+  if (Physics.Raycast(transform.position, transform.forward, hit_info, hit_distance, tracking.trackLayers))
+  {
+    spread -= tracking.decreasePerSecond * Time.deltaTime;
+  } else {
+    spread += tracking.spreadPerSecond * Time.deltaTime;
+  }
+  spread = Mathf.Clamp(spread, tracking.minSpread, maxSpread); 
 }
 
 function OnGUI () {
