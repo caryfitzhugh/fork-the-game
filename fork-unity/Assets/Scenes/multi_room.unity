@@ -951,7 +951,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 45
+  m_RootOrder: 55
 --- !u!1001 &547232133
 Prefab:
   m_ObjectHideFlags: 0
@@ -1651,7 +1651,7 @@ Transform:
   m_LocalScale: {x: .779999971, y: 1, z: .879999995}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 31
+  m_RootOrder: 40
 --- !u!1 &988982430
 GameObject:
   m_ObjectHideFlags: 0
@@ -2655,6 +2655,22 @@ MonoBehaviour:
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 2a98ccf37f9ddaf4fba2b9931fc4cb62, type: 3}
   m_PrefabInternal: {fileID: 352034780}
+--- !u!114 &1606204256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606204255}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c549320254c6a7f48874a855d6547a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 2.5
+  structure:
+    ceilingHeight: 5
+    gameObject: {fileID: 0}
+    collider: {fileID: 0}
 --- !u!1001 &1615141095
 Prefab:
   m_ObjectHideFlags: 0

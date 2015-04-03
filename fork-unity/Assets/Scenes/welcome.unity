@@ -188,6 +188,26 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7972ae04a768c1441afdd693b608a2c1, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &385289820
+GameObject:
+  m_PrefabParentObject: {fileID: 181362, guid: e224c83bdc6cfdd4288f4a69197c4757, type: 2}
+  m_PrefabInternal: {fileID: 1427041870}
+--- !u!114 &385289821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 385289820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c549320254c6a7f48874a855d6547a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionDistance: 2.5
+  structure:
+    ceilingHeight: 5
+    gameObject: {fileID: 0}
+    collider: {fileID: 0}
 --- !u!1001 &535182934
 Prefab:
   m_ObjectHideFlags: 0
@@ -241,6 +261,7 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
+    - {fileID: 11482366, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &574317965
@@ -691,7 +712,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01f1e25448ba44b7d97ea5427ee39bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  magnetize_distance: 2
   magnetize_mask:
     serializedVersion: 2
     m_Bits: 256
@@ -711,7 +731,9 @@ MonoBehaviour:
   height: 35
   spread: 20
   tracking:
-    maxSpread: 60
+    trackLayers:
+      serializedVersion: 2
+      m_Bits: 0
     minSpread: 20
     spreadPerSecond: 30
     decreasePerSecond: 25

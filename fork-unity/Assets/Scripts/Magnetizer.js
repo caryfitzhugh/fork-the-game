@@ -1,6 +1,13 @@
 ﻿#pragma strict
-public var magnetize_distance = 3.0;
 public var magnetize_mask: LayerMask;
+private var level_settings : LevelGlobals = null;
+
+function Awake() {
+  level_settings = FindObjectOfType(LevelGlobals);
+  if (!level_settings) {
+    Debug.Log("No LevelGlobal found!");
+  }
+}
 
 function Start () {
 
@@ -12,7 +19,7 @@ function Update () {
   var hit_info : UnityEngine.RaycastHit;
 
   if (Input.GetKey(KeyCode.LeftBracket) || Input.GetKey(KeyCode.RightBracket) || Input.GetKey(KeyCode.P)) {
-    if (Physics.Raycast(transform.position, transform.forward, hit_info, magnetize_distance, magnetize_mask)) {
+    if (Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, magnetize_mask)) {
       //Debug.Log(hit_info.collider);
 
       if (Input.GetKey(KeyCode.LeftBracket) ) {

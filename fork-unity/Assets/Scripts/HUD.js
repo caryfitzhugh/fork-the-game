@@ -11,19 +11,26 @@ class tracking_opts {
   var spreadPerSecond = 45.0;
   var decreasePerSecond = 150.0;
 }
- 
+
 var tracking : tracking_opts;
- 
+
 private var texture : Texture2D;
 private var lineStyle : GUIStyle;
-private var hit_distance = 2;  // temp until we can align hit distances
 private var maxSpread = 50.0;
+private var level_settings : LevelGlobals = null;
+
+function Awake() {
+  level_settings = FindObjectOfType(LevelGlobals);
+  if (!level_settings) {
+    Debug.Log("No LevelGlobal found!");
+  }
+}
 
 function Start () {
   texture = Texture2D(1,1);   // 1-pixel texture
-   
+
   set_color(texture, crosshairColor);
-   
+
   lineStyle = GUIStyle();
   lineStyle.normal.background = texture;
 }
@@ -31,7 +38,7 @@ function Start () {
 function Update () {
   //Debug.Log(
   var hit_info : RaycastHit;
-  if (Physics.Raycast(transform.position, transform.forward, hit_info, hit_distance, tracking.trackLayers))
+  if (Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, tracking.trackLayers))
   {
     spread -= tracking.decreasePerSecond * Time.deltaTime;
   } else {

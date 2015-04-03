@@ -1,6 +1,5 @@
 ﻿#pragma strict
 
-var pickup_distance : float = 2.0;
 var hold_distance : float = 1.5;
 var alignObject : boolean = false;
 var pickup_mask : LayerMask;
@@ -8,6 +7,14 @@ var pickup_mask : LayerMask;
 private var is_holding : boolean = false;
 private var held_object : GameObject;
 private var hold_height : float = 0;
+private var level_settings : LevelGlobals = null;
+
+function Awake() {
+  level_settings = FindObjectOfType(LevelGlobals);
+  if (!level_settings) {
+    Debug.Log("No LevelGlobal found!");
+  }
+}
 
 // init
 function Start () {
@@ -29,7 +36,7 @@ function Update ()
     }
     else
     {
-      if(Physics.Raycast(transform.position, transform.forward, hit_info, pickup_distance, pickup_mask))
+      if(Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, pickup_mask))
       {
         hit_info.collider.GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world, we will move it ourselves
 

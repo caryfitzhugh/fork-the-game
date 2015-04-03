@@ -7,9 +7,15 @@ var horizPower : float = 1;
 var vertVelocity : float = 1;
 var vertPower : float = 1;
 var balance : float = 98;
-var wallsObject : GameObject;
 
-private var ceiling_height : float = 5.0;
+private var level_settings : LevelGlobals = null;
+
+function Awake() {
+  level_settings = FindObjectOfType(LevelGlobals);
+  if (!level_settings) {
+    Debug.Log("No LevelGlobal found!");
+  }
+}
 
 function OnTriggerStay (object : Collider) {
   // var parent = transform.parent;
@@ -32,7 +38,7 @@ function FixedUpdate() {
   for (var i = 0;i < hits.Length; i++) {
     var hit_info : RaycastHit = hits[i];
     var object_rbody = hit_info.rigidbody;
-    if (hit_info.transform.position.y > (ceiling_height + 1)) {
+    if (hit_info.transform.position.y > (level_settings.structure.ceilingHeight + 1)) {
       Destroy(hit_info.transform.gameObject);   // object is above the ceiling, dstroy iy
     } else if (object_rbody) {
       var center_vector = (transform.position - hit_info.transform.position);   // "error" vector of object centering
@@ -43,9 +49,9 @@ function FixedUpdate() {
       var vert_vector = Vector3.up * vert_thrust * vertPower;
       object_rbody.AddForce(vert_vector);
       //Debug.Log("lifting");
-      if (hit_info.transform.position.y > (ceiling_height - 1)) {
+      if (hit_info.transform.position.y > (level_settings.structure.ceilingHeight - 1)) {
         // allow the object to pass through the ceiling
-        Physics.IgnoreCollision(hit_info.collider, wallsObject.GetComponent.<Collider>());
+        Physics.IgnoreCollision(hit_info.collider, level_settings.structure.collider);
       }
     }
   }
