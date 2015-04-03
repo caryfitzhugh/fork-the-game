@@ -47,17 +47,16 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         var closestSurfacePoint2 : Vector3 = target.GetComponent.<Collider>().ClosestPointOnBounds(transform.position);
         var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
 
-        if (surface_distance < 0.5) {
+         if (surface_distance < 0.5) {
+
           Debug.DrawLine(transform.position, target.transform.position, Color.green);
           // this is the target line we want to match
 
           var target_local = transform.InverseTransformPoint(target.transform.position);  // vector to target in local coordinates
-          //Debug.Log("my_loc_world: " + transform.position);
-          //Debug.Log("tgt_loc_world: " + target.transform.position);
-          //Debug.Log("tgt_local: " + target_local);
 
           // Which face is closest to matching the desired direction?
           var local_face_vector : Vector3;
+
           if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
               Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
 
@@ -95,6 +94,10 @@ function process_nearby_objects (nearby_objects : Hashtable) {
 
           // Only rotate around the Y ( to keep them on the ground?)
           GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);  // it also works on the floor at large values
+          GetComponent.<Rigidbody>().AddForce(vector, ForceMode.Force); // Push them closer together (a little)
+
+          Debug.Log("transform.rot" + transform.rotation );
+          Debug.Log("quaternoin " + Quaternion.LookRotation (world_face_vector,transform.TransformVector(Vector3.up).normalized ));//hit1.normal);
 
           // Make sure we can move it.
           // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html

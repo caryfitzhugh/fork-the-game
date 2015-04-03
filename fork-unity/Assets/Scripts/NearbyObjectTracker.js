@@ -34,7 +34,7 @@ function OnTriggerStay (other : Collider) {
 
 function OnTriggerExit (other : Collider) {
   if (!nearby_objects.Contains(other.gameObject.GetInstanceID())){
-    Debug.Log("What? Error! - Leaving but not here");
+    //Debug.Log("What? Error! - Leaving but not here");
   } else {
     nearby_objects.Remove(other.gameObject.GetInstanceID());
   }
