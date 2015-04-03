@@ -7,6 +7,9 @@ var horizPower : float = 1;
 var vertVelocity : float = 1;
 var vertPower : float = 1;
 var balance : float = 98;
+var wallsObject : GameObject;
+
+private var ceiling_height : float = 5.0;
 
 function OnTriggerStay (object : Collider) {
   // var parent = transform.parent;
@@ -24,16 +27,26 @@ function OnTriggerStay (object : Collider) {
 function FixedUpdate() {
   var hits : RaycastHit[];
   hits = Physics.RaycastAll(transform.position + (Vector3.up * 7), Vector3.down, 8, liftLayer);
-
+  Debug.DrawLine(transform.position + (Vector3.up * 7), transform.position + (Vector3.down * 8), Color.green);
+  
   for (var i = 0;i < hits.Length; i++) {
     var hit_info : RaycastHit = hits[i];
     var object_rbody = hit_info.rigidbody;
-    if (object_rbody) {
-      var vert_throttle = (vertVelocity - object_rbody.velocity.y) / vertVelocity; // calculated throttle value normalized
+    if (hit_info.transform.position.y > (ceiling_height + 1)) {
+      Destroy(hit_info.transform.gameObject);   // object is above the ceiling, dstroy iy
+    } else if (object_rbody) {
+      var center_vector = (transform.position - hit_info.transform.position);   // "error" vector of object centering
+      var horiz_throttle = 1.0 - Vector3(center_vector.x, 0, center_vector.z).magnitude;  // normalized center offset amount
+      var vert_velocity_target = vertVelocity * horiz_throttle * horiz_throttle;  // velocity should falloff with distance^2
+      var vert_throttle = (vert_velocity_target - object_rbody.velocity.y) / vert_velocity_target; // calculated throttle value normalized
       var vert_thrust = ((vert_throttle * balance) + balance);
       var vert_vector = Vector3.up * vert_thrust * vertPower;
       object_rbody.AddForce(vert_vector);
       //Debug.Log("lifting");
+      if (hit_info.transform.position.y > (ceiling_height - 1)) {
+        // allow the object to pass through the ceiling
+        Physics.IgnoreCollision(hit_info.collider, wallsObject.GetComponent.<Collider>());
+      }
     }
   }
 }

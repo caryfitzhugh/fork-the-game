@@ -37,28 +37,14 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _EmissionMap
+          name: _MetallicGlossMap
         second:
-          m_Texture: {fileID: 2800000, guid: 59ccfb56c93c8e449928dde99d3672c3, type: 3}
+          m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
         first:
           name: _ParallaxMap
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailMask
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _DetailAlbedoMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -72,7 +58,21 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
-          name: _MetallicGlossMap
+          name: _EmissionMap
+        second:
+          m_Texture: {fileID: 2800000, guid: 59ccfb56c93c8e449928dde99d3672c3, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailMask
+        second:
+          m_Texture: {fileID: 0}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _DetailAlbedoMap
         second:
           m_Texture: {fileID: 0}
           m_Scale: {x: 1, y: 1}
@@ -92,10 +92,6 @@ Material:
         second: 0
       data:
         first:
-          name: _Parallax
-        second: .0199999996
-      data:
-        first:
           name: _ZWrite
         second: 1
       data:
@@ -104,8 +100,16 @@ Material:
         second: .879999995
       data:
         first:
+          name: _Metallic
+        second: 0
+      data:
+        first:
           name: _BumpScale
         second: 1
+      data:
+        first:
+          name: _Parallax
+        second: .0199999996
       data:
         first:
           name: _OcclusionStrength
@@ -120,21 +124,17 @@ Material:
         second: 0
       data:
         first:
-          name: _Mode
-        second: 0
-      data:
-        first:
           name: _EmissionScaleUI
         second: 1
       data:
         first:
-          name: _Metallic
+          name: _Mode
         second: 0
     m_Colors:
       data:
         first:
           name: _EmissionColor
-        second: {r: .490196079, g: .490196079, b: .490196079, a: 1}
+        second: {r: .772549033, g: .772549033, b: .772549033, a: 1}
       data:
         first:
           name: _Color
@@ -142,4 +142,4 @@ Material:
       data:
         first:
           name: _EmissionColorUI
-        second: {r: .490196079, g: .490196079, b: .490196079, a: 1}
+        second: {r: .772549033, g: .772549033, b: .772549033, a: 1}
