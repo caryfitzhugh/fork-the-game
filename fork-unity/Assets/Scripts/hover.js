@@ -21,11 +21,14 @@ function Update () {
 }
 
 function FixedUpdate() {
-  var throttle = (target_height - transform.position.y) / target_height;  // calculated throttle value normalized
-  var thrust = (throttle * (sensitivity * balance)) + balance;
+  var error = target_height - transform.position.y;
+  if (error > 0) {
+    var throttle = Mathf.Clamp(error / target_height, 0, 1);  // calculated throttle value normalized
+    var thrust = (throttle * (sensitivity * balance)) + balance;
 
-  rbody.AddForce(Vector3.up * thrust);
-  //Debug.Log("Target hgt: " + (target_height - transform.position.y) + " Throttle: " + throttle + " Thrust: " + thrust);
+    rbody.AddForce(Vector3.up * thrust);
+    //Debug.Log("Target hgt: " + (target_height - transform.position.y) + " Throttle: " + throttle + " Thrust: " + thrust);
+  }
 
   if (spin) {
     //spin_vector += (Vector3.right * spinPower);

@@ -25,7 +25,7 @@ function OnTriggerStay (object : Collider) {
     var vector = (transform.position - object.transform.position);
     var horiz_vector = Vector3(vector.x, 0, vector.z);
     var horiz_thrust = horiz_vector * horizPower;
-    object_rbody.AddForce(horiz_thrust);
+    object_rbody.AddForce(horiz_thrust);  // we probably shouldn't do physics here, but we will try to get away with it for this part
     //Debug.Log("centering");
   }
 }
@@ -39,7 +39,7 @@ function FixedUpdate() {
     var hit_info : RaycastHit = hits[i];
     var object_rbody = hit_info.rigidbody;
     if (hit_info.transform.position.y > (level_settings.structure.ceilingHeight + 1)) {
-      Destroy(hit_info.transform.gameObject);   // object is above the ceiling, dstroy iy
+      Destroy(hit_info.transform.gameObject);   // object is above the ceiling, destroy it
     } else if (object_rbody) {
       var center_vector = (transform.position - hit_info.transform.position);   // "error" vector of object centering
       var horiz_throttle = 1.0 - Vector3(center_vector.x, 0, center_vector.z).magnitude;  // normalized center offset amount
