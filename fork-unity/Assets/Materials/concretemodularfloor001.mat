@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: concretemodularfloor001
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 45, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _PARALLAXMAP
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -108,7 +108,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: .100000001
+        second: .277999997
       data:
         first:
           name: _BumpScale
@@ -116,7 +116,7 @@ Material:
       data:
         first:
           name: _OcclusionStrength
-        second: .586000025
+        second: .634000003
       data:
         first:
           name: _DetailNormalMapScale
@@ -136,7 +136,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: .416999996
     m_Colors:
       data:
         first:
@@ -149,7 +149,7 @@ Material:
       data:
         first:
           name: _SpecColor
-        second: {r: .200000003, g: .200000003, b: .200000003, a: 1}
+        second: {r: .372549027, g: .372549027, b: .372549027, a: 1}
       data:
         first:
           name: _EmissionColorUI

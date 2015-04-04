@@ -1,8 +1,8 @@
 ﻿#pragma strict
 
-var hold_distance : float = 1.5;
+var holdDistance : float = 1.5;
 var alignObject : boolean = false;
-var pickup_mask : LayerMask;
+var interactionLayers : LayerMask;
 
 private var is_holding : boolean = false;
 private var held_object : GameObject;
@@ -36,24 +36,28 @@ function Update ()
     }
     else
     {
-      if(Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, pickup_mask))
+      if(Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, interactionLayers))
       {
-        hit_info.collider.GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world, we will move it ourselves
+        if (hit_info.collider.gameObject.layer == 8) { // this is the pickup layer -- why oh why is it referenced by index?
+          hit_info.collider.GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world, we will move it ourselves
 
-        hit_info.collider.transform.parent = transform.parent;  // set object to be a child of the player (carrying it)
+          hit_info.collider.transform.parent = transform.parent;  // set object to be a child of the player (carrying it)
 
-        held_object = hit_info.collider.gameObject;
-        hold_height = held_object.transform.position.y;
-        //Debug.Log("Hgt: " + hold_height);
+          held_object = hit_info.collider.gameObject;
+          hold_height = held_object.transform.position.y;
+          //Debug.Log("Hgt: " + hold_height);
 
-        is_holding = true;
+          is_holding = true;
+        } else {  // else it is 11, the interaction layer :-P
+          hit_info.collider.gameObject.SendMessage("activate", true);
+        }
       }
     }
   }
 
   if (is_holding == true)
   {
-    var target_position = transform.parent.position + transform.parent.forward * hold_distance;  // continue to align the held object with the camera
+    var target_position = transform.parent.position + transform.parent.forward * holdDistance;  // continue to align the held object with the camera
     held_object.transform.position.x = target_position.x;
     held_object.transform.position.z = target_position.z; // don't adjust the objects y-position to keep it on the floor
     held_object.transform.position.y = hold_height;

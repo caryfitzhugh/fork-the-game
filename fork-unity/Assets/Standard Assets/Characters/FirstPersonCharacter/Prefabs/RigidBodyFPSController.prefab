@@ -241,7 +241,7 @@ MonoBehaviour:
   tracking:
     trackLayers:
       serializedVersion: 2
-      m_Bits: 256
+      m_Bits: 2304
     minSpread: 15
     spreadPerSecond: 45
     decreasePerSecond: 150
@@ -270,11 +270,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaba3ad17b46e8478b7ddf2f95b36bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hold_distance: 1.5
+  holdDistance: 1.5
   alignObject: 0
-  pickup_mask:
+  interactionLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 2304
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
