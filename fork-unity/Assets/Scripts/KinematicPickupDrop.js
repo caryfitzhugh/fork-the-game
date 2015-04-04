@@ -36,17 +36,22 @@ function Update ()
     {
       if(Physics.Raycast(transform.position, transform.forward, hit_info, level_settings.interactionDistance, pickup_mask))
       {
-        held_object = hit_info.collider.gameObject;
-        held_object.transform.position.y = held_object.transform.position.y + 0.5;
+        if (hit_info.collider.gameObject.layer == 8) { // this is the pickup layer -- why oh why is it referenced by index?
+          held_object = hit_info.collider.gameObject;
+          held_object.transform.position.y = held_object.transform.position.y + 0.5;
+          hold_height = held_object.transform.position.y;
 
-        // When moving / pickup a crate, sometimes we don't want to flip the orientation.
-        if (alignObject == true) {
-          held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
+          // When moving / pickup a crate, sometimes we don't want to flip the orientation.
+          if (alignObject == true) {
+            held_object.transform.LookAt(new Vector3(transform.position.x, hold_height, transform.position.z));
+          }
+
+          // Add the joint
+          lift_joint = held_object.AddComponent(FixedJoint);
+          lift_joint.connectedBody = gameObject.transform.parent.gameObject.GetComponent.<Rigidbody>(); // we are just the camera, our parent is the one with the rigidbody
+        } else {  // else it is 11, the interaction layer :-P
+          hit_info.collider.gameObject.SendMessage("activate", true);
         }
-
-        // Add the joint
-        lift_joint = gameObject.AddComponent(FixedJoint);
-        lift_joint.connectedBody = held_object.GetComponent.<Rigidbody>();
       }
     }
   }

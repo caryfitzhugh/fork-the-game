@@ -14,7 +14,7 @@ function Start () {
 
 function activate(activation) {
   var hopper : ObstructionCheck = hopper_blocked();
-  Debug.Log("activated!");
+  //Debug.Log("activated!");
   if (!hopper.blocked) {
     Instantiate(dispense, transform.position + (transform.up * 1.78), Quaternion.identity);
   }

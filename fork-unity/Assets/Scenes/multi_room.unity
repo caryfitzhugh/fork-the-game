@@ -1447,6 +1447,26 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6cc7f607f7219e64aa2646f092a455de, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &846413290
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+  m_PrefabInternal: {fileID: 2030842064}
+--- !u!114 &846413291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 846413290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d4f4799588e4c54977d6241f3cff2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hold_distance: 1.5
+  alignObject: 1
+  pickup_mask:
+    serializedVersion: 2
+    m_Bits: 2304
 --- !u!1001 &860746603
 Prefab:
   m_ObjectHideFlags: 0
@@ -4813,7 +4833,8 @@ Prefab:
       propertyPath: interactionLayers.m_Bits
       value: 2304
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11490966, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &2077553469

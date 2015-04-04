@@ -264,7 +264,8 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11490966, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &717094361
@@ -626,6 +627,26 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 55aa9d8b6fd47d2448b637cde94f05f6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1831415247
+GameObject:
+  m_PrefabParentObject: {fileID: 100004, guid: c6453f8e1f814744d8b94e5a6d1f9942, type: 2}
+  m_PrefabInternal: {fileID: 535182934}
+--- !u!114 &1831415250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1831415247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d4f4799588e4c54977d6241f3cff2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hold_distance: 1.5
+  alignObject: 0
+  pickup_mask:
+    serializedVersion: 2
+    m_Bits: 2304
 --- !u!1001 &1859442042
 Prefab:
   m_ObjectHideFlags: 0
