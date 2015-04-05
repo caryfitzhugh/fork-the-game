@@ -43,7 +43,7 @@ function FixedUpdate() {
         if (object_renderer) { object_height = object_renderer.bounds.extents.y; }
           else if (object.tag == "Player") { object_height = 1; } // could check player collider height
           else object_height = 1;
-        var target_height = object_height + hoverHeight;
+        var target_height = transform.position.y + object_height + hoverHeight;
         //var throttle : float = Mathf.Clamp((target_height - object_transform.position.y)/10, -.01, .2);  // 20/mass -mass/100, mass/10 but player balance is off, it seems
         var throttle : float = Mathf.Clamp((target_height - object_transform.position.y)/2, -.1, 1);  // calculated throttle value normalized
         var thrust = balance * (throttle + 1);
