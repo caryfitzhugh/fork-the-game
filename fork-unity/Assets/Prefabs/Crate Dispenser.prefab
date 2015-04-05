@@ -87,6 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dispense: {fileID: 129334, guid: c2ec7a83184639b4aa2bed02c491e93d, type: 2}
   ejectForce: .100000001
+  vendDelay: 4
+  autoVend: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
