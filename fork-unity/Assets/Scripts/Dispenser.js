@@ -10,7 +10,7 @@ class ObstructionCheck {
   public var distance : float;
 }
 
-private var last_vend = 0;
+private var last_vend = 1 - vendDelay;
 
 function Start () {
 
