@@ -2201,7 +2201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -2428,7 +2427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -2695,7 +2693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: 2.5
   sensitivity: 1
   spin: 1
@@ -3184,7 +3181,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 49
+  m_RootOrder: 50
 --- !u!114 &1598712905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,7 +3224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .0500000007
   spin: 0
@@ -3614,7 +3610,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 113952, guid: d97edbeb5688f74459891649eff7e6fb, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d97edbeb5688f74459891649eff7e6fb, type: 2}
@@ -3668,7 +3664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -3817,31 +3812,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 491918, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
       propertyPath: m_RootOrder
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 11472510, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: wallsObject
-      value: 
-      objectReference: {fileID: 1606204255}
-    - target: {fileID: 2388976, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 99d44424e96406046bb53a9d61909d6e, type: 2}
-    - target: {fileID: 11472510, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: vertVelocity
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 11472510, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: vertPower
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527526, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: m_Size.z
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6527526, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
-      propertyPath: m_Center.z
-      value: -1.97000003
+      value: 64
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6a9d9f096dc89d94797fdffe186ef450, type: 2}
@@ -4046,7 +4017,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -4223,7 +4193,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -4368,7 +4337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -4877,7 +4845,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
   sensitivity: .100000001
   spin: 0
@@ -5693,7 +5660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: 1.60000002
   sensitivity: 1
   spin: 1

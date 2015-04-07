@@ -104,9 +104,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd6aceb0fa60ca14a83a737488ddfc05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balance: 98
   hoverHeight: .100000001
-  sensitivity: .100000001
+  sensitivity: .0500000007
   spin: 0
   spinPower: .200000003
 --- !u!114 &11450830
@@ -149,7 +148,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31606ce697d2dbf42904990b4c6f8875, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  polarity: 0
   fieldRadius: 5
   strength: 5
   attractionLayer:
