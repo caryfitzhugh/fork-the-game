@@ -19,7 +19,7 @@ function Update () {
 
   // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.right), Color.blue);
   // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.up), Color.yellow);
-  Debug.DrawRay(transform.position, transform.TransformVector(Vector3.forward), Color.white);
+  //Debug.DrawRay(transform.position, transform.TransformVector(Vector3.forward), Color.white);
   // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.down), Color.red);
   // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.back), Color.green);
   // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.left), Color.magenta);
@@ -27,6 +27,10 @@ function Update () {
 
 function process_nearby_objects (nearby_objects : Hashtable) {
   if (my_polarity.polarity != MagPolarity.None) {
+
+
+    // Apparently you are not a nearby object! :)
+Debug.Log("Collect " + nearby_objects.Count + " into groups: " + collect_into_groups(nearby_objects).Count);
 
     for (var target : GameObject in nearby_objects.Values) {
       // If the object has a polarity
@@ -42,12 +46,26 @@ function process_nearby_objects (nearby_objects : Hashtable) {
         // You just push it away (opposite of the bottom equation)
         GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Force);
       } else {
-        // This is an expensive calculation. You may want to just use the distance between the object centers.
-        var closestSurfacePoint1: Vector3  = GetComponent.<Collider>().ClosestPointOnBounds(target.transform.position);
-        var closestSurfacePoint2 : Vector3 = target.GetComponent.<Collider>().ClosestPointOnBounds(transform.position);
-        var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
+         if (vector.sqrMagnitude < 2) {
+            // Find out our desired position
+            var desired_position : Vector3;
+            // We look at the target, and get it's "face vector"
+            var dest_local = target.transform.InverseTransformPoint(transform.position);  // vector to target in local coordinates
 
-         if (surface_distance < 0.5) {
+            // Which face is closest to matching the desired direction?
+            var dest_local_face_vector = face_vector(dest_local);
+            var dest_world_face_vector = target.transform.TransformVector(dest_local_face_vector).normalized;
+            desired_position = target.transform.position + dest_world_face_vector * 1 /* The size of a cube */;
+
+            // Just "SNAP" to it!
+            transform.position = desired_position;
+            if (target.GetComponent(FixedJoint)) {
+              var mag_joint = target.AddComponent(FixedJoint);
+              mag_joint.connectedBody = GetComponent.<Rigidbody>();
+
+              Debug.Log("Created Joint");
+            }
+         } else {
 
           Debug.DrawLine(transform.position, target.transform.position, Color.green);
           // this is the target line we want to match
@@ -55,26 +73,9 @@ function process_nearby_objects (nearby_objects : Hashtable) {
           var target_local = transform.InverseTransformPoint(target.transform.position);  // vector to target in local coordinates
 
           // Which face is closest to matching the desired direction?
-          var local_face_vector : Vector3;
-
-          if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
-              Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
-
-                if (target_local.x > 0) { local_face_vector = Vector3.right; }
-                else { local_face_vector = Vector3.left; }
-
-              } else if (Mathf.Abs(target_local.y) > Mathf.Abs(target_local.x) &&
-                  Mathf.Abs(target_local.y) > Mathf.Abs(target_local.z)) {
-                    if (target_local.y > 0) { local_face_vector = Vector3.up; }
-                    else { local_face_vector = Vector3.down; }
-
-                  } else {
-                    if (target_local.z > 0) { local_face_vector = Vector3.forward; }
-                    else { local_face_vector = Vector3.back;}
-                  }
-
-          //Debug.Log("lfv: " + local_face_vector);
+          var local_face_vector = face_vector(target_local);
           var world_face_vector = transform.TransformVector(local_face_vector).normalized;
+
           //Debug.Log("wfv (red): " + world_face_vector);
           Debug.DrawLine(transform.position, transform.position + (3 * world_face_vector), Color.red);
           // This is the face-normal that is closest to the target line, so we need to move this line to the green line
@@ -84,7 +85,6 @@ function process_nearby_objects (nearby_objects : Hashtable) {
 
           var normal_axis = Vector3.Cross(world_target_vector, world_face_vector);
 
-          //Debug.Log("rotation axis (red): " + normal_axis);
           Debug.DrawLine(transform.position, transform.position + (3 * normal_axis), Color.blue);
           // This is the axis of rotation around which we must be rotated to match the desired orientation
 
@@ -94,24 +94,41 @@ function process_nearby_objects (nearby_objects : Hashtable) {
 
           // Only rotate around the Y ( to keep them on the ground?)
           GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);  // it also works on the floor at large values
-          GetComponent.<Rigidbody>().AddForce(vector, ForceMode.Force); // Push them closer together (a little)
 
-          Debug.Log("transform.rot" + transform.rotation );
-          Debug.Log("quaternoin " + Quaternion.LookRotation (world_face_vector,transform.TransformVector(Vector3.up).normalized ));//hit1.normal);
-
-          // Make sure we can move it.
-          // http://docs.unity3d.com/ScriptReference/Rigidbody.SweepTest.html
-
-          // STEP 1) Adjust the rotation to match DONE
-          // STEP 2) Move closer until the extents / bounds are within 0.1 (or something tiny).
-          // STEP 3) Attach a fixedJoint btwn you and the target
-        } else  {
+          // Draw them closer together
           GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Force);
+
         }
       }
     }
   }
 }
+
+function face_vector ( target_local : Vector3) : Vector3 {
+          var local_face_vector : Vector3;
+
+          if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
+              Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
+
+            if (target_local.x > 0) { local_face_vector = Vector3.right; }
+            else { local_face_vector = Vector3.left; }
+
+          } else if (Mathf.Abs(target_local.y) > Mathf.Abs(target_local.x) &&
+              Mathf.Abs(target_local.y) > Mathf.Abs(target_local.z)) {
+                if (target_local.y > 0) { local_face_vector = Vector3.up; }
+                else { local_face_vector = Vector3.down; }
+
+              } else {
+                if (target_local.z > 0) { local_face_vector = Vector3.forward; }
+                else { local_face_vector = Vector3.back;}
+              }
+
+  return local_face_vector;
+};
+
+function desired_position (you : GameObject, target: GameObject) : Vector3 {
+  //
+};
 
 function closest_object_from_group (you : GameObject, group_contents : Hashtable) : GameObject {
   var closest : GameObject = null;
@@ -182,3 +199,11 @@ function collect_into_groups (objects : Hashtable) : Array {
 
   return groups;
 }
+
+/*
+        // This is an expensive calculation. You may want to just use the distance between the object centers.
+        var closestSurfacePoint1: Vector3  = GetComponent.<Collider>().ClosestPointOnBounds(target.transform.position);
+        var closestSurfacePoint2 : Vector3 = target.GetComponent.<Collider>().ClosestPointOnBounds(transform.position);
+        var surface_distance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
+
+*/
