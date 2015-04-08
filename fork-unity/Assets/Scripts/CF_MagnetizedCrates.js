@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-public var force_multiplier : float = 500;
+public var force_multiplier : float = 10;
 private var my_polarity : HasPolarity = null;
 
 
@@ -10,27 +10,21 @@ function Awake () {
 }
 
 function Start () {
-
 }
 
 function Update () {
-  // Want to draw a line from each face - straight outward
-  // For debugging
-
-  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.right), Color.blue);
-  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.up), Color.yellow);
-  //Debug.DrawRay(transform.position, transform.TransformVector(Vector3.forward), Color.white);
-  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.down), Color.red);
-  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.back), Color.green);
-  // Debug.DrawRay(transform.position, transform.TransformVector(Vector3.left), Color.magenta);
 }
 
 function process_nearby_objects (nearby_objects : Hashtable) {
   if (my_polarity.polarity != MagPolarity.None) {
 
 
-    // Apparently you are not a nearby object! :)
-Debug.Log("Collect " + nearby_objects.Count + " into groups: " + collect_into_groups(nearby_objects).Count);
+   // Apparently you are not a nearby object! :)
+//Debug.Log("Collect " + nearby_objects.Count + " into groups: " + collect_into_groups(nearby_objects).Count);
+
+ //   for (var group in collect_into_groups(nearby_objects)) {
+      // For each group
+//    }
 
     for (var target : GameObject in nearby_objects.Values) {
       // If the object has a polarity
@@ -45,31 +39,36 @@ Debug.Log("Collect " + nearby_objects.Count + " into groups: " + collect_into_gr
       } else if (target_polarity != my_polarity.polarity) {
         // You just push it away (opposite of the bottom equation)
         GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Force);
+
       } else {
-         if (vector.sqrMagnitude < 2) {
+
+         if (vector.sqrMagnitude < 3) {
             // Find out our desired position
-            var desired_position : Vector3;
-            // We look at the target, and get it's "face vector"
-            var dest_local = target.transform.InverseTransformPoint(transform.position);  // vector to target in local coordinates
+            var desired_position : Vector3 = get_desired_position(gameObject, target);
+            var desired_rotation : Quaternion = get_desired_rotation(gameObject, target);
 
-            // Which face is closest to matching the desired direction?
-            var dest_local_face_vector = face_vector(dest_local);
-            var dest_world_face_vector = target.transform.TransformVector(dest_local_face_vector).normalized;
-            desired_position = target.transform.position + dest_world_face_vector * 1 /* The size of a cube */;
+            Debug.DrawLine(desired_position, transform.position, Color.red);
 
-            // Just "SNAP" to it!
-            transform.position = desired_position;
-            if (target.GetComponent(FixedJoint)) {
-              var mag_joint = target.AddComponent(FixedJoint);
-              mag_joint.connectedBody = GetComponent.<Rigidbody>();
 
-              Debug.Log("Created Joint");
+            if (!connected_by_joint(gameObject, target)) {
+              Debug.Log("not in joints");
+
+              // Just "SNAP" to it!
+              transform.position = desired_position;
+              GetComponent.<Rigidbody>().velocity = new Vector3(0,0,0);
+              GetComponent.<Rigidbody>().rotation = desired_rotation;
+
+              var mag_joint = gameObject.AddComponent(FixedJoint);
+              mag_joint.connectedBody = target.GetComponent.<Rigidbody>();
+
+              if (!connected_by_joint(gameObject, target)) {
+                Debug.Log("FAILED!");
+              }
             }
-         } else {
 
+         } else {
           Debug.DrawLine(transform.position, target.transform.position, Color.green);
           // this is the target line we want to match
-
           var target_local = transform.InverseTransformPoint(target.transform.position);  // vector to target in local coordinates
 
           // Which face is closest to matching the desired direction?
@@ -104,6 +103,37 @@ Debug.Log("Collect " + nearby_objects.Count + " into groups: " + collect_into_gr
   }
 }
 
+function get_desired_position (me : GameObject, target : GameObject) : Vector3 {
+  // We look at the target, and get it's "face vector"
+  var dest_local = target.transform.InverseTransformPoint(transform.position);  // vector to target in local coordinates
+
+  // Which face is closest to matching the desired direction?
+  var dest_local_face_vector = face_vector(dest_local);
+  var dest_world_face_vector = target.transform.TransformVector(dest_local_face_vector).normalized;
+  return target.transform.position + dest_world_face_vector * 1.3 /* The size of a cube */;
+}
+
+function get_desired_rotation (me : GameObject, target : GameObject) : Quaternion {
+  // vector to target in local coordinates
+  // The target rotation:
+  var target_rotation = target.transform.rotation;
+
+  return target_rotation;
+}
+
+function connected_by_joint (me : GameObject, target : GameObject) : boolean {
+  var joints = me.GetComponents(FixedJoint);
+  var in_joints = false;
+
+  for (var joint in joints) {
+    var fixed_joint : FixedJoint = joint as FixedJoint;
+    if (fixed_joint.connectedBody.GetInstanceID() == target.GetComponent.<Rigidbody>().GetInstanceID()) {
+      in_joints = true;
+    }
+  }
+  return in_joints;
+}
+
 function face_vector ( target_local : Vector3) : Vector3 {
           var local_face_vector : Vector3;
 
@@ -126,10 +156,6 @@ function face_vector ( target_local : Vector3) : Vector3 {
   return local_face_vector;
 };
 
-function desired_position (you : GameObject, target: GameObject) : Vector3 {
-  //
-};
-
 function closest_object_from_group (you : GameObject, group_contents : Hashtable) : GameObject {
   var closest : GameObject = null;
   var closest_dist = 99999;
@@ -148,12 +174,13 @@ function recur_collect_groups (game_object : GameObject, current_group_contents 
   // Collects
   // TO create groups, we look at the FixedJoints (which are connected to other CF_MagnetizedCrates
   // and add those gameobjects.
-//  current_group_contents.game_object
+  //  current_group_contents.game_object
   if (!current_group_contents.ContainsKey(game_object.GetInstanceID())) {
     current_group_contents.Add(game_object.GetInstanceID(), game_object);
   }
 
   var joints = game_object.GetComponents(FixedJoint);
+  Debug.Log("Found " + joints.length + " joints");
   for (var joint in joints) {
     var fixed_joint : FixedJoint = joint as FixedJoint;
     // Get the game object
@@ -177,9 +204,11 @@ function collect_into_groups (objects : Hashtable) : Array {
     var object : GameObject = obj as GameObject;
     // You want to see if we've seen it before. If so, skip
     if (!seen[object.GetInstanceID()]) {
-
       // Go find all the objects in this group!
       var group = recur_collect_groups(object, {});
+
+      Debug.Log("Collected group: " + group.Count);
+/*
       // Make sure we mark this as "found"
       for (var go in group.Values) {
         var group_obj : GameObject = go as GameObject;
@@ -192,6 +221,7 @@ function collect_into_groups (objects : Hashtable) : Array {
 
       // Add to the groups
       groups.Push(group);
+      */
     } else {
       // It's already in a group. so skip
     }
