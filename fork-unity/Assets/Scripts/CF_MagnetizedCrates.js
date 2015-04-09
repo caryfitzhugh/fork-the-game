@@ -30,73 +30,52 @@ function process_nearby_objects (nearby_objects : Hashtable) {
       // If the object has a polarity
       var tpi = target.GetComponent.<HasPolarity>();
       var target_polarity = tpi.polarity;
-      var vector = (target.transform.position - transform.position);
       // This is our magnitude
       var magnitude = force_multiplier * nearby_objects.Count * nearby_objects.Count;
+
+      var desired_position : Vector3 = get_desired_position(gameObject, target);
+      var desired_rotation : Quaternion = get_desired_rotation(gameObject, target);
+
+      var move_vector : Vector3 = desired_position - transform.position;
+      var distance = move_vector.sqrMagnitude;
 
       if (target_polarity == MagPolarity.None) {
         // Do nothing -- the other guy is non-polarized
       } else if (target_polarity != my_polarity.polarity) {
         // You just push it away (opposite of the bottom equation)
-        GetComponent.<Rigidbody>().AddForce(-1.0 * vector * magnitude, ForceMode.Force);
+        GetComponent.<Rigidbody>().AddForce(-1.0 * move_vector * magnitude, ForceMode.Force);
+
 
       } else {
+        if (distance < 0.0001) {
+          if (!connected_by_joint(gameObject, target)) {
+            Debug.Log("not in joints");
+            GetComponent.<Rigidbody>().velocity = new Vector3(0,0,0);
+            GetComponent.<Rigidbody>().rotation = desired_rotation;
 
-         if (vector.sqrMagnitude < 3) {
-            // Find out our desired position
-            var desired_position : Vector3 = get_desired_position(gameObject, target);
-            var desired_rotation : Quaternion = get_desired_rotation(gameObject, target);
-
-            Debug.DrawLine(desired_position, transform.position, Color.red);
-
+            var mag_joint = gameObject.AddComponent(FixedJoint);
+            mag_joint.connectedBody = target.GetComponent.<Rigidbody>();
 
             if (!connected_by_joint(gameObject, target)) {
-              Debug.Log("not in joints");
-
-              // Just "SNAP" to it!
-              transform.position = desired_position;
-              GetComponent.<Rigidbody>().velocity = new Vector3(0,0,0);
-              GetComponent.<Rigidbody>().rotation = desired_rotation;
-
-              var mag_joint = gameObject.AddComponent(FixedJoint);
-              mag_joint.connectedBody = target.GetComponent.<Rigidbody>();
-
-              if (!connected_by_joint(gameObject, target)) {
-                Debug.Log("FAILED!");
-              }
+              Debug.Log("FAILED!");
             }
+          }
+        } else if (distance < 3) {
+            // Find out our desired position
+            Debug.DrawLine(desired_position, transform.position, Color.red);
+
+            // The step size is equal to speed times frame time.
+	          var step = 180 * Time.deltaTime;
+
+	          // Rotate our transform a step closer to the target's.
+	          transform.rotation = Quaternion.RotateTowards(transform.rotation, desired_rotation, step);
+
+            // Move towards it at about 1/2 speed.
+            transform.position = transform.position + move_vector * 0.1;
 
          } else {
-          Debug.DrawLine(transform.position, target.transform.position, Color.green);
-          // this is the target line we want to match
-          var target_local = transform.InverseTransformPoint(target.transform.position);  // vector to target in local coordinates
-
-          // Which face is closest to matching the desired direction?
-          var local_face_vector = face_vector(target_local);
-          var world_face_vector = transform.TransformVector(local_face_vector).normalized;
-
-          //Debug.Log("wfv (red): " + world_face_vector);
-          Debug.DrawLine(transform.position, transform.position + (3 * world_face_vector), Color.red);
-          // This is the face-normal that is closest to the target line, so we need to move this line to the green line
-
-          var world_target_vector = (target.transform.position - transform.position).normalized;
-          //Debug.Log("wtv: " + world_target_vector);
-
-          var normal_axis = Vector3.Cross(world_target_vector, world_face_vector);
-
-          Debug.DrawLine(transform.position, transform.position + (3 * normal_axis), Color.blue);
-          // This is the axis of rotation around which we must be rotated to match the desired orientation
-
-          // I refuse to believe that my vector is inverted so I invert it for AddTorque who is, of course, wrong. :)
-          // it it hard to overcome static friction, but this torque works fine with a hover attached (though we'd have to dampen the torque, you'll see why)
-          var speed = -500;
-
-          // Only rotate around the Y ( to keep them on the ground?)
-          GetComponent.<Rigidbody>().AddTorque(normal_axis * speed);  // it also works on the floor at large values
-
           // Draw them closer together
-          GetComponent.<Rigidbody>().AddForce(vector * magnitude, ForceMode.Force);
-
+          GetComponent.<Rigidbody>().AddForce(move_vector * magnitude, ForceMode.Force);
         }
       }
     }
@@ -110,7 +89,7 @@ function get_desired_position (me : GameObject, target : GameObject) : Vector3 {
   // Which face is closest to matching the desired direction?
   var dest_local_face_vector = face_vector(dest_local);
   var dest_world_face_vector = target.transform.TransformVector(dest_local_face_vector).normalized;
-  return target.transform.position + dest_world_face_vector * 1.3 /* The size of a cube */;
+  return target.transform.position + dest_world_face_vector * 1 /* The size of a cube */;
 }
 
 function get_desired_rotation (me : GameObject, target : GameObject) : Quaternion {
