@@ -21,17 +21,14 @@ public class Door : MonoBehaviour {
 		GetComponent<AudioSource>().Play();
 	}
 	
-	private void UpdateOpenDoor(float f){		
-		Vector3 pos = transform.TransformDirection( new Vector3( 1,0,0));
-		transform.localPosition = StartlocalPos + pos*f;
-		
+	private void UpdateOpenDoor(float f){
+		Vector3 pos = new Vector3( f,0,0) ;
+		transform.localPosition = StartlocalPos + pos;
 	}
 
-	private void UpdateCloseDoor(float f){		
-		Vector3 pos = transform.TransformDirection( new Vector3( -f,0,0)) ;
-		
-		transform.localPosition = endlocalPos-pos;
-		
+	private void UpdateCloseDoor(float f){
+		Vector3 pos = new Vector3( f,0,0) ;
+		transform.localPosition = endlocalPos + pos;
 	}
 	
 	private void EndOpen(){
