@@ -16,7 +16,7 @@ var tracking : tracking_opts;
 
 private var texture : Texture2D;
 private var lineStyle : GUIStyle;
-private var maxSpread = 50.0;
+private var maxSpread = 20.0;
 private var level_settings : LevelGlobals = null;
 
 function Awake() {

@@ -1,6 +1,11 @@
 ﻿#pragma strict
 import System.Collections.Generic;
 
+// Surface Effect
+// Surface effect will apply forces to objects that are within the surface collider
+// The surface collider should be oriented in the +Z direction and be set to trigger
+// Mesh renderer and mesh collider can be disabled
+
 var hoverHeight : float = .5;
 
 var velocity : float = 3;
@@ -69,6 +74,7 @@ function FixedUpdate() {
         var offcenter_vector = Vector3.Project(object_position_vector, transform.right);
         var horiz_thrust = offcenter_vector * centering * object_rbody.mass;
         object_rbody.AddForce(horiz_thrust);
+        Debug.Log("Centering: " + horiz_thrust);
       } // end centering
     }
   }
