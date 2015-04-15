@@ -13,6 +13,14 @@ var acceleration : float = 0;
 var centering : float = 1;
 
 private var tracking = new List.<GameObject>();
+private var force_manager : SurfaceEffectManager = null;
+
+function Awake() {
+  force_manager = FindObjectOfType(SurfaceEffectManager);
+  if (!force_manager) {
+    Debug.Log("No SurfaceEffectManager found!");
+  }
+}
 
 function Start () {
 }
@@ -55,7 +63,7 @@ function FixedUpdate() {
         // Debug.Log("Target hgt: " + target_height + " Curr hgt: " + object_transform.position.y);
         // Debug.Log("Throttle: " + throttle + " Thrust: " + thrust);
         // Debug.Log("Balance: " + balance + " Delta: " + (thrust - balance));
-        object_rbody.AddForce(Vector3.up * thrust);
+        force_manager.apply_force(Vector3.up * thrust, object_rbody);
       } // end vertical displacement
       var object_velocity = Vector3.ProjectOnPlane(object_rbody.velocity, Vector3.up);  // current x-z velocity
       if (acceleration > 0) {
@@ -67,14 +75,14 @@ function FixedUpdate() {
       if (velocity > 0) {
         var forward_velocity_vector = Vector3.Project(object_velocity, transform.forward);
         var force = (velocity - forward_velocity_vector.magnitude) * object_rbody.mass;
-        object_rbody.AddForce(transform.forward * force);
+        force_manager.apply_force(transform.forward * force, object_rbody);
       } // end velocity match
       if (centering) {
         var object_position_vector = (transform.position - object.transform.position);
         var offcenter_vector = Vector3.Project(object_position_vector, transform.right);
         var horiz_thrust = offcenter_vector * centering * object_rbody.mass;
-        object_rbody.AddForce(horiz_thrust);
-        Debug.Log("Centering: " + horiz_thrust);
+        force_manager.apply_force(horiz_thrust, object_rbody);
+        // Debug.Log("Centering: " + horiz_thrust);
       } // end centering
     }
   }

@@ -1,0 +1,44 @@
+﻿#pragma strict
+//import System.Collections.Generic;
+
+// Surface Effect Manager
+// Surface effect manager mitigates the combination of forces created when an object
+// intersects more than one surface effect collider
+
+//private var tracking = new List.<GameObject>();
+
+private var fixed_time : float = 0;
+private var forces = {};
+
+function Start () {
+}
+
+function Update () {
+}
+
+function apply_force (force : Vector3, rbody : Rigidbody) {
+  var resulting_force : Vector3;
+  if (Time.fixedTime != fixed_time) {
+    fixed_time = Time.fixedTime;
+    forces = {};
+  }
+  if (rbody in forces) {
+    var current_force : Vector3 = forces[rbody];
+    resulting_force = force;
+    //Debug.Log(fixed_time + ": There was a collision...");
+    if (force.y > current_force.y) {  // for now, we are only concerned with the Y axis
+      resulting_force.y = force.y - current_force.y;  // only apply the difference
+      current_force.y = force.y;
+      forces[rbody] = current_force;  // store the new force
+      //Debug.Log(fixed_time + ": Force unchanged");
+    } else {
+      resulting_force.y = 0;
+      //Debug.Log(fixed_time + ": Removing force!");
+    }
+  } else {
+    forces[rbody] = force;
+    resulting_force = force;
+    //Debug.Log(fixed_time + ": First force added");
+  }
+  rbody.AddForce(resulting_force);
+}
