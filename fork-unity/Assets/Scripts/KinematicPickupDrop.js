@@ -1,6 +1,7 @@
 #pragma strict
 
 var hold_distance : float = 1.5;
+var holdHeight : float = .5;
 var alignObject : boolean = false;
 var pickup_mask : LayerMask;
 
@@ -38,7 +39,7 @@ function Update ()
       {
         if (hit_info.collider.gameObject.layer == 8) { // this is the pickup layer -- why oh why is it referenced by index?
           held_object = hit_info.collider.gameObject;
-          held_object.transform.position.y = held_object.transform.position.y + 0.5;
+          held_object.transform.position.y = held_object.transform.position.y + holdHeight;
           hold_height = held_object.transform.position.y;
 
           // When moving / pickup a crate, sometimes we don't want to flip the orientation.

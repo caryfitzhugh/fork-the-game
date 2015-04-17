@@ -38,8 +38,8 @@ function FixedUpdate() {
           // calculate force along vector using strength setting
           var force_vector : Vector3 = direction.normalized * force * force * other_magnet_magnetized.strength * 10;
           //Debug.Log("force_vector magnitude: " + force_vector.magnitude);
-          if (other_magnet_polarity.polarity == my_polarity.polarity) {
-            // polarity is the same so repel
+          if (other_magnet_polarity.polarity != my_polarity.polarity) {
+            // polarity is different so repel
             rbody.AddForce(-force_vector);
           } else {
             // polarity is the same so attract

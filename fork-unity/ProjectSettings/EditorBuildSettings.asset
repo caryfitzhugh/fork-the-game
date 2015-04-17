@@ -8,8 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/welcome.unity
   - enabled: 1
+    path: Assets/Scenes/CargoHold.unity
+  - enabled: 1
+    path: Assets/Scenes/multi_room.unity
+  - enabled: 1
     path: Assets/Scenes/carys-playground.unity
   - enabled: 1
     path: Assets/Scenes/chasm.unity
-  - enabled: 1
-    path: Assets/Scenes/multi_room.unity
