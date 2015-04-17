@@ -8,6 +8,9 @@ Obj/
 UnityGenerated/
 Library/
 Assets/AssetStoreTools*
+*.exr
+*.exr.meta
+LightmapSnapshot.*
 
 # ================= #
 # Blender generated #
