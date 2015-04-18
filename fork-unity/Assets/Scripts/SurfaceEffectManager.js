@@ -1,26 +1,23 @@
 ﻿#pragma strict
-//import System.Collections.Generic;
 
 // Surface Effect Manager
 // Surface effect manager mitigates the combination of forces created when an object
 // intersects more than one surface effect collider
 
-//private var tracking = new List.<GameObject>();
-
 private var fixed_time : float = 0;
-private var forces = {};
+private var forces = new Dictionary.<Rigidbody,Vector3>();
 
-function Start () {
+function Start() {
 }
 
-function Update () {
+function Update() {
 }
 
-function apply_force (force : Vector3, rbody : Rigidbody) {
+function apply_force(force : Vector3, rbody : Rigidbody) {
   var resulting_force : Vector3;
   if (Time.fixedTime != fixed_time) {
     fixed_time = Time.fixedTime;
-    forces = {};
+    forces = new Dictionary.<Rigidbody,Vector3>();
   }
   if (rbody in forces) {
     var current_force : Vector3 = forces[rbody];

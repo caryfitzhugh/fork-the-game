@@ -5,11 +5,15 @@ public var strength : float = 1.0;
 public var attractionLayer: LayerMask;
 
 private var my_polarity : HasPolarity = null;
+private var link_manager : MagnetizedLinkMgr = null;
 private var rbody : Rigidbody;
 
 function Awake () {
   my_polarity = GetComponent(HasPolarity);
-  if (my_polarity == null) Debug.Log("Error! -- Object has no polarity!");
+  if (my_polarity == null) { Debug.Log("Error! -- Object has no polarity!"); }
+
+  link_manager = FindObjectOfType(MagnetizedLinkMgr);
+  if (link_manager == null) { Debug.Log("Error! -- No link manager found!"); }
 }
 
 function Start () {
@@ -30,6 +34,7 @@ function FixedUpdate() {
         var other_magnet_polarity : HasPolarity = other_magnet.GetComponent(HasPolarity);
         var other_magnet_magnetized : Magnetized = other_magnet.GetComponent(Magnetized);
         if (other_magnet_polarity && other_magnet_magnetized && (other_magnet_polarity.polarity != MagPolarity.None)) {
+          var separation = other_magnet.transform.position - transform.position;
           // Calculate the normalized force to apply to ourselves, based on the other magnet
           var force = Mathf.Clamp(1.0 - ((other_magnet.transform.position - transform.position).magnitude / other_magnet_magnetized.fieldRadius), 0.0, 1.0);
           //Debug.Log("normalized force magnitude: " + force);
@@ -44,6 +49,9 @@ function FixedUpdate() {
           } else {
             // polarity is the same so attract
             rbody.AddForce(force_vector);
+            if (Mathf.Abs(separation.magnitude) < 1.1) { // FIXME should check object bounds
+              link_manager.connect(gameObject, other_magnet.gameObject);
+            }
           }
         }
       }
