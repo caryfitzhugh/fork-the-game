@@ -114,23 +114,23 @@ function connected_by_joint (me : GameObject, target : GameObject) : boolean {
 }
 
 function face_vector ( target_local : Vector3) : Vector3 {
-          var local_face_vector : Vector3;
+  var local_face_vector : Vector3;
 
-          if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
-              Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
+  if (Mathf.Abs(target_local.x) > Mathf.Abs(target_local.y) &&
+      Mathf.Abs(target_local.x) > Mathf.Abs(target_local.z)) {
 
-            if (target_local.x > 0) { local_face_vector = Vector3.right; }
-            else { local_face_vector = Vector3.left; }
+    if (target_local.x > 0) { local_face_vector = Vector3.right; }
+    else { local_face_vector = Vector3.left; }
 
-          } else if (Mathf.Abs(target_local.y) > Mathf.Abs(target_local.x) &&
-              Mathf.Abs(target_local.y) > Mathf.Abs(target_local.z)) {
-                if (target_local.y > 0) { local_face_vector = Vector3.up; }
-                else { local_face_vector = Vector3.down; }
+  } else if (Mathf.Abs(target_local.y) > Mathf.Abs(target_local.x) &&
+      Mathf.Abs(target_local.y) > Mathf.Abs(target_local.z)) {
+    if (target_local.y > 0) { local_face_vector = Vector3.up; }
+    else { local_face_vector = Vector3.down; }
 
-              } else {
-                if (target_local.z > 0) { local_face_vector = Vector3.forward; }
-                else { local_face_vector = Vector3.back;}
-              }
+  } else {
+    if (target_local.z > 0) { local_face_vector = Vector3.forward; }
+    else { local_face_vector = Vector3.back;}
+  }
 
   return local_face_vector;
 };
