@@ -34,9 +34,9 @@ function set_polarity (new_polarity : MagPolarity) {
   if (polarityIndicator) {
     var polarity_color = new Color(0.5,0.5,0.5);
     if (polarity == MagPolarity.Negative) { // red/black polarity standard implies negative should be red ;-)
-      polarity_color = new Color(.7,0,0);
+      polarity_color = new Color(1,.2,.2);
     } else if (polarity == MagPolarity.Positive) {
-      polarity_color = new Color(0,0,.7);
+      polarity_color = new Color(.6,.6,1);
     }
     if (colorMaterial && ind_mat_instance) {
       ind_mat_instance.color = polarity_color;

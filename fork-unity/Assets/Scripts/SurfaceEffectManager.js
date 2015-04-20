@@ -4,6 +4,9 @@
 // Surface effect manager mitigates the combination of forces created when an object
 // intersects more than one surface effect collider
 
+// for now, a type that moves and a type that stops
+enum SurfaceType{Convey, Catch};
+
 private var fixed_time : float = 0;
 private var forces = new Dictionary.<Rigidbody,Vector3>();
 
@@ -13,7 +16,7 @@ function Start() {
 function Update() {
 }
 
-function apply_force(force : Vector3, rbody : Rigidbody) {
+function apply_force(force : Vector3, rbody : Rigidbody, type : SurfaceType) {
   var resulting_force : Vector3;
   if (Time.fixedTime != fixed_time) {
     fixed_time = Time.fixedTime;

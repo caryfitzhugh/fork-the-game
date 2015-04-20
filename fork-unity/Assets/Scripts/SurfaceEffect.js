@@ -63,25 +63,25 @@ function FixedUpdate() {
         // Debug.Log("Target hgt: " + target_height + " Curr hgt: " + object_transform.position.y);
         // Debug.Log("Throttle: " + throttle + " Thrust: " + thrust);
         // Debug.Log("Balance: " + balance + " Delta: " + (thrust - balance));
-        force_manager.apply_force(Vector3.up * thrust, object_rbody);
+        force_manager.apply_force(Vector3.up * thrust, object_rbody, SurfaceType.Convey);
       } // end vertical displacement
       var object_velocity = Vector3.ProjectOnPlane(object_rbody.velocity, Vector3.up);  // current x-z velocity
       if (acceleration > 0) {
         if (object_velocity.magnitude > .1) {
           var object_direction = object_velocity.normalized;    // not normalizing will accelerate fast bodies faster
-          object_rbody.AddForce(object_direction * acceleration * object_rbody.mass);
+          force_manager.apply_force(object_direction * acceleration * object_rbody.mass, object_rbody, SurfaceType.Convey);
         }
       } // end acceleration increase
       if (velocity > 0) {
         var forward_velocity_vector = Vector3.Project(object_velocity, transform.forward);
         var force = (velocity - forward_velocity_vector.magnitude) * object_rbody.mass;
-        force_manager.apply_force(transform.forward * force, object_rbody);
+        force_manager.apply_force(transform.forward * force, object_rbody, SurfaceType.Convey);
       } // end velocity match
       if (centering) {
         var object_position_vector = (transform.position - object.transform.position);
         var offcenter_vector = Vector3.Project(object_position_vector, transform.right);
         var horiz_thrust = offcenter_vector * centering * object_rbody.mass;
-        force_manager.apply_force(horiz_thrust, object_rbody);
+        force_manager.apply_force(horiz_thrust, object_rbody, SurfaceType.Convey);
         // Debug.Log("Centering: " + horiz_thrust);
       } // end centering
     }
