@@ -103,8 +103,8 @@ function FixedUpdate() {
       }
     }
   } else if (current_state == ReceptacleState.Capture) {  // we have captured a valid object so try to force it in place
-    var err_center = seek_xz_with_force(captured, center_floor, 100);
-    var err_rotate = seek_y_rotation_with_force(captured, Mathf.Round(captured.transform.eulerAngles.y / 90) * 90, 100);
+    var err_center = seek_xz_with_force(captured, center_floor, 50);
+    var err_rotate = seek_y_rotation_with_force(captured, Mathf.Round(captured.transform.eulerAngles.y / 90) * 90, 10);
     if ((err_center < .05) && (err_rotate < .5)) {  // close enough, we accept the object
       change_state(ReceptacleState.Trigger);
     }
@@ -128,8 +128,14 @@ function seek_xz_with_force(object : GameObject, xy_position : Vector3, force : 
       xy_position.y = xy_position.y + collider.bounds.extents.y;  // set y target correctly from bounds
       var center_vector = xy_position - object.transform.position;
       //Debug.Log("Ctr vector: " + center_vector);
-      var centering_force = 1 - Mathf.Clamp(center_vector.magnitude / (effect_radius + collider.bounds.extents.x), 0, 1);
       //Debug.Log("Ctr mag: " + center_vector.magnitude);
+
+      var centering_force : float;
+      if (current_state == ReceptacleState.Idle) {  // here the effect is "magnetic", so less further away
+        centering_force = 1 - Mathf.Clamp(center_vector.magnitude / (effect_radius + collider.bounds.extents.x), 0, 1);
+      } else {  // we are capturing and trying to center so we don't want to overshoot
+        centering_force = Mathf.Clamp(center_vector.magnitude, .4, 2);
+      }
       //Debug.Log("Ctr force: " + centering_force);
       force_manager.apply_force(center_vector * centering_force * force * object_rbody.mass, object_rbody, SurfaceType.Catch);
       return center_vector.magnitude;
@@ -166,12 +172,13 @@ function change_state(new_state : ReceptacleState) {
       captured.GetComponent.<Rigidbody>().isKinematic = true;  // remove from physics world, we will move it ourselves
       capture_start_y = captured.transform.position.y;
       capture_end_y = center_floor.y - captured.GetComponent.<Collider>().bounds.extents.y + .05;
-      Debug.Log("is_triggered - Time: " + capture_time + "  y0: " + capture_start_y + "  y1: " + capture_end_y);
+      //Debug.Log("is_triggered - Time: " + capture_time + "  y0: " + capture_start_y + "  y1: " + capture_end_y);
     } else if (new_state == ReceptacleState.Complete) {
       // also nuttin'
     }
 
     current_state = new_state;
     gameObject.SendMessage("receptacle_status", current_state);
+    //Debug.Log(current_state);
   }
 }
