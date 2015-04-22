@@ -48,7 +48,6 @@ function Awake() {
 function Start() {
   effect_radius = GetComponent.<Collider>().bounds.extents.x;
   center_floor = transform.position;
-  center_floor.y = center_floor.y - GetComponent.<Collider>().bounds.extents.y;
 }
 
 function OnTriggerEnter(object : Collider) {
@@ -103,8 +102,10 @@ function FixedUpdate() {
       }
     }
   } else if (current_state == ReceptacleState.Capture) {  // we have captured a valid object so try to force it in place
-    var err_center = seek_xz_with_force(captured, center_floor, 50);
-    var err_rotate = seek_y_rotation_with_force(captured, Mathf.Round(captured.transform.eulerAngles.y / 90) * 90, 10);
+    var err_center = seek_xz_with_force(captured, center_floor, catchForce);
+    var err_rotate = seek_y_rotation_with_force(captured, Mathf.Round(captured.transform.eulerAngles.y / 90) * 90);
+    //if (err_center < .05) { Debug.Log("centering done"); }
+    //if (err_rotate < .5) { Debug.Log("orienting done"); }
     if ((err_center < .05) && (err_rotate < .5)) {  // close enough, we accept the object
       change_state(ReceptacleState.Trigger);
     }
@@ -128,16 +129,19 @@ function seek_xz_with_force(object : GameObject, xy_position : Vector3, force : 
       xy_position.y = xy_position.y + collider.bounds.extents.y;  // set y target correctly from bounds
       var center_vector = xy_position - object.transform.position;
       //Debug.Log("Ctr vector: " + center_vector);
-      //Debug.Log("Ctr mag: " + center_vector.magnitude);
+      Debug.Log("Ctr mag: " + center_vector.magnitude);
 
-      var centering_force : float;
+      var force_mod : float;
       if (current_state == ReceptacleState.Idle) {  // here the effect is "magnetic", so less further away
-        centering_force = 1 - Mathf.Clamp(center_vector.magnitude / (effect_radius + collider.bounds.extents.x), 0, 1);
+        force_mod = 1 - Mathf.Clamp(center_vector.magnitude / (effect_radius + collider.bounds.extents.x), 0, .8);
       } else {  // we are capturing and trying to center so we don't want to overshoot
-        centering_force = Mathf.Clamp(center_vector.magnitude, .4, 2);
+        force_mod = Mathf.Clamp(center_vector.magnitude / collider.bounds.extents.x, .4, 1);
       }
-      //Debug.Log("Ctr force: " + centering_force);
-      force_manager.apply_force(center_vector * centering_force * force * object_rbody.mass, object_rbody, SurfaceType.Catch);
+      //Debug.Log("Force mod: " + force_mod);
+      var force_vector = center_vector.normalized * force_mod;
+      Debug.Log("Force vector: " + force_vector.magnitude);
+      Debug.Log("Full force: " + (force_vector.magnitude * force * object_rbody.mass));
+      force_manager.apply_force(force_vector * force * object_rbody.mass, object_rbody, SurfaceType.Catch);
       return center_vector.magnitude;
     }
     return 0; // if we cannot move the object, we are done
@@ -145,18 +149,21 @@ function seek_xz_with_force(object : GameObject, xy_position : Vector3, force : 
 
 // forces an object's rotation toward the given y angle using torque
 // returns the value of the distance error (> 0)
-function seek_y_rotation_with_force(object : GameObject, angle : float, force : float) {
-    var parent = object.transform.parent;
-    var is_carried = (parent != null && parent.gameObject.tag == "Player");
-    var is_player = (object.tag == "Player");
+function seek_y_rotation_with_force(object : GameObject, angle : float) {
     var object_rbody = object.GetComponent.<Rigidbody>();
-    if (object_rbody && !is_carried && !is_player) {
-      var error = angle - object.transform.eulerAngles.y;
-      //Debug.Log("angle: " + angle + "  curr: " + object.transform.eulerAngles.y);
-      var rotation_force = Mathf.Clamp(error / 45, -1, 1);
-      //Debug.Log("error: " + error);
-      //Debug.Log("Rot force: " + rotation_force);
-      object_rbody.AddTorque(Vector3.up * rotation_force * force * object_rbody.mass);
+    if (object_rbody) {
+      var current_angle = object.transform.eulerAngles.y;
+      var error = angle - current_angle;
+      var current_ang_velocity = object_rbody.angularVelocity.y;
+      var predicted_angle = current_angle + current_ang_velocity;
+      var predicted_error = (angle - predicted_angle) % 360;
+      if (predicted_error > 180) { predicted_error -= 360; }
+      if (predicted_error < -180) { predicted_error += 360; }
+      //Debug.Log("angle: " + angle + "pred_angle: " + predicted_angle);
+      //Debug.Log("error: " + error + "pred_error: " + predicted_error);
+      //Debug.Log("curr_ang_v: " + current_ang_velocity);
+      object_rbody.AddTorque(Vector3.up * predicted_error);
+      //Debug.Log("torque: " + predicted_error);
       return Mathf.Abs(error);
     }
     return 0; // if we cannot move the object, we are done
@@ -179,6 +186,6 @@ function change_state(new_state : ReceptacleState) {
 
     current_state = new_state;
     gameObject.SendMessage("receptacle_status", current_state);
-    //Debug.Log(current_state);
+    //Debug.Log("------------------------------------" + current_state);
   }
 }

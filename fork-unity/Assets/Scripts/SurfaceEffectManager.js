@@ -41,4 +41,5 @@ function apply_force(force : Vector3, rbody : Rigidbody, type : SurfaceType) {
     //Debug.Log(fixed_time + ": First force added");
   }
   rbody.AddForce(resulting_force);
+  //Debug.Log("Adding surface force");
 }

@@ -60,6 +60,7 @@ function FixedUpdate() {
           if (other_magnet_polarity.polarity != my_polarity.polarity) {
             // polarity is different so repel
             rbody.AddForce(-force_vector);
+            //Debug.Log("Repel: " + force_vector.magnitude);
           } else {
             // polarity is the same so attract
             // but first, remind the manager that we should be connected
