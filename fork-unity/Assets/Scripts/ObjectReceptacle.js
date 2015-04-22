@@ -129,7 +129,7 @@ function seek_xz_with_force(object : GameObject, xy_position : Vector3, force : 
       xy_position.y = xy_position.y + collider.bounds.extents.y;  // set y target correctly from bounds
       var center_vector = xy_position - object.transform.position;
       //Debug.Log("Ctr vector: " + center_vector);
-      Debug.Log("Ctr mag: " + center_vector.magnitude);
+      //Debug.Log("Ctr mag: " + center_vector.magnitude);
 
       var force_mod : float;
       if (current_state == ReceptacleState.Idle) {  // here the effect is "magnetic", so less further away
@@ -139,8 +139,8 @@ function seek_xz_with_force(object : GameObject, xy_position : Vector3, force : 
       }
       //Debug.Log("Force mod: " + force_mod);
       var force_vector = center_vector.normalized * force_mod;
-      Debug.Log("Force vector: " + force_vector.magnitude);
-      Debug.Log("Full force: " + (force_vector.magnitude * force * object_rbody.mass));
+      //Debug.Log("Force vector: " + force_vector.magnitude);
+      //Debug.Log("Full force: " + (force_vector.magnitude * force * object_rbody.mass));
       force_manager.apply_force(force_vector * force * object_rbody.mass, object_rbody, SurfaceType.Catch);
       return center_vector.magnitude;
     }

@@ -6918,9 +6918,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d4f4799588e4c54977d6241f3cff2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hold_distance: 1.5
   holdHeight: .5
   alignObject: 1
+  impartMomentum: .5
   pickup_mask:
     serializedVersion: 2
     m_Bits: 256
@@ -11390,9 +11390,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d4f4799588e4c54977d6241f3cff2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hold_distance: 1.5
   holdHeight: .109999999
   alignObject: 0
+  impartMomentum: .5
   pickup_mask:
     serializedVersion: 2
     m_Bits: 2304

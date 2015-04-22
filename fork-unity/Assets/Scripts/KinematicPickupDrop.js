@@ -1,8 +1,9 @@
 #pragma strict
 
-var hold_distance : float = 1.5;
+//var hold_distance : float = 1.5;  // doing this would require a bunch of forcing
 var holdHeight : float = .5;
 var alignObject : boolean = false;
+var impartMomentum : float = .5;
 var pickup_mask : LayerMask;
 
 private var held_object : GameObject;
@@ -32,6 +33,8 @@ function Update ()
     {
       Destroy(lift_joint);
       lift_joint = null;
+      var player_velocity = transform.parent.gameObject.GetComponent.<Rigidbody>().velocity;
+      held_object.GetComponent.<Rigidbody>().AddForce(player_velocity * impartMomentum, ForceMode.VelocityChange);
     }
     else
     {
